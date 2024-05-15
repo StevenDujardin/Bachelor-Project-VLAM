@@ -12,13 +12,12 @@ def scrape_recipes(url):
         
         # Find all the recipe links on the page
         recipe_links = soup.find_all('article', class_='teaser-recipe')
-        
         # Extract recipe titles and URLs
         recipes = []
         for link in recipe_links:
             recipe_title = link.text.strip()
-            # recipe_url = BeautifulSoup.find()
-        
+            recipe_url = link.findChildren('a', href=True)[0]['href']
+            print(recipe_url)
             recipes.append({'title': recipe_title})
 
         return recipes
