@@ -1,16 +1,20 @@
 import "./App.css";
 import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+import { OverOns } from "./pages/OverOns";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <img
-        src="https://www.lekkervanbijons.be/sites/default/files/styles/home_hero_xxlarge/public/images/HR_iStock_papa-kind-groenten.jpg?itok=8Hm8F_TU"
-        alt="groenten"
-        className="w-full absolute -z-10 object-cover brightness-90"
-      ></img>
+    <Router>
       <Header />
-    </>
+      <Routes>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/over_ons" element={<OverOns/>}></Route>
+
+        <Route></Route>
+      </Routes>
+    </Router>
   );
 }
 

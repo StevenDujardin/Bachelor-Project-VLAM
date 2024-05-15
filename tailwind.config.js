@@ -7,6 +7,7 @@ export default {
   theme: {
     fontFamily: {
       centerBold: ['Center Bold Regular'],
+      poppins: ['Poppins'],
     },
     extend: {},
   },
