@@ -2,7 +2,7 @@ import { FC } from "react";
 
 export const Home: FC = () => {
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     // Add logic for what happens when the form is submitted
     console.log("Form submitted!");
