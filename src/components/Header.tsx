@@ -1,19 +1,32 @@
 import { FC } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header: FC = () => {
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    return location.pathname === path ? "border-b-2 border-white" : "";
+  };
+
   return (
-    <div className="px-28 w-screen  font-centerBold absolute top-0 z-10">
+    <div className="px-28 w-screen font-centerBold absolute top-0 z-10">
       <div>
         <div className="flex py-3 pr-4 justify-end text-white font-poppins font-light text-sm">
-          <a href="/over_ons" className="px-3">
+          <Link
+            to="/over_ons"
+            className={`mx-3 shadow-slate-500 text-shadow-sm ${isActive("/over_ons")}`}
+          >
             Over ons
-          </a>
-          <a href="/over_ons" className="px-3">
+          </Link>
+          <Link
+            to="/best_practices"
+            className={`mx-3 shadow-slate-500 text-shadow-sm ${isActive("/best_practices")}`}
+          >
             Best Practices
-          </a>
+          </Link>
         </div>
         <div className="absolute translate-x-6 -translate-y-2">
-          <a href="/">
+          <Link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="97"
@@ -33,25 +46,22 @@ export const Header: FC = () => {
                 fill="#fff"
               ></path>
             </svg>
-          </a>
+          </Link>
         </div>
-        <div className=" rounded-2xl px-8 min-h-20 bg-[#046a38] flex flex-row justify-end align-middle shadow-xl">
+        <div className="rounded-2xl px-8 min-h-20 bg-[#046a38] flex flex-row justify-end align-middle shadow-xl">
           <div className="flex flex-row justify-between h-20 gap-4 text-white ">
-            <a
-              href="/"
-              className=" min-h-full pt-7 px-2 self-center hover:border-b-2"
+            <Link
+              to="/"
+              className={`min-h-full pt-7 px-2 hover:border-b-2 ${isActive("/")}`}
             >
-              Home
-            </a>
-            <a href="#" className=" min-h-full pt-7  px-2 hover:border-b-2">
               Kook AI
-            </a>
-            <a
-              href="#"
-              className=" min-h-full pt-7 px-2 self-center hover:border-b-2"
+            </Link>
+            <Link
+              to="/recepten"
+              className={`min-h-full pt-7 px-2 self-center hover:border-b-2 ${isActive("/recepten")}`}
             >
               Alle AI Recepten
-            </a>
+            </Link>
           </div>
         </div>
       </div>
