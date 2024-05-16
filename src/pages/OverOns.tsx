@@ -47,20 +47,17 @@ export const OverOns: FC = () => {
         <div className="flex flex-row gap-8">
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
-              Koken met het beste van hier
+              Smullen van elk seizoen
             </div>
             <p>
-              Een recept voor stoofvlees met frieten nodig? No problemo! Liever
-              een hapje voor bij het aperitief? Hopla, gevonden. Een recept voor
-              pannenkoeken? Dik in orde. Of een zomerse salade? Check! Onze
-              nieuwste receptenfolders kan je bestellen of downloaden via onze
-              webwinkel.
+              Vlees, vis, groenten of fruit, met onze themarecepten tover je in
+              de keuken met de rijkdom van elk seizoen.
             </p>
             <p>
-              We hebben recepten voor elke dag met lekkers uit eigen land. Heb
-              je vragen over een recept, laat het ons weten via
-              info@lekkervanbijons.be.
+              Winter, zomer, lente of herfst, ga aan de slag met ingrediënten
+              die net van het veld komen of producten die nu op hun best zijn.
             </p>
+            <p>Koop slim met volgende tips</p>
           </div>
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
@@ -76,38 +73,28 @@ export const OverOns: FC = () => {
           ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
-              Koken met het beste van hier
+              Onberispelijke kwaliteit
             </div>
             <p>
-              Een recept voor stoofvlees met frieten nodig? No problemo! Liever
-              een hapje voor bij het aperitief? Hopla, gevonden. Een recept voor
-              pannenkoeken? Dik in orde. Of een zomerse salade? Check! Onze
-              nieuwste receptenfolders kan je bestellen of downloaden via onze
-              webwinkel.
-            </p>
-            <p>
-              We hebben recepten voor elke dag met lekkers uit eigen land. Heb
-              je vragen over een recept, laat het ons weten via
-              info@lekkervanbijons.be.
+              In Vlaanderen gelden uiterst strenge normen voor
+              voedselveiligheid. Kook je met producten van bij ons dan ben je
+              zeker van een onberispelijke kwaliteit. In de winkel zijn het
+              Europese bio-label en het label Meesterlyck een extra hulp bij een
+              bewuste keuze.
             </p>
           </div>
         </div>
         <div className="flex flex-row gap-8">
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
-              Koken met het beste van hier
+              Proeven van vakmanschap
             </div>
             <p>
-              Een recept voor stoofvlees met frieten nodig? No problemo! Liever
-              een hapje voor bij het aperitief? Hopla, gevonden. Een recept voor
-              pannenkoeken? Dik in orde. Of een zomerse salade? Check! Onze
-              nieuwste receptenfolders kan je bestellen of downloaden via onze
-              webwinkel.
-            </p>
-            <p>
-              We hebben recepten voor elke dag met lekkers uit eigen land. Heb
-              je vragen over een recept, laat het ons weten via
-              info@lekkervanbijons.be.
+              Het onmiskenbare oog voor detail en de fierheid van de maker, dat
+              proef je. De passie van de bakker, de traditie van het slagersvak,
+              de trots van de visser en de technische kennis van de teler. In de
+              ingrediënten van elk recept schuilt onversneden vakmanschap van
+              bij ons.
             </p>
           </div>
           <img
