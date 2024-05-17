@@ -3,15 +3,15 @@ import { FC } from "react";
 export const OverOns: FC = () => {
   return (
     <>
-      <div className="flex flex-col justify-end  w-full h-80  -z-10 object-cover bg-[#6cc24a]">
-        <div className="flex justify-center px-24 w-1/2 ">
+      <div className="flex flex-col justify-end  w-full h-80 -z-10 object-cover bg-[#6cc24a]">
+        <div className="flex self-center mx-24 w-screen max-w-7xl ">
           <h1 className="font-centerBold text-white text-4xl pb-16">
             Wie zijn we?
           </h1>
         </div>
       </div>
       <div className="w-screen h-16 bg-[#f3faf0]"></div>
-      <div className="flex flex-col gap-10 font-poppins text-md font-light mx-72">
+      <div className="flex flex-col max-w-7xl self-center gap-10 font-poppins text-md font-light ">
         <p className="pt-11">
           VLAM, het Vlaams Centrum voor Agro- en Visserijmarketing, voert
           promotie voor de Vlaamse landbouw- en visserijsector. VLAM werkt in

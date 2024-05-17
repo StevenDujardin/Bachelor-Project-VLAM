@@ -2,7 +2,7 @@ import { FC } from "react";
 
 export const Home: FC = () => {
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     // Add logic for what happens when the form is submitted
     console.log("Form submitted!");
@@ -15,7 +15,7 @@ export const Home: FC = () => {
         className="w-full h-96 overflow-hidden -z-10 object-cover brightness-90"
       ></img>
 
-      <div className="bg-white">
+      <div className="bg-white max-w-7xl items-center justify-center self-center place-content-center ">
         <div>
           <div className="flex flex-row justify-center">
             <h1 className="font-centerBold text-4xl pt-10 pb-10">
