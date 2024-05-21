@@ -17,7 +17,7 @@ export const Card: FC<CardProps> = ({
   difficulty,
 }) => {
   return (
-    <div className="flex flex-row lg:flex-row lg:w-80 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition-shadow duration-300 hover:shadow-2xl">
+    <div className="flex flex-row lg:flex-row lg:w-80 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105">
       <div className="flex flex-row lg:flex-col gap-4 p-6">
         <img
           src={image}
