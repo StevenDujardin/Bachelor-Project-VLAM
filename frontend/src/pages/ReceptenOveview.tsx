@@ -1,7 +1,6 @@
 import { Search } from "lucide-react";
 import { FC } from "react";
-import { Card } from "../components/Card";
-
+import { Card, CardProps } from "../components/Card";
 export const ReceptenOveview: FC = () => {
   return (
     <>
@@ -214,6 +213,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={6}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -221,6 +221,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={5}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -228,6 +229,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
+            id={4}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -235,6 +237,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={3}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -242,6 +245,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={2}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -249,6 +253,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={1}
           ></Card>
         </div>
       </div>
