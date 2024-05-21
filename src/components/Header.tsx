@@ -10,7 +10,7 @@ export const Header: FC = () => {
 
   return (
     <div className=" flex justify-center">
-      <div className="px-28 w-screen max-w-7xl self-center font-centerBold absolute top-0 z-10">
+      <div className="mx-28 w-screen max-w-7xl self-center font-centerBold absolute top-0 z-10">
         <div className="flex py-3 pr-4 justify-end text-white font-poppins font-light text-sm">
           <Link
             to="/over_ons"

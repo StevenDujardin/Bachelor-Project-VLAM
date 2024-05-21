@@ -12,7 +12,7 @@ export const Home: FC = () => {
       <img
         src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
         alt="groenten"
-        className="w-full h-96 overflow-hidden -z-10 object-cover brightness-90"
+        className="w-full h-96 overflow-hidden object-cover brightness-90"
       ></img>
 
       <div className="bg-white max-w-7xl items-center justify-center self-center place-content-center ">
