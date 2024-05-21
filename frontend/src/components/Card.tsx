@@ -1,6 +1,6 @@
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 import { FC } from "react";
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export interface CardProps {
   image: string;
@@ -20,9 +20,14 @@ export const Card: FC<CardProps> = ({
   id,
 }) => {
   const navigate = useNavigate();
-  const redirectToRecept = () => {navigate(`/recepten/${id}`)}
+  const redirectToRecept = () => {
+    navigate(`/recepten/${id}`);
+  };
   return (
-    <div className="flex flex-row lg:flex-row lg:w-80 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105" onClick={redirectToRecept}>
+    <div
+      className="flex flex-row lg:flex-row lg:w-80 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105"
+      onClick={redirectToRecept}
+    >
       <div className="flex flex-row lg:flex-col gap-4 p-6">
         <img
           src={image}
