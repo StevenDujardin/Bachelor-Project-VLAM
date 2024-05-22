@@ -1,7 +1,6 @@
 import { Search } from "lucide-react";
 import { FC } from "react";
 import { Card } from "../components/Card";
-
 export const ReceptenOveview: FC = () => {
   return (
     <>
@@ -20,8 +19,8 @@ export const ReceptenOveview: FC = () => {
         <form className=" w-80">
           <div className=" font-centerBold text-xl">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Type gerecht:</div>
-            <div className="flex flex-col p-2 gap-2 divide-y">
+            <div className="text-md font-centerBold">Type gerecht:</div>
+            <div className="flex flex-col p-4 gap-2 divide-y ">
               <div className="flex gap-2">
                 <input
                   title="dranken"
@@ -32,17 +31,18 @@ export const ReceptenOveview: FC = () => {
                 ></input>
                 <label>Dranken</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="voorgerecht"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="voorgerecht"
+                  id="voorgerecht"
                 ></input>
-                <label>Voorgerecht</label>
+                <label htmlFor="voorgerecht">Voorgerecht</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="hoofdgerecht"
                   type="checkbox"
@@ -52,7 +52,7 @@ export const ReceptenOveview: FC = () => {
                 ></input>
                 <label>Hoofdgerecht</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="dessert"
                   type="checkbox"
@@ -65,7 +65,7 @@ export const ReceptenOveview: FC = () => {
             </div>
           </div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Tijdsduur:</div>
+            <div className="text-md font-centerBold">Tijdsduur:</div>
             <div className="flex flex-col p-2 gap-2 divide-y">
               <div className="flex gap-2">
                 <input
@@ -120,7 +120,7 @@ export const ReceptenOveview: FC = () => {
             </div>
           </div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Moeilijkheidsgraad:</div>
+            <div className="text-md font-centerBold">Moeilijkheidsgraad:</div>
             <div className="flex flex-col p-2  gap-2 divide-y">
               <div className="flex gap-2">
                 <input
@@ -156,7 +156,7 @@ export const ReceptenOveview: FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-mantis-500 text-white rounded-md hover:bg-mantis-600 transition duration-200"
+            className=" flex justify-self-center mx-2 py-2 px-4 bg-mantis-500 text-white rounded-md hover:bg-mantis-600 transition duration-200"
           >
             Filters toepassen
           </button>
@@ -164,13 +164,14 @@ export const ReceptenOveview: FC = () => {
         <div>
           <div></div>
         </div>
-        <div className="grid lg:grid-cols-3 grid-cols-1 gap-8">
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8">
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
             title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -178,6 +179,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -185,6 +187,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -192,34 +195,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -227,6 +203,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -234,6 +211,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -241,6 +219,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={6}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -248,6 +227,39 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
+            id={5}
+          ></Card>
+          <Card
+            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
+            type="Hoofdgerecht"
+            duration="30min"
+            difficulty="gemiddeld"
+            id={4}
+          ></Card>
+          <Card
+            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
+            type="Hoofdgerecht"
+            duration="30min"
+            difficulty="2"
+            id={3}
+          ></Card>
+          <Card
+            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
+            type="Hoofdgerecht"
+            duration="30min"
+            difficulty="2"
+            id={2}
+          ></Card>
+          <Card
+            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
+            type="Hoofdgerecht"
+            duration="30min"
+            difficulty="2"
+            id={1}
           ></Card>
         </div>
       </div>
