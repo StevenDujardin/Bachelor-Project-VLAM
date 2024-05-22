@@ -47,7 +47,7 @@ export const Header: FC = () => {
             </svg>
           </Link>
         </div>
-        <div className="rounded-2xl px-8 min-h-20 bg-[#046a38] flex flex-row justify-end align-middle shadow-xl">
+        <div className="md:rounded-2xl px-8 min-h-20 bg-[#046a38] flex flex-row justify-end align-middle shadow-2xl">
           <div className="flex flex-row justify-between h-20 gap-4 text-white ">
             <Link
               to="/"
