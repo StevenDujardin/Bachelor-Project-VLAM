@@ -3,9 +3,9 @@ import { FC } from "react";
 export const BestPractice: FC = () => {
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-80 object-cover bg-[#6cc24a]">
+      <div className="flex flex-col justify-end w-full  h-60 md:h-80 object-cover bg-[#6cc24a]">
         <div className="flex self-center mx-24 w-screen max-w-7xl">
-          <h1 className="font-centerBold text-white text-4xl pb-16 px-8 md:px-0">
+          <h1 className="font-centerBold text-white text-3xl md:text-4xl pb-4 md:pb-16 px-8 xl:px-0">
             Best Practices voor AI-Gegenereerde Recepten
           </h1>
         </div>
