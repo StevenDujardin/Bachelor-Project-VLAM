@@ -17,9 +17,10 @@ datasource db {
 model Recipe {
   recipe_id   Int    @id @default(autoincrement())
   title       String
-  time        String
+  duration    String
+  steps       String[]
   description String
-  category    String
+  type        String
   difficulty  String
   ingredients String[]
 }

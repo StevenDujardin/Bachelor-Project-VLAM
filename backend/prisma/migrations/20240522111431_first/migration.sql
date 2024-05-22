@@ -2,9 +2,10 @@
 CREATE TABLE "Recipe" (
     "recipe_id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "time" TEXT NOT NULL,
+    "duration" TEXT NOT NULL,
+    "steps" TEXT[],
     "description" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
     "difficulty" TEXT NOT NULL,
     "ingredients" TEXT[],
 

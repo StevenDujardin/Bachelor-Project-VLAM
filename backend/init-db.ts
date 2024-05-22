@@ -12,9 +12,10 @@ const main = async () => {
         data: {
             title: "AardbeienTaart",
             description: "Gooi aardbeien op een taart",
-            time: "2 min",
+            duration: "2 min",
+            steps: ["Neem taart", "Gooi er aardbeien op"],
             difficulty: "makkelijk",
-            category: "dessert",
+            type: "dessert",
             ingredients: ["Aardbeien", "Taart"]   
 
         }  

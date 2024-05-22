@@ -1,25 +1,30 @@
 export class Recipe {
+    readonly recipe_id: number;
     readonly title: String;
     readonly description: String;
-    readonly time: String;
+    readonly steps: String;
+    readonly duration: String;
     readonly difficulty: String;
-    readonly category: String;
+    readonly type: String;
     readonly ingredients: Array<String>;
 
 
     constructor(recipe: {
+            recipe_id: number;
             title: String;
             description: String;
-            time: String;
+            steps: Array<String>;
+            duration: String;
             difficulty: String;
-            category: String;
+            type: String;
             ingredients: Array<String>;
     }) {
+        this.recipe_id = recipe.recipe_id;
         this.title = recipe.title;
         this.description = recipe.description;
-        this.time = recipe.time;
+        this.duration = recipe.duration;
         this.difficulty = recipe.difficulty;
-        this.category = recipe.category;
+        this.type = recipe.type;
         this.ingredients = recipe.ingredients;
     
     }

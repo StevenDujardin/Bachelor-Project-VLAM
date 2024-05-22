@@ -2,19 +2,23 @@ import { Recipe as RecipePrisma } from "@prisma/client"
 import { Recipe } from "../model/recipe";
 
 const mapToRecipe = ({
+                    recipe_id,
                        title,
                        description,
-                       time,
+                       steps,
+                       duration,
                        difficulty,
-                       category, 
+                       type, 
                        ingredients
                      }: RecipePrisma): Recipe => {
     return new Recipe({
+        recipe_id,
         title,
         description,
-        time,
+        steps,
+        duration,
         difficulty,
-        category,
+        type,
         ingredients
     });
 };
