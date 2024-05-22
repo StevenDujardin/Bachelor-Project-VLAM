@@ -3,15 +3,15 @@ import { FC } from "react";
 export const OverOns: FC = () => {
   return (
     <>
-      <div className="flex flex-col justify-end  w-full h-80 -z-10 object-cover bg-[#6cc24a]">
+      <div className="flex flex-col justify-end  w-full h-60 md:h-80 -z-10 object-cover bg-[#6cc24a]">
         <div className="flex self-center mx-24 w-screen max-w-7xl ">
-          <h1 className="font-centerBold text-white text-4xl pb-16">
+          <h1 className="font-centerBold text-white text-4xl pb-8 md:pb-16 px-8 xl:px-0">
             Wie zijn we?
           </h1>
         </div>
       </div>
-      <div className="w-screen h-16 bg-[#f3faf0]"></div>
-      <div className="flex flex-col max-w-7xl self-center gap-10 font-poppins text-md font-light ">
+      <div className="w-screen md:h-16 bg-[#f3faf0]"></div>
+      <div className="flex flex-col md:max-w-7xl px-10  self-center gap-10 font-poppins text-md font-light ">
         <p className="pt-11">
           VLAM, het Vlaams Centrum voor Agro- en Visserijmarketing, voert
           promotie voor de Vlaamse landbouw- en visserijsector. VLAM werkt in
@@ -20,11 +20,11 @@ export const OverOns: FC = () => {
           groenten, fruit, aardappelen, vlees, eieren, zuivel, vis en bier van
           bij ons.
         </p>
-        <div className="flex flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Balletjes%20van%20champignons%20en%20bonen%20met%20mosterdsaus_%283%29_.jpg?itok=zNDydGb-"
             alt="img"
-            className=" h-64 rounded-l-2xl"
+            className=" h-64 object-cover  rounded-2xl md:rounded-none md:rounded-l-2xl"
           ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
@@ -44,7 +44,12 @@ export const OverOns: FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-row gap-8">
+        <div className="flex flex-col md:flex-row-reverse gap-8">
+          <img
+            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
+            alt="img"
+            className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
+          ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
               Smullen van elk seizoen
@@ -59,17 +64,12 @@ export const OverOns: FC = () => {
             </p>
             <p>Koop slim met volgende tips</p>
           </div>
-          <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
-            alt="img"
-            className=" h-64 rounded-r-2xl"
-          ></img>
         </div>
-        <div className="flex flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Slagerij%20VVIB%201.jpg?itok=gdiByPma"
             alt="img"
-            className=" h-64 rounded-l-2xl"
+            className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-l-2xl"
           ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
@@ -84,7 +84,12 @@ export const OverOns: FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-row gap-8">
+        <div className="flex flex-col md:flex-row-reverse gap-8">
+          <img
+            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/vissersboot_met_vissers.jpg?itok=RTY343kN"
+            alt="img"
+            className=" h-64object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
+          ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
               Proeven van vakmanschap
@@ -97,11 +102,6 @@ export const OverOns: FC = () => {
               bij ons.
             </p>
           </div>
-          <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/vissersboot_met_vissers.jpg?itok=RTY343kN"
-            alt="img"
-            className=" h-64 rounded-r-2xl"
-          ></img>
         </div>
         <div></div>
         <div></div>

@@ -5,7 +5,7 @@ export const ReceptenOveview: FC = () => {
   return (
     <>
       <div className="flex flex-col justify-end w-full h-80 object-cover bg-mantis-50">
-        <div className="flex justify-center px-24 ">
+        <div className="flex justify-center md:px-24 ">
           <div className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl">
             <input
               className=" py-6 w-full outline-none"
@@ -15,8 +15,8 @@ export const ReceptenOveview: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex  flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
-        <form className=" w-80">
+      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
+        <form className="md:w-80 pb-8">
           <div className=" font-centerBold text-xl">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
             <div className="text-md font-centerBold">Type gerecht:</div>

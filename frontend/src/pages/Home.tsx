@@ -23,7 +23,7 @@ export const Home: FC = () => {
             </h1>
           </div>
           <div className="flex flex-row justify-center">
-            <p className="font-poppins text-lg font-light w-1/2">
+            <p className="font-poppins text-lg font-light px-6 md:w-1/2">
               Kook AI is een website waar je recepten kan vinden voor elke dag
               met lekkers uit eigen land. Heb je vragen over een recept, laat
               het ons weten via
@@ -33,9 +33,9 @@ export const Home: FC = () => {
 
         <form
           onSubmit={handleSubmit}
-          className=" flex flex-row gap-8 m-10 p-20 bg-[#f3faf0] rounded-2xl shadow-xl"
+          className=" flex  flex-col md:flex-row md:gap-8 m-4 md:m-10 p-4 md:p-20 bg-[#f3faf0] rounded-2xl shadow-xl"
         >
-          <div className=" flex flex-col gap-4 w-1/2">
+          <div className=" flex flex-col gap-4 md:w-2/3  lg:w-2/3 ">
             <label
               htmlFor="recipeRequest"
               className="text-2xl font-light font-centerBold"
@@ -59,7 +59,7 @@ export const Home: FC = () => {
               Genereer Recept
             </button>
           </div>
-          <div className="pt-10 flex flex-col gap-4 text-md font-medium">
+          <div className="pt-10 flex flex-col gap-4 md:w-1/2 text-md font-medium">
             <p>
               Vraag aan de kook AI om een recept te genereren met jouw favoriete
               ingrediënten van bij ons
