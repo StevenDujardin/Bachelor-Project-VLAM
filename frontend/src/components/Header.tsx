@@ -11,16 +11,15 @@ export const Header: FC = () => {
   return (
     <div className=" flex justify-center">
       <div className="mx-28 w-screen max-w-7xl self-center font-centerBold absolute top-0 z-10">
-        <div className="flex py-3 pr-4 justify-end text-white font-poppins font-light text-sm">
-          <Link
-            to="/over_ons"
-            className={`mx-3 shadow-slate-500 text-shadow-sm ${isActive("/over_ons")}`}
-          >
+        <div
+          className={`flex py-3 pr-4 justify-end font-poppins font-light text-sm ${location.pathname === "/recepten" || /\/recepten\/\d+/.test(location.pathname) ? "text-LVBO" : " text-white  shadow-slate-500 text-shadow-sm"}`}
+        >
+          <Link to="/over_ons" className={`mx-3 ${isActive("/over_ons")}`}>
             Over ons
           </Link>
           <Link
             to="/best_practices"
-            className={`mx-3 shadow-slate-500 text-shadow-sm ${isActive("/best_practices")}`}
+            className={`mx-3 ${isActive("/best_practices")}`}
           >
             Best Practices
           </Link>

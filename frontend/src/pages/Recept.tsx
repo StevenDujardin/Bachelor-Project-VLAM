@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 
 interface ReceptProps {
@@ -15,7 +15,7 @@ interface ReceptProps {
 
 const ReceptExample: ReceptProps = {
   image:
-    "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA",
+    "https://www.lekkervanbijons.be/sites/default/files/styles/960w_ratio_2_1/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=-zeKi844",
   title: "Pasta Carbonara",
   type: "Pasta",
   duration: "30 min",
@@ -23,7 +23,7 @@ const ReceptExample: ReceptProps = {
   id: 1,
   description:
     "Een heerlijke salade met kazen van bij ons? Dat kan! Probeer deze heerlijke maaltijdsalade met Flandrien kaas die de show steelt. Gecombineerd met het fruit en de karnemelkdressing krijg je een frisse toets bij het gerecht. Puur genieten!",
-  ingredients: ["pasta", "eggs", "bacon", "cheese"],
+  ingredients: ["500g pasta", "4 eggs", "200 g bacon", "150 g cheese", "salt"],
   steps: [
     "Doe alle ingrediënten voor de dressing in een afsluitbaar potje of bokaal, kruid met peper en zout en schud tot een romige dressing. Zet koel weg.",
     "Snijd het brood in blokjes.Pers de look en roerbak 30 seconden in olijfolie. Voeg de broodblokjes en het takje rozemarijn toe en bak het brood goudbruin en knapperig. Kruid met peper en zout.",
@@ -32,19 +32,40 @@ const ReceptExample: ReceptProps = {
 };
 
 export const Recept: FC = () => {
+  const [persons, setPersons] = useState(4);
+
+  const adjustPersons = (delta: number) => {
+    setPersons((prev) => Math.min(8, Math.max(1, prev + delta))); // Ensure at least 1 person
+  };
+
+  const adjustIngredientQuantity = (ingredient: string, factor: number) => {
+    const match = ingredient.match(/^(\d+)\s?(.*)$/);
+    if (!match) return ingredient; // Return the original if no match
+
+    const [_, quantity, unit] = match;
+    const newQuantity = parseFloat(quantity) * factor;
+
+    return `${newQuantity} ${unit}`; // Format the quantity with 2 decimals
+  };
+
+  const factor = persons / 4; // 4 is the base number of persons
+  const adjustedIngredients = ReceptExample.ingredients.map((ingredient) =>
+    adjustIngredientQuantity(ingredient, factor),
+  );
+
   return (
     <>
       <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center py-8">
-        <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100">
-          <div className="flex flex-row lg:flex-row gap-10 p-6">
+        <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100">
+          <div className="flex flex-col lg:flex-row gap-10 p-6">
             <img
               src={ReceptExample.image}
               alt="img"
-              className=" w-2/3  rounded-lg shadow-lg"
+              className=" lg:w-2/3 object-cover rounded-lg shadow-lg"
             ></img>
 
-            <div className="flex flex-col justify-between w-1/3">
+            <div className="flex flex-col justify-between lg:w-1/3">
               <div>
                 <div className=" text-5xl font-light font-centerBold py-2">
                   {ReceptExample.title}
@@ -54,16 +75,16 @@ export const Recept: FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row justify-between mx-4">
-                <div className="flex bg-LVBO p-4 rounded-full text-white">
+              <div className="flex flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4">
+                <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <ChefHat size={24} className="mr-2" />
                   <p>{ReceptExample.type}</p>
                 </div>
-                <div className="flex bg-LVBO p-4 rounded-full text-white">
+                <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <Timer size={24} className="mr-2" />
                   <p>{ReceptExample.duration}</p>
                 </div>
-                <div className="flex bg-LVBO p-4 rounded-full text-white">
+                <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <SignalHigh size={24} className="mr-2" />
                   <p>{ReceptExample.difficulty}</p>
                 </div>
@@ -72,14 +93,33 @@ export const Recept: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center pb-8">
-        <div className="flex flex-row lg:flex-row lg:w-1/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100">
-          <div className="flex flex-col gap-4 p-6">
+      <div className="flex flex-col  md:flex-row w-screen max-w-7xl self-center pb-8">
+        <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100">
+          <div className="flex flex-col w-full gap-4 p-6">
             <div className=" text-2xl font-light font-centerBold py-2">
               Ingredients
             </div>
-            <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins w-fit">
-              {ReceptExample.ingredients.map((ingredient) => (
+            <div className="flex justify-between p-2 mx-4 rounded-full bg-white">
+              <button
+                title="substract person"
+                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                onClick={() => adjustPersons(-1)}
+              >
+                -
+              </button>
+              <div className="flex flex-col justify-center">
+                Voor {persons} personen
+              </div>
+              <button
+                title="add person"
+                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                onClick={() => adjustPersons(1)}
+              >
+                +
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
+              {adjustedIngredients.map((ingredient) => (
                 <div className="flex pt-2">
                   <p>{ingredient}</p>
                 </div>
@@ -87,7 +127,7 @@ export const Recept: FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row lg:flex-row lg:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100">
+        <div className="flex flex-row lg:flex-row md:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100">
           <div className="flex flex-col gap-4 p-6">
             <div className="text-2xl font-light font-centerBold py-2">
               Steps
