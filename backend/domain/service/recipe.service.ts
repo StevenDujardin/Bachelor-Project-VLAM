@@ -1,5 +1,5 @@
-import { Recipe } from "../domain/model/recipe";
-import recipeDb from "../domain/data-access/recipe.db"
+import { Recipe } from "../model/recipe";
+import recipeDb from "../data-access/recipe.db"
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.getAllRecipes();

@@ -2,7 +2,7 @@ export class Recipe {
     readonly recipe_id: number;
     readonly title: String;
     readonly description: String;
-    readonly steps: String;
+    readonly steps: Array<String> = [];
     readonly duration: String;
     readonly difficulty: String;
     readonly type: String;

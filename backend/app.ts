@@ -11,6 +11,7 @@ const port = 3000;
 app.get('/', (req, res) => {
   res.send('Backend is runnning');
 });
+app.use(bodyParser.json());
 
 app.use("/recipe-api", recipeRouter)
 

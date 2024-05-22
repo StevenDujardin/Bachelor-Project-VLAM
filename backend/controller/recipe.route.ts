@@ -1,5 +1,5 @@
 import express, { Request, Response} from 'express';
-import recipeService from "../service/recipe.service"
+import recipeService from "../domain/service/recipe.service"
 
 const recipeRouter = express.Router();
 
@@ -9,7 +9,7 @@ recipeRouter.get('/recipes', async (req: Request, res: Response) => {
         const recipes  = await recipeService.getAllRecipes();
         res.status(200).json(recipes);
     } catch (error) {
-        res.status(500).json({ status: 'error', errorMessage: error.message });
+        res.status(500).json({ status: 'error'});
     }
 });
 
