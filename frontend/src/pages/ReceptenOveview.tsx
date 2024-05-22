@@ -28,8 +28,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="dranken"
+                  id="dranken"
                 ></input>
-                <label>Dranken</label>
+                <label htmlFor="dranken">Dranken</label>
               </div>
               <div className="flex gap-2 pt-2">
                 <input
@@ -49,8 +50,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="hoofdgerecht"
+                  id="hoofdgerecht"
                 ></input>
-                <label>Hoofdgerecht</label>
+                <label htmlFor="hoofdgerecht">Hoofdgerecht</label>
               </div>
               <div className="flex gap-2 pt-2">
                 <input
@@ -59,8 +61,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="dessert"
+                  id="dessert"
                 ></input>
-                <label>Dessert</label>
+                <label htmlFor="dessert">Dessert</label>
               </div>
             </div>
           </div>
@@ -74,8 +77,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="15"
+                  id="15"
                 ></input>
-                <label>&lt;= 15 minuten</label>
+                <label htmlFor="15">&lt;= 15 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -84,8 +88,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="30"
+                  id="30"
                 ></input>
-                <label>&lt;= 30 minuten</label>
+                <label htmlFor="30">&lt;= 30 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -94,8 +99,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="45"
+                  id="45"
                 ></input>
-                <label>&lt;= 45 minuten</label>
+                <label htmlFor="45">&lt;= 45 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -104,8 +110,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="60"
+                  id="60"
                 ></input>
-                <label>&lt;= 60 minuten</label>
+                <label htmlFor="60">&lt;= 60 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -114,8 +121,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="120"
+                  id="120"
                 ></input>
-                <label>&lt;= 120 minuten</label>
+                <label htmlFor="120">&lt;= 120 minuten</label>
               </div>
             </div>
           </div>
@@ -129,8 +137,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="gemakkelijk"
+                  id="gemakkelijk"
                 ></input>
-                <label>Gemakelijk</label>
+                <label htmlFor="gemakkelijk">Gemakelijk</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -139,8 +148,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="gemiddeld"
+                  id="gemiddeld"
                 ></input>
-                <label>Gemiddeld</label>
+                <label htmlFor="gemiddeld">Gemiddeld</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -149,8 +159,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="moelijk"
+                  id="moeilijk"
                 ></input>
-                <label>Moeilijk</label>
+                <label htmlFor="moeilijk">Moeilijk</label>
               </div>
             </div>
           </div>
@@ -171,7 +182,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -179,7 +190,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -187,7 +198,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -195,7 +206,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -203,7 +214,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -211,7 +222,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={0}
+            recipe_id={0}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -219,7 +230,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={6}
+            recipe_id={6}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -227,7 +238,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={5}
+            recipe_id={5}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -235,7 +246,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="gemiddeld"
-            id={4}
+            recipe_id={4}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -243,7 +254,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={3}
+            recipe_id={3}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -251,7 +262,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={2}
+            recipe_id={2}
           ></Card>
           <Card
             image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
@@ -259,7 +270,7 @@ export const ReceptenOveview: FC = () => {
             type="Hoofdgerecht"
             duration="30min"
             difficulty="2"
-            id={1}
+            recipe_id={1}
           ></Card>
         </div>
       </div>

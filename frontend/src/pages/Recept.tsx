@@ -7,7 +7,7 @@ interface ReceptProps {
   type: string;
   duration: string;
   difficulty: string;
-  id: number;
+  recipe_id: number;
   description: string;
   ingredients: string[];
   steps: string[];
@@ -20,7 +20,7 @@ const ReceptExample: ReceptProps = {
   type: "Pasta",
   duration: "30 min",
   difficulty: "Easy",
-  id: 1,
+  recipe_id: 1,
   description:
     "Een heerlijke salade met kazen van bij ons? Dat kan! Probeer deze heerlijke maaltijdsalade met Flandrien kaas die de show steelt. Gecombineerd met het fruit en de karnemelkdressing krijg je een frisse toets bij het gerecht. Puur genieten!",
   ingredients: ["500g pasta", "4 eggs", "200 g bacon", "150 g cheese", "salt"],
@@ -42,7 +42,7 @@ export const Recept: FC = () => {
     const match = ingredient.match(/^(\d+)\s?(.*)$/);
     if (!match) return ingredient; // Return the original if no match
 
-    const [_, quantity, unit] = match;
+    const [, quantity, unit] = match;
     const newQuantity = parseFloat(quantity) * factor;
 
     return `${newQuantity} ${unit}`; // Format the quantity with 2 decimals

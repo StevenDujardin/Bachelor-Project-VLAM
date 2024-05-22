@@ -8,7 +8,7 @@ export interface CardProps {
   type: string;
   duration: string;
   difficulty: string;
-  id: number;
+  recipe_id: number;
 }
 
 export const Card: FC<CardProps> = ({
@@ -17,11 +17,11 @@ export const Card: FC<CardProps> = ({
   type,
   duration,
   difficulty,
-  id,
+  recipe_id,
 }) => {
   const navigate = useNavigate();
   const redirectToRecept = () => {
-    navigate(`/recepten/${id}`);
+    navigate(`/recepten/${recipe_id}`);
   };
   return (
     <div

@@ -20,7 +20,7 @@ export const OverOns: FC = () => {
           groenten, fruit, aardappelen, vlees, eieren, zuivel, vis en bier van
           bij ons.
         </p>
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 xl:-translate-x-20">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Balletjes%20van%20champignons%20en%20bonen%20met%20mosterdsaus_%283%29_.jpg?itok=zNDydGb-"
             alt="img"
@@ -44,7 +44,7 @@ export const OverOns: FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row-reverse gap-8">
+        <div className="flex flex-col md:flex-row-reverse gap-8 xl:translate-x-20">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
             alt="img"
@@ -65,7 +65,7 @@ export const OverOns: FC = () => {
             <p>Koop slim met volgende tips</p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 xl:-translate-x-20">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Slagerij%20VVIB%201.jpg?itok=gdiByPma"
             alt="img"
@@ -84,11 +84,11 @@ export const OverOns: FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row-reverse gap-8">
+        <div className="flex flex-col md:flex-row-reverse gap-8 xl:translate-x-20">
           <img
             src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/vissersboot_met_vissers.jpg?itok=RTY343kN"
             alt="img"
-            className=" h-64object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
+            className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
           ></img>
           <div className="flex flex-col gap-4">
             <div className=" text-2xl font-light font-centerBold">
