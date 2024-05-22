@@ -1,7 +1,16 @@
 {
-    "compilerOptions": {
-      // other options...
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@prisma/client": ["./node_modules/@prisma/client"]
     }
+  },
+  "include": ["src"]
 }
