@@ -1,12 +1,15 @@
 // src/index.ts
-import express from 'express';
+import * as dotenv from "dotenv";
+import express from "express";
+import * as bodyParser from "body-parser";
 import { recipeRouter } from './controller/recipe.route';
 
 const app = express();
+dotenv.config();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello, TypeScript with Express!');
+  res.send('Backend is runnning');
 });
 
 app.use("/recipe-api", recipeRouter)

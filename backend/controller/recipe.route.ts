@@ -1,7 +1,7 @@
 import express, { Request, Response} from 'express';
 import { recipeService } from "../service/recipe.service"
 
-const recipeRouter = express.Router
+const recipeRouter = express.Router();
 
 recipeRouter.get('/recipes', async (req: Request, res: Response) => {
     try {

@@ -1,11 +1,17 @@
 // src/index.ts
-import express from 'express';
+
+import { PrismaClient } from "@prisma/client";
+
+const express =  require("express")
+const dotenv = require("dotenv")
+const prisma = require("./db/prisma");
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, TypeScript with Express!');
+
+app.get('/', async(req, res) => {
+  res.send("Backend is running..")
 });
 
 
