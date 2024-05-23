@@ -1,12 +1,32 @@
-import { FC } from "react";
+import axios from "axios";
+import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Home: FC = () => {
-  // Function to handle form submission
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    // Add logic for what happens when the form is submitted
-    console.log("Form submitted!");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  // Function to handle textarea change
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value);
   };
+
+  // Function to handle form submission
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/generate", {
+        message: message,
+      });
+      console.log(response.data);
+      navigate(`/recepten/${response.data.recipe_id}`);
+
+      // Add logic for what to do with the response here
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <>
       <img
@@ -50,6 +70,8 @@ export const Home: FC = () => {
               cols={30}
               rows={7}
               placeholder="Geef mij een recept voor een aardbeientaart"
+              value={message} // Use the state to control the input
+              onChange={handleChange} // Update the state on input change
             ></textarea>
 
             <button
