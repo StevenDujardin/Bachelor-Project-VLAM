@@ -68,23 +68,3 @@ export default prisma;
 
 
 
-<<<<<<< Updated upstream
-
-- 4 kippenbillen
-- 2 eierdooiers
-- 2 teentjes look
-- ½ limoen of citroen
-- 1 eetlepel mosterd
-- 15 cl arachideolie
-- 1 dl natuuryoghurt
-- cayennepeper
-- Engelse saus (Worchestershiresaus)
-- 3 zoute ansjovisfilets
-- 1 krop Romeinse sla
-- 1 ongesneden toastbrood
-- klontjes boter
-- olijfolie
-- 100 g Parmezaanse kaas in blok
-
-=======
->>>>>>> Stashed changes
