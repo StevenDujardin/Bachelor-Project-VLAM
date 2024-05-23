@@ -32,7 +32,6 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
                 OR: [
                     { title: { contains: search, mode: 'insensitive' } },
                     { description: { contains: search, mode: 'insensitive' } },
-                    { ingredients: { has: search } },
                 ],
             },
         });
@@ -41,6 +40,10 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
         throw new Error('Error searching recipes');
     }
 };
+
+
+
+
 
 
 
