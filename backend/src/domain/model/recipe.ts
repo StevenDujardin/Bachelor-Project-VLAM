@@ -1,23 +1,23 @@
 export class Recipe {
     readonly recipe_id: number;
-    readonly title: String;
-    readonly description: String;
-    readonly steps: Array<String>;
-    readonly duration: String;
-    readonly difficulty: String;
-    readonly type: String;
-    readonly ingredients: Array<String>;
+    readonly title: string;
+    readonly description: string;
+    readonly steps: Array<string>;
+    readonly duration: string;
+    readonly difficulty: string;
+    readonly type: string;
+    readonly ingredients: Array<string>;
 
 
     constructor(recipe: {
             recipe_id: number;
-            title: String;
-            description: String;
-            steps: Array<String>;
-            duration: String;
-            difficulty: String;
-            type: String;
-            ingredients: Array<String>;
+            title: string;
+            description: string;
+            steps: Array<string>;
+            duration: string;
+            difficulty: string;
+            type: string;
+            ingredients: Array<string>;
     }) {
         this.recipe_id = recipe.recipe_id;
         this.title = recipe.title;

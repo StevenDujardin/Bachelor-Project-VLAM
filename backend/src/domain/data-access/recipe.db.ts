@@ -40,14 +40,19 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
         throw new Error('Error searching recipes');
     }
 };
+const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: string, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
+    const recipe = await database.recipe.create({
+        data: {
+            title: title,
+            description: description,
+            steps: steps,
+            duration: duration,
+            difficulty: difficulty,
+            type: type,
+            ingredients: ingredients
+        }
+    });
+    return recipe;
+}
 
-
-
-
-
-
-
-
-
-
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBsearchRecipe}
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe}

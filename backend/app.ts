@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import * as bodyParser from "body-parser";
 import { recipeRouter } from './src/controller/recipe.route';
+import { openAIRouter } from './src/controller/openai.router';
 import cors from 'cors'; 
 
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 
 app.use("/recipe-api", recipeRouter);
+app.use("/generate", openAIRouter)
 
 
 app.listen(port, () => {
