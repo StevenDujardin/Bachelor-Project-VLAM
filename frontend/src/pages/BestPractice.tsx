@@ -12,15 +12,16 @@ export const BestPractice: FC = () => {
       </div>
       <div className="w-screen md:h-16 bg-mantis-50"></div>
       <div className="flex flex-col max-w-7xl self-center gap-10 font-poppins text-md font-light p-8">
-      <div className="text-xl font-light font-centerBold mt-4">
-              Wat is een prompt?
-            </div>
-            <p>
-              Een prompt is een instructie of vraag die je aan de AI geeft om een recept te genereren. Zorg ervoor dat je prompt in het Nederlands is voor de beste resultaten.
-            </p>
+        <div className="text-xl font-light font-centerBold mt-4">
+          Wat is een prompt?
+        </div>
+        <p>
+          Een prompt is een instructie of vraag die je aan de AI geeft om een
+          recept te genereren. Zorg ervoor dat je prompt in het Nederlands is
+          voor de beste resultaten.
+        </p>
         {[
           {
-            
             title: "Gebruik Lokaal Geproduceerde Ingrediënten",
             description:
               "Wanneer je AI gebruikt om recepten te genereren, zorg ervoor dat je instructies geeft om lokale ingrediënten te gebruiken. Dit verbetert niet alleen de smaak, maar ondersteunt ook de lokale economie. Er zal een foutmelding worden meegegeven als dit geen lokaal product is!",
@@ -58,9 +59,7 @@ export const BestPractice: FC = () => {
               Goede Voorbeelden:
             </div>
             <div className="p-4 border-l-4 border-green-500 bg-green-50 rounded-md">
-              <p className="italic">
-                "Geef een recept voor aardbeientaart."
-              </p>
+              <p className="italic">"Geef een recept voor aardbeientaart."</p>
               <p className="italic">
                 "Geef mij een recept met pasta dat lactosevrij is."
               </p>
@@ -69,7 +68,8 @@ export const BestPractice: FC = () => {
               </p>
             </div>
             <p className="mt-4">
-              Hou je prompt kort en krachtig en gebruik de filters om je vraag te specificeren.
+              Hou je prompt kort en krachtig en gebruik de filters om je vraag
+              te specificeren.
             </p>
           </div>
         </div>

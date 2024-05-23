@@ -1,7 +1,33 @@
 import { Search } from "lucide-react";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Card } from "../components/Card";
+import axios from "axios";
 export const ReceptenOveview: FC = () => {
+  // State to store the recipes
+  const [recipes, setRecipes] = useState([]);
+
+  // Effect hook to fetch recipes on mount
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/recipe-api/recipes",
+          {
+            headers: {
+              Accept: "*/*",
+            },
+          }
+        );
+        setRecipes(response.data);
+        console.log(response.data) // Assuming the API returns an array of recipes
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col justify-end w-full h-80 object-cover bg-mantis-50">
@@ -176,102 +202,17 @@ export const ReceptenOveview: FC = () => {
           <div></div>
         </div>
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8">
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={0}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={6}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={5}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-            recipe_id={4}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={3}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={2}
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-            recipe_id={1}
-          ></Card>
+          {recipes.map((recipe) => (
+            <Card
+              recipe_id={recipe.recipe_id}
+               // Assuming each recipe has a unique 'id'
+              image={"https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
+              title={recipe.title}
+              type={recipe.type}
+              duration={recipe.duration}
+              difficulty={recipe.difficulty}
+            />
+          ))}
         </div>
       </div>
     </>
