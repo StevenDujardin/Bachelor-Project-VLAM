@@ -13,9 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Recipe {
-  recipe_id   Int    @id @default(autoincrement())
+  recipe_id   Int      @id @default(autoincrement())
   title       String
   duration    String
   steps       String[]
@@ -26,6 +25,6 @@ model Recipe {
 }
 
 model Ingredient {
-   ingredient_id   Int    @id @default(autoincrement())
-   name  String
+  ingredient_id Int    @id @default(autoincrement())
+  name          String
 }
