@@ -5,6 +5,8 @@ import { Home } from "./pages/Home";
 import { OverOns } from "./pages/OverOns";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ReceptenOveview } from "./pages/ReceptenOveview";
+import { Recept } from "./pages/Recept";
+import { BestPractice } from "./pages/BestPractice";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/over_ons" element={<OverOns />}></Route>
           <Route path="/recepten" element={<ReceptenOveview />}></Route>
+          <Route path="/recepten/:id" element={<Recept />}></Route>
+          <Route path="/best_practices" element={<BestPractice />}></Route>
 
           <Route></Route>
         </Routes>

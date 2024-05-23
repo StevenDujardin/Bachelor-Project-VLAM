@@ -1,12 +1,37 @@
 import { Search } from "lucide-react";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Card } from "../components/Card";
-
+import axios from "axios";
 export const ReceptenOveview: FC = () => {
+  // State to store the recipes
+  const [recipes, setRecipes] = useState([]);
+
+  // Effect hook to fetch recipes on mount
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/recipe-api/recipes",
+          {
+            headers: {
+              Accept: "*/*",
+            },
+          }
+        );
+        setRecipes(response.data);
+        console.log(response.data) // Assuming the API returns an array of recipes
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col justify-end w-full h-80 object-cover bg-mantis-50">
-        <div className="flex justify-center px-24 ">
+        <div className="flex justify-center md:px-24 ">
           <div className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl">
             <input
               className=" py-6 w-full outline-none"
@@ -16,12 +41,12 @@ export const ReceptenOveview: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex  flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
-        <form className=" w-80">
+      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
+        <form className="md:w-80 pb-8">
           <div className=" font-centerBold text-xl">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Type gerecht:</div>
-            <div className="flex flex-col p-2 gap-2 divide-y">
+            <div className="text-md font-centerBold">Type gerecht:</div>
+            <div className="flex flex-col p-4 gap-2 divide-y ">
               <div className="flex gap-2">
                 <input
                   title="dranken"
@@ -29,43 +54,47 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="dranken"
+                  id="dranken"
                 ></input>
-                <label>Dranken</label>
+                <label htmlFor="dranken">Dranken</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="voorgerecht"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="voorgerecht"
+                  id="voorgerecht"
                 ></input>
-                <label>Voorgerecht</label>
+                <label htmlFor="voorgerecht">Voorgerecht</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="hoofdgerecht"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="hoofdgerecht"
+                  id="hoofdgerecht"
                 ></input>
-                <label>Hoofdgerecht</label>
+                <label htmlFor="hoofdgerecht">Hoofdgerecht</label>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <input
                   title="dessert"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="typeDish"
                   value="dessert"
+                  id="dessert"
                 ></input>
-                <label>Dessert</label>
+                <label htmlFor="dessert">Dessert</label>
               </div>
             </div>
           </div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Tijdsduur:</div>
+            <div className="text-md font-centerBold">Tijdsduur:</div>
             <div className="flex flex-col p-2 gap-2 divide-y">
               <div className="flex gap-2">
                 <input
@@ -74,8 +103,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="15"
+                  id="15"
                 ></input>
-                <label>&lt;= 15 minuten</label>
+                <label htmlFor="15">&lt;= 15 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -84,8 +114,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="30"
+                  id="30"
                 ></input>
-                <label>&lt;= 30 minuten</label>
+                <label htmlFor="30">&lt;= 30 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -94,8 +125,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="45"
+                  id="45"
                 ></input>
-                <label>&lt;= 45 minuten</label>
+                <label htmlFor="45">&lt;= 45 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -104,8 +136,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="60"
+                  id="60"
                 ></input>
-                <label>&lt;= 60 minuten</label>
+                <label htmlFor="60">&lt;= 60 minuten</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -114,13 +147,14 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="120"
+                  id="120"
                 ></input>
-                <label>&lt;= 120 minuten</label>
+                <label htmlFor="120">&lt;= 120 minuten</label>
               </div>
             </div>
           </div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
-            <div className="text-lg ">Moeilijkheidsgraad:</div>
+            <div className="text-md font-centerBold">Moeilijkheidsgraad:</div>
             <div className="flex flex-col p-2  gap-2 divide-y">
               <div className="flex gap-2">
                 <input
@@ -129,8 +163,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="gemakkelijk"
+                  id="gemakkelijk"
                 ></input>
-                <label>Gemakelijk</label>
+                <label htmlFor="gemakkelijk">Gemakelijk</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -139,8 +174,9 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="gemiddeld"
+                  id="gemiddeld"
                 ></input>
-                <label>Gemiddeld</label>
+                <label htmlFor="gemiddeld">Gemiddeld</label>
               </div>
               <div className="flex gap-2">
                 <input
@@ -149,14 +185,15 @@ export const ReceptenOveview: FC = () => {
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="difficulty"
                   value="moelijk"
+                  id="moeilijk"
                 ></input>
-                <label>Moeilijk</label>
+                <label htmlFor="moeilijk">Moeilijk</label>
               </div>
             </div>
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-mantis-500 text-white rounded-md hover:bg-mantis-600 transition duration-200"
+            className=" flex justify-self-center mx-2 py-2 px-4 bg-mantis-500 text-white rounded-md hover:bg-mantis-600 transition duration-200"
           >
             Filters toepassen
           </button>
@@ -164,91 +201,18 @@ export const ReceptenOveview: FC = () => {
         <div>
           <div></div>
         </div>
-        <div className="grid lg:grid-cols-3 grid-cols-1 gap-8">
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="gemiddeld"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
-          <Card
-            image="https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-            title="Maaltijdsalade met fruit, Flandrien kaas en karnemelkdressing"
-            type="Hoofdgerecht"
-            duration="30min"
-            difficulty="2"
-          ></Card>
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8">
+          {recipes.map((recipe) => (
+            <Card
+              recipe_id={recipe.recipe_id}
+               // Assuming each recipe has a unique 'id'
+              image={"https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
+              title={recipe.title}
+              type={recipe.type}
+              duration={recipe.duration}
+              difficulty={recipe.difficulty}
+            />
+          ))}
         </div>
       </div>
     </>
