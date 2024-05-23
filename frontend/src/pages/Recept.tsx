@@ -109,7 +109,7 @@ export const Recept: FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4">
+              <div className="flex flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0">
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <ChefHat size={24} className="mr-2" />
                   <p>{recipe.type}</p>

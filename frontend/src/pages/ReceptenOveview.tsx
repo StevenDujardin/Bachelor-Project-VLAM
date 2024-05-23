@@ -1,44 +1,60 @@
 import { Search } from "lucide-react";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, FormEvent } from "react";
 import { Card } from "../components/Card";
 import axios from "axios";
 export const ReceptenOveview: FC = () => {
   // State to store the recipes
   const [recipes, setRecipes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Effect hook to fetch recipes on mount
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/recipe-api/recipes",
-          {
-            headers: {
-              Accept: "*/*",
-            },
-          }
-        );
-        setRecipes(response.data);
-        console.log(response.data) // Assuming the API returns an array of recipes
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
-      }
-    };
-
     fetchRecipes();
   }, []);
+
+  const fetchRecipes = async (search = "") => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/recipe-api/recipes${search ? `/search/${search}` : ""}`,
+        {
+          headers: {
+            Accept: "*/*",
+          },
+        }
+      );
+      setRecipes(response.data);
+      console.log(response.data); // Assuming the API returns an array of recipes
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = async (event: FormEvent) => {
+    event.preventDefault(); // Prevents the default form submit action
+    fetchRecipes(searchTerm);
+  };
 
   return (
     <>
       <div className="flex flex-col justify-end w-full h-80 object-cover bg-mantis-50">
         <div className="flex justify-center md:px-24 ">
-          <div className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl"
+          >
             <input
               className=" py-6 w-full outline-none"
               placeholder="Naar welk recept je be op zoek?"
+              value={searchTerm}
+              onChange={handleSearchChange}
             ></input>
-            <Search size={32} className="m-6" />
-          </div>
+            <button type="submit" aria-label="Zoeken">
+              <Search size={32} className="m-6" />
+            </button>
+          </form>
         </div>
       </div>
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
@@ -205,8 +221,10 @@ export const ReceptenOveview: FC = () => {
           {recipes.map((recipe) => (
             <Card
               recipe_id={recipe.recipe_id}
-               // Assuming each recipe has a unique 'id'
-              image={"https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
+              // Assuming each recipe has a unique 'id'
+              image={
+                "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+              }
               title={recipe.title}
               type={recipe.type}
               duration={recipe.duration}
