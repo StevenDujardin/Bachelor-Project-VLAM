@@ -42,21 +42,25 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
         const messages = await openai.beta.threads.messages.list(run.thread_id);
         const lastMessage = messages.data.at(0);
         if (lastMessage?.role !== 'assistant') {
-            throw new Error('Error');
+            throw new Error('Het laatste bericht was niet gegeven door de assistent.');
         }
         const assistantMessageContent = lastMessage?.content.at(0);
         if(!assistantMessageContent) {
-            throw new Error('Error');
+            throw new Error('Er waren geen bericten gegeven door de assistent.');
         }
         if(assistantMessageContent?.type !== 'text'){
-            throw new Error('Error');
+            throw new Error('Het laatste bericht was geen tekstbericht.');
         }
         const textMessage = assistantMessageContent as TextContentBlock
         const textJson = JSON.parse(textMessage.text.value);
+        if ("warning" in textJson) {
+            console.log(textJson.warning);
+            throw new Error(textJson.warning);
+        }
         return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration, textJson.difficulty, textJson.type, textJson.ingredients);
         
       } else {
-        throw new Error('Error');
+        throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');
       }
 }
 
