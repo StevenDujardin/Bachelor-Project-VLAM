@@ -2,7 +2,7 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import * as bodyParser from "body-parser";
-import { recipeRouter } from './controller/recipe.route';
+import { recipeRouter } from './src/controller/recipe.route';
 
 const app = express();
 dotenv.config();
