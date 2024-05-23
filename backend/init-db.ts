@@ -53,6 +53,7 @@ export default prisma;
 
 
 
+<<<<<<< Updated upstream
 
 - 4 kippenbillen
 - 2 eierdooiers
@@ -70,3 +71,5 @@ export default prisma;
 - olijfolie
 - 100 g Parmezaanse kaas in blok
 
+=======
+>>>>>>> Stashed changes
