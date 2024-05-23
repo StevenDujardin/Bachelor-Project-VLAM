@@ -66,5 +66,3 @@ main()
 
 export default prisma;
 
-
-
