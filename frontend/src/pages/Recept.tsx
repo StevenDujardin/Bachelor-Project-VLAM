@@ -1,5 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Loading } from "./Loading";
 
 interface ReceptProps {
   image: string;
@@ -33,9 +36,38 @@ const ReceptExample: ReceptProps = {
 
 export const Recept: FC = () => {
   const [persons, setPersons] = useState(4);
+  const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
+
+  const { recipe_id } = useParams();
+  console.log(recipe_id);
+  // Effect hook to fetch recipe on mount
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        console.log(recipe_id);
+
+        const response = await axios.get(
+          `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
+          {
+            headers: {
+              Accept: "*/*",
+            },
+          }
+        );
+        setRecipe(response.data);
+        console.log(response.data); // Assuming the API returns an array of recipes
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    };
+
+    if (recipe_id) {
+      fetchRecipe();
+    }
+  }, [recipe_id]);
 
   const adjustPersons = (delta: number) => {
-    setPersons((prev) => Math.min(8, Math.max(1, prev + delta))); // Ensure at least 1 person
+    setPersons((prev) => Math.min(8, Math.max(1, prev + delta))); // Ensure at least 1 person and at most 8
   };
 
   const adjustIngredientQuantity = (ingredient: string, factor: number) => {
@@ -45,12 +77,14 @@ export const Recept: FC = () => {
     const [, quantity, unit] = match;
     const newQuantity = parseFloat(quantity) * factor;
 
-    return `${newQuantity} ${unit}`; // Format the quantity with 2 decimals
+    return `${newQuantity} ${unit}`;
   };
-
+  if (!recipe) {
+    return <Loading />; // Render loading state or similar
+  }
   const factor = persons / 4; // 4 is the base number of persons
-  const adjustedIngredients = ReceptExample.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor),
+  const adjustedIngredients = recipe.ingredients.map((ingredient) =>
+    adjustIngredientQuantity(ingredient, factor)
   );
 
   return (
@@ -60,7 +94,7 @@ export const Recept: FC = () => {
         <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100">
           <div className="flex flex-col lg:flex-row gap-10 p-6">
             <img
-              src={ReceptExample.image}
+              src={recipe?.image || ReceptExample.image}
               alt="img"
               className=" lg:w-2/3 object-cover rounded-lg shadow-lg"
             ></img>
@@ -68,25 +102,25 @@ export const Recept: FC = () => {
             <div className="flex flex-col justify-between lg:w-1/3">
               <div>
                 <div className=" text-5xl font-light font-centerBold py-2">
-                  {ReceptExample.title}
+                  {recipe.title}
                 </div>
                 <div className=" text-xl font-light py-2">
-                  {ReceptExample.description}
+                  {recipe.description}
                 </div>
               </div>
 
               <div className="flex flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4">
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <ChefHat size={24} className="mr-2" />
-                  <p>{ReceptExample.type}</p>
+                  <p>{recipe.type}</p>
                 </div>
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <Timer size={24} className="mr-2" />
-                  <p>{ReceptExample.duration}</p>
+                  <p>{recipe.duration}</p>
                 </div>
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <SignalHigh size={24} className="mr-2" />
-                  <p>{ReceptExample.difficulty}</p>
+                  <p>{recipe.difficulty}</p>
                 </div>
               </div>
             </div>
@@ -133,7 +167,7 @@ export const Recept: FC = () => {
               Steps
             </div>
             <ol className="list-decimal pl-4 space-y-4 divide-y divide-LVBO font-poppins">
-              {ReceptExample.steps.map((step, index) => (
+              {recipe.steps.map((step, index) => (
                 <li key={index} className="pl-2 pt-4">
                   {step}
                 </li>

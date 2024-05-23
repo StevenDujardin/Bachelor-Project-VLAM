@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/over_ons" element={<OverOns />}></Route>
           <Route path="/recepten" element={<ReceptenOveview />}></Route>
-          <Route path="/recepten/:id" element={<Recept />}></Route>
+          <Route path="/recepten/:recipe_id" element={<Recept />}></Route>
           <Route path="/best_practices" element={<BestPractice />}></Route>
 
           <Route></Route>
