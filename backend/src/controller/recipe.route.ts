@@ -14,4 +14,17 @@ recipeRouter.get('/recipes', async (req: Request, res: Response) => {
     }
 });
 
+recipeRouter.get('/recipes/:id', async (req: Request, res: Response) => {
+    try {
+        console.log("getRecipeWithID")
+        const id = Number(req.params.id)
+        const recipe  = await recipeService.getRecipeWithID(id);
+        res.status(200).json(recipe);
+    } catch (error) {
+        res.status(500).json({ status: 'error'});
+    }
+});
+
+
+
 export { recipeRouter }
