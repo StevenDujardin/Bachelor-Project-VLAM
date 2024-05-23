@@ -25,6 +25,18 @@ recipeRouter.get('/recipes/:id', async (req: Request, res: Response) => {
     }
 });
 
+recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) => {
+    try {
+        console.log("search")
+        const search = req.params.search;
+        //search on title description and ingredients
+        const result  = await recipeService.searchRecipe(search);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ status: 'error'});
+    }
+});
+
 
 
 export { recipeRouter }

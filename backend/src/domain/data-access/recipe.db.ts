@@ -25,5 +25,26 @@ const DBgetRecipesWithID = async (id: number ): Promise<Recipe> => {
     }
 };
 
+const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
+    try {
+        const recipes = await database.recipe.findMany({
+            where: {
+                OR: [
+                    { title: { contains: search, mode: 'insensitive' } },
+                    { description: { contains: search, mode: 'insensitive' } },
+                    { ingredients: { has: search } },
+                ],
+            },
+        });
+        return mapToRecipes(recipes);
+    } catch (error) {
+        throw new Error('Error searching recipes');
+    }
+};
 
-export default { DBgetAllRecipes, DBgetRecipesWithID}
+
+
+
+
+
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBsearchRecipe}
