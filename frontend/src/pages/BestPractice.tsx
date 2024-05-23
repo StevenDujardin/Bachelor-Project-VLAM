@@ -12,27 +12,25 @@ export const BestPractice: FC = () => {
       </div>
       <div className="w-screen md:h-16 bg-mantis-50"></div>
       <div className="flex flex-col max-w-7xl self-center gap-10 font-poppins text-md font-light p-8">
-      <div className="text-xl font-light font-centerBold mt-4">
-              Wat is een prompt?
-            </div>
-            <p>
-              Een prompt is een instructie of vraag die je aan de AI geeft om een recept te genereren. Zorg ervoor dat je prompt in het Nederlands is voor de beste resultaten.
-            </p>
+        <div className="text-xl font-light font-centerBold mt-4">
+          Wat doet het?
+        </div>
+        <p>
+          Dankzij AI kunnen recepten op maat gegenereerd worden die aansluiten bij jouw specifieke wensen en voorkeuren. AI kan recepten samenstellen op basis van de ingrediënten die je in huis hebt, bepaalde dieetwensen zoals glutenvrij of veganistisch, en zelfs je voorkeur voor bepaalde keukens of kooktechnieken. Dit maakt het koken niet alleen eenvoudiger, maar ook leuker en meer gepersonaliseerd.
+        </p>
+        <div className="text-xl font-light font-centerBold mt-4">
+          Wat is een prompt?
+        </div>
+        <p>
+          Een prompt is een instructie of vraag die je aan de AI geeft om een recept te genereren. Zorg ervoor dat je prompt in het Nederlands is voor de beste resultaten, zodat de AI jouw voorkeuren en behoeften optimaal kan begrijpen en verwerken.
+        </p>
         {[
           {
-            
             title: "Gebruik Lokaal Geproduceerde Ingrediënten",
             description:
-              "Wanneer je AI gebruikt om recepten te genereren, zorg ervoor dat je instructies geeft om lokale ingrediënten te gebruiken. Dit verbetert niet alleen de smaak, maar ondersteunt ook de lokale economie. Er zal een foutmelding worden meegegeven als dit geen lokaal product is!",
+              "Wanneer je AI gebruikt om recepten te genereren, zorg ervoor dat je instructies geeft om lokale ingrediënten te gebruiken. Dit verbetert niet alleen de smaak en kwaliteit van je gerechten, maar ondersteunt ook de lokale economie en vermindert de ecologische voetafdruk. Lokale producten zijn vaak verser en bevatten meer voedingsstoffen, wat bijdraagt aan een gezondere maaltijd. Bovendien zal de AI een foutmelding geven als een product niet lokaal is, zodat je altijd verzekerd bent van de beste ingrediënten.",
             image:
-              "https://assets-global.website-files.com/65b77b4c4401f4eb13b755ec/65b77b4c4401f4eb13b75dda_Spagetti.webp",
-          },
-          {
-            title: "Wees Specifiek in je Prompt",
-            description:
-              "Een goede prompt zorgt voor betere resultaten. Geef specifieke details zoals de gewenste keuken, hoofdingrediënten en eventuele dieetbeperkingen. Schrijf je prompt ook in het Nederlands.",
-            image:
-              "https://res.cloudinary.com/teepublic/image/private/s--M8luqZWa--/t_Resized%20Artwork/c_fit,g_north_west,h_954,w_954/co_ffffff,e_outline:48/co_ffffff,e_outline:inner_fill:48/co_ffffff,e_outline:48/co_ffffff,e_outline:inner_fill:48/co_bbbbbb,e_outline:3:1000/c_mpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1701727775/production/designs/54109275_0.jpg",
+              "https://www.techopedia.com/wp-content/uploads/2023/09/How-to-Write-AI-Prompts-1.png",
           },
         ].map((practice, index) => (
           <div className="flex flex-col md:flex-row gap-8" key={index}>
@@ -69,7 +67,7 @@ export const BestPractice: FC = () => {
               </p>
             </div>
             <p className="mt-4">
-              Hou je prompt kort en krachtig en gebruik de filters om je vraag te specificeren.
+              Hou je prompt kort en krachtig en gebruik de filters om je vraag te specificeren. Een duidelijke en gedetailleerde prompt helpt de AI om recepten te genereren die nauw aansluiten bij jouw wensen en behoeften.
             </p>
           </div>
         </div>
