@@ -4,7 +4,6 @@ import recipeService from "../domain/service/recipe.service"
 import { TextContentBlock } from 'openai/resources/beta/threads/messages';
 
 
-const openai = new OpenAI({apiKey:process.env.OPENAI_SECRET_KEY});
 const openAIRouter = express.Router();
 
 openAIRouter.post('/', async (req: Request, res: Response) => {

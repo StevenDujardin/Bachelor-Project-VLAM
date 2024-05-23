@@ -5,7 +5,6 @@ import { TextContentBlock } from 'openai/resources/beta/threads/messages';
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.DBgetAllRecipes();
-    return recipeDb.DBgetAllRecipes();
 };
 
 const getRecipeWithID = (id : number): Promise<Recipe> => {

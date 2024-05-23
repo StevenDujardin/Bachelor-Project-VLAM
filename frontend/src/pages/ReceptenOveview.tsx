@@ -19,7 +19,7 @@ export const ReceptenOveview: FC = () => {
           headers: {
             Accept: "*/*",
           },
-        }
+        },
       );
       setRecipes(response.data);
       console.log(response.data); // Assuming the API returns an array of recipes

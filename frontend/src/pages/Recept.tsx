@@ -52,7 +52,7 @@ export const Recept: FC = () => {
             headers: {
               Accept: "*/*",
             },
-          }
+          },
         );
         setRecipe(response.data);
         console.log(response.data); // Assuming the API returns an array of recipes
@@ -84,7 +84,7 @@ export const Recept: FC = () => {
   }
   const factor = persons / 4; // 4 is the base number of persons
   const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor)
+    adjustIngredientQuantity(ingredient, factor),
   );
 
   return (
@@ -96,10 +96,10 @@ export const Recept: FC = () => {
             <img
               src={recipe?.image || ReceptExample.image}
               alt="img"
-              className=" lg:w-2/3 object-cover rounded-lg shadow-lg"
+              className=" lg:w-3/5 object-cover rounded-lg shadow-lg"
             ></img>
 
-            <div className="flex flex-col justify-between lg:w-1/3">
+            <div className="flex flex-col justify-between lg:w-2/5">
               <div>
                 <div className=" text-5xl font-light font-centerBold py-2">
                   {recipe.title}

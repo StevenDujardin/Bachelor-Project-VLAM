@@ -5,7 +5,6 @@ export const Loading: FC = () => {
     <>
       <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
       <div className="flex flex-col w-screen max-w-7xl self-center py-8">
-
         <div className="align-bottom self-center text-center h-screen p-20">
           <div role="status">
             <svg
@@ -24,7 +23,9 @@ export const Loading: FC = () => {
                 fill="currentFill"
               />
             </svg>
-            <span className="flex flex-col justify-center text-black text-2xl p-4 font-centerBold">Loading...</span>
+            <span className="flex flex-col justify-center text-black text-2xl p-4 font-centerBold">
+              Loading...
+            </span>
           </div>
         </div>
       </div>
