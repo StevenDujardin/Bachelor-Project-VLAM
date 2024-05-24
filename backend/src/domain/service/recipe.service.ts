@@ -16,6 +16,10 @@ const searchRecipe = (search : string): Promise<Recipe[]> => {
 };
 
 
+const filterRecipes = (typeDish: string, difficulty: string, durations: string[]): Promise<Recipe[]> => {
+  return recipeDb.DBfilterRecipes(typeDish, difficulty, durations);
+};
+
 const generateRecipe = async (prompt: string): Promise<Recipe> => {
     const openai = new OpenAI({apiKey:process.env.OPENAI_SECRET_KEY});
     const assistant = await openai.beta.assistants.retrieve(
@@ -65,4 +69,4 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
 }
 
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe  }
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes }

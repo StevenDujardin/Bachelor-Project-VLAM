@@ -21,6 +21,7 @@ export const Home: FC = () => {
       const response = await axios.post("http://localhost:3000/generate", {
         message: message,
       });
+
       setIsLoading(false);
       console.log(response.data);
       navigate(`/recepten/${response.data.recipe_id}`);

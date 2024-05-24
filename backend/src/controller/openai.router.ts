@@ -14,44 +14,6 @@ openAIRouter.post('/', async (req: Request, res: Response) => {
   } catch (error: Error | any) {
     res.status(500).json({ status: error.message});
   }
-  /* const assistant = await openai.beta.assistants.retrieve(
-    "asst_fDgYsQlhKOttJtOaHPujJESr"
-  );  
-  const thread = await openai.beta.threads.create();
-  const message = await openai.beta.threads.messages.create(
-    thread.id,
-    {
-      role: "user",
-      content: req.body.message,
-    }
-  );
-
-  
-  let run = await openai.beta.threads.runs.createAndPoll(
-    thread.id,
-    {
-      assistant_id: assistant.id,
-    }
-  );
-  
-  if (run.status == 'completed') {
-    const messages = await openai.beta.threads.messages.list(run.thread_id);
-    const lastMessage = messages.data.at(0);
-    if (lastMessage?.role !== 'assistant') {
-        res.status(500).json({ status: 'error'});
-    }
-    const assistantMessageContent = lastMessage?.content.at(0);
-    if(!assistantMessageContent) {
-      res.status(500).json({ status: 'error'});
-    }
-    if(assistantMessageContent?.type !== 'text'){
-      res.status(500).json({ status: 'error'});
-    }
-    const textMessage = assistantMessageContent as TextContentBlock
-    console.log(textMessage.text.value)
-  } else {
-    res.status(500).json({ status: 'error'});
-  } */
 });
 
 
