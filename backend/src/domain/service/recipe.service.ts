@@ -15,11 +15,6 @@ const searchRecipe = (search : string): Promise<Recipe[]> => {
     return recipeDb.DBsearchRecipe(search);
 };
 
-interface FilterParams {
-  type?: string;
-  difficulty?: string;
-  durations?: string[];
-}
 
 const filterRecipes = (typeDish: string, difficulty: string, durations: string[]): Promise<Recipe[]> => {
   return recipeDb.DBfilterRecipes(typeDish, difficulty, durations);
