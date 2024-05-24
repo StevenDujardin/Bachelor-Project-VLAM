@@ -39,13 +39,10 @@ export const Recept: FC = () => {
   const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
 
   const { recipe_id } = useParams();
-  console.log(recipe_id);
   // Effect hook to fetch recipe on mount
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        console.log(recipe_id);
-
         const response = await axios.get(
           `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
           {
@@ -55,7 +52,6 @@ export const Recept: FC = () => {
           },
         );
         setRecipe(response.data);
-        console.log(response.data); // Assuming the API returns an array of recipes
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }

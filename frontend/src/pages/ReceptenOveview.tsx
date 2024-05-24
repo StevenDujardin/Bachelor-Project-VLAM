@@ -6,15 +6,67 @@ export const ReceptenOveview: FC = () => {
   // State to store the recipes
   const [recipes, setRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState<
+    Record<string, string | number | (string | number)[]>
+  >({});
+
+  const handleFilterSubmit = async (event: FormEvent) => {
+    event.preventDefault(); // Prevents the default form submit action
+
+    const newFilters: Record<string, string | number | (string | number)[]> =
+      {};
+
+    // Use the FormData API to get all values from the form
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    // Iterate over each entry in the FormData
+    for (const [key, value] of formData.entries()) {
+      if (key === "duration") {
+        // For the duration, we only want a single value, not an array
+        newFilters[key] = value;
+      } else if (key.endsWith("[]")) {
+        // Remove the '[]' from the key name
+        const cleanKey = key.slice(0, -2);
+        // Initialize the array if it doesn't exist
+        if (!newFilters[cleanKey]) {
+          newFilters[cleanKey] = [];
+        }
+        // Push the value into the array
+        (newFilters[cleanKey] as Array<string | number>).push(value);
+      } else {
+        // For other inputs, just store the value directly
+        newFilters[key] = value;
+      }
+    }
+
+    setFilters(newFilters); // Update the filters state
+    fetchRecipes(searchTerm, newFilters); // Fetch recipes with filters
+  };
 
   useEffect(() => {
     fetchRecipes();
   }, []);
 
-  const fetchRecipes = async (search = "") => {
+  const fetchRecipes = async (
+    search = "",
+    filters: Record<string, string | number> = {},
+  ) => {
     try {
+      // Constructing query parameters from filters object
+      const queryParams = new URLSearchParams();
+      if (search) queryParams.append("search", search);
+      Object.keys(filters).forEach((key) => {
+        const value = filters[key];
+        if (Array.isArray(value)) {
+          // If it's an array, join the values with commas
+          queryParams.append(key, value.join(","));
+        } else {
+          queryParams.append(key, value.toString());
+        }
+      });
+
       const response = await axios.get(
-        `http://localhost:3000/recipe-api/recipes${search ? `/search/${search}` : ""}`,
+        `http://localhost:3000/recipe-api/recipes?${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
@@ -22,7 +74,6 @@ export const ReceptenOveview: FC = () => {
         },
       );
       setRecipes(response.data);
-      console.log(response.data); // Assuming the API returns an array of recipes
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
@@ -58,7 +109,7 @@ export const ReceptenOveview: FC = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
-        <form className="md:w-80 pb-8">
+        <form onSubmit={handleFilterSubmit} className="md:w-80 pb-8">
           <div className=" font-centerBold text-xl">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
             <div className="text-md font-centerBold">Type gerecht:</div>
@@ -68,7 +119,7 @@ export const ReceptenOveview: FC = () => {
                   title="dranken"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="typeDish"
+                  name="type[]"
                   value="dranken"
                   id="dranken"
                 ></input>
@@ -79,7 +130,7 @@ export const ReceptenOveview: FC = () => {
                   title="voorgerecht"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="typeDish"
+                  name="type[]"
                   value="voorgerecht"
                   id="voorgerecht"
                 ></input>
@@ -90,7 +141,7 @@ export const ReceptenOveview: FC = () => {
                   title="hoofdgerecht"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="typeDish"
+                  name="type[]"
                   value="hoofdgerecht"
                   id="hoofdgerecht"
                 ></input>
@@ -101,7 +152,7 @@ export const ReceptenOveview: FC = () => {
                   title="dessert"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="typeDish"
+                  name="type[]"
                   value="dessert"
                   id="dessert"
                 ></input>
@@ -115,7 +166,7 @@ export const ReceptenOveview: FC = () => {
               <div className="flex gap-2">
                 <input
                   title="15 minuten"
-                  type="checkbox"
+                  type="radio"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="15"
@@ -126,7 +177,7 @@ export const ReceptenOveview: FC = () => {
               <div className="flex gap-2">
                 <input
                   title="30 minuten"
-                  type="checkbox"
+                  type="radio"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="30"
@@ -137,7 +188,7 @@ export const ReceptenOveview: FC = () => {
               <div className="flex gap-2">
                 <input
                   title="45 minuten"
-                  type="checkbox"
+                  type="radio"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="45"
@@ -148,7 +199,7 @@ export const ReceptenOveview: FC = () => {
               <div className="flex gap-2">
                 <input
                   title="60 minuten"
-                  type="checkbox"
+                  type="radio"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="60"
@@ -159,7 +210,7 @@ export const ReceptenOveview: FC = () => {
               <div className="flex gap-2">
                 <input
                   title="90 minuten"
-                  type="checkbox"
+                  type="radio"
                   className="hover:accent-mantis-600 accent-mantis-500"
                   name="duration"
                   value="120"
@@ -177,7 +228,7 @@ export const ReceptenOveview: FC = () => {
                   title="gemakkelijk"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="difficulty"
+                  name="difficulty[]"
                   value="gemakkelijk"
                   id="gemakkelijk"
                 ></input>
@@ -188,7 +239,7 @@ export const ReceptenOveview: FC = () => {
                   title="gemiddeld"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="difficulty"
+                  name="difficulty[]"
                   value="gemiddeld"
                   id="gemiddeld"
                 ></input>
@@ -199,7 +250,7 @@ export const ReceptenOveview: FC = () => {
                   title="moeilijk"
                   type="checkbox"
                   className="hover:accent-mantis-600 accent-mantis-500"
-                  name="difficulty"
+                  name="difficulty[]"
                   value="moelijk"
                   id="moeilijk"
                 ></input>

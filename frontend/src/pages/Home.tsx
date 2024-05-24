@@ -18,7 +18,6 @@ export const Home: FC = () => {
       const response = await axios.post("http://localhost:3000/generate", {
         message: message,
       });
-      console.log(response.data);
       navigate(`/recepten/${response.data.recipe_id}`);
 
       // Add logic for what to do with the response here
