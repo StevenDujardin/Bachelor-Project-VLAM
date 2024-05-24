@@ -82,6 +82,7 @@ export const Home: FC = () => {
             <button
               type="submit"
               className="bg-[#046a38] text-white rounded-lg p-2"
+              {...(isLoading && { disabled: true })}
             >
               {isLoading ? "Laden..." : "Genereer Recept"}{" "}
             </button>

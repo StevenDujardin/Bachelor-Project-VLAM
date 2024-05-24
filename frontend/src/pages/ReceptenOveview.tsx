@@ -2,9 +2,10 @@ import { Search } from "lucide-react";
 import { FC, useEffect, useState, FormEvent } from "react";
 import { Card } from "../components/Card";
 import axios from "axios";
+import { ReceptProps } from "./Recept";
 export const ReceptenOveview: FC = () => {
   // State to store the recipes
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<ReceptProps[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
