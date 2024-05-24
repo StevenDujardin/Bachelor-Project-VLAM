@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 
-interface ReceptProps {
+export interface ReceptProps {
   image: string;
   title: string;
   type: string;
@@ -105,7 +105,7 @@ export const Recept: FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0">
+              <div className="flex flex-col sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <ChefHat size={24} className="mr-2" />
                   <p>{recipe.type}</p>
@@ -138,7 +138,7 @@ export const Recept: FC = () => {
                 -
               </button>
               <div className="flex flex-col justify-center">
-                Voor {persons} personen
+                <p>Voor <b>{persons}</b> personen</p>
               </div>
               <button
                 title="add person"
