@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { ChefHat, SignalHigh, Timer } from "lucide-react";
+import { ChefHat, Minus, Plus, SignalHigh, Timer } from "lucide-react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Loading } from "./Loading";
@@ -49,7 +49,7 @@ export const Recept: FC = () => {
             headers: {
               Accept: "*/*",
             },
-          },
+          }
         );
         setRecipe(response.data);
       } catch (error) {
@@ -80,7 +80,7 @@ export const Recept: FC = () => {
   }
   const factor = persons / 4; // 4 is the base number of persons
   const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor),
+    adjustIngredientQuantity(ingredient, factor)
   );
 
   return (
@@ -132,20 +132,20 @@ export const Recept: FC = () => {
             <div className="flex justify-between p-2 mx-4 rounded-full bg-white">
               <button
                 title="substract person"
-                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                className="bg-LVBO px-2 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
                 onClick={() => adjustPersons(-1)}
               >
-                -
+                <Minus size={20} />
               </button>
               <div className="flex flex-col justify-center">
                 <p>Voor <b>{persons}</b> personen</p>
               </div>
               <button
                 title="add person"
-                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                className="bg-LVBO px-2 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
                 onClick={() => adjustPersons(1)}
               >
-                +
+                <Plus size={20} />
               </button>
             </div>
             <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
