@@ -4,6 +4,7 @@ import recipeService from "../domain/service/recipe.service"
 
 const recipeRouter = express.Router();
 
+//Get recipe with ID
 recipeRouter.get('/recipes/:id', async (req, res) => {
     try {
         console.log("getRecipeWithID")
@@ -15,6 +16,7 @@ recipeRouter.get('/recipes/:id', async (req, res) => {
     }
 });
 
+//Search recipe
 recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) => {
     try {
         console.log("search")
@@ -27,10 +29,9 @@ recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) 
     }
 });
 
+//Get all recipes with filter
 recipeRouter.get('/recipes', async (req, res) => {
     try {
-        // Extract query parameters
-        
         const type = req.query.type as string;
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
@@ -42,7 +43,19 @@ recipeRouter.get('/recipes', async (req, res) => {
         console.error('Error fetching recipes:', error);
         res.status(500).send('An error occurred while fetching recipes');
       }
-    });
+});
+
+recipeRouter.get('/ingredients', async (req, res) => {
+    try {
+        console.log("Ingredients")
+        const result = await recipeService.getAllIngredients();
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        res.status(500).send('An error occurred while fetching recipes');
+      }
+});
+
 
 
 

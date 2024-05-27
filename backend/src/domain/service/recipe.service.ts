@@ -2,6 +2,7 @@ import { Recipe } from "../model/recipe";
 import recipeDb from "../data-access/recipe.db"
 import {OpenAI} from "openai"
 import { TextContentBlock } from 'openai/resources/beta/threads/messages';
+import { Ingredient } from "@prisma/client";
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.DBgetAllRecipes();
@@ -69,4 +70,8 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
 }
 
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes }
+const getAllIngredients = (): Promise<Ingredient[]> => {
+  return recipeDb.DBgetAllIngredients();
+};
+
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients }

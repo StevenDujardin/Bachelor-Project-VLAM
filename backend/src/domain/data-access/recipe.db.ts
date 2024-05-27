@@ -2,8 +2,10 @@ import { Recipe } from "../model/recipe"
 import { mapToRecipe, mapToRecipes } from "../mapper/recipe.mapper";
 import database from  "../../../util/database"
 import { data } from "autoprefixer";
+import { Ingredient } from "@prisma/client";
 
 
+//Get all recipes
 const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     try {
         const recipes = await database.recipe.findMany();
@@ -13,6 +15,7 @@ const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     }
 };
 
+//Get recipe with ID
 const DBgetRecipesWithID = async (id: number ): Promise<Recipe> => {
     try {
         const recipe = await database.recipe.findFirstOrThrow({
@@ -26,6 +29,7 @@ const DBgetRecipesWithID = async (id: number ): Promise<Recipe> => {
     }
 };
 
+//Search recipe
 const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
     try {
         const recipes = await database.recipe.findMany({
@@ -44,8 +48,8 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
 
   
 
-  const DBfilterRecipes = async (type: string, difficulty: string, duration: number): Promise<Recipe[]> => {
-  
+//Filter recipes
+const DBfilterRecipes = async (type: string, difficulty: string, duration: number): Promise<Recipe[]> => {
     try {
       const recipes = await database.recipe.findMany({
         where: {
@@ -62,6 +66,7 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
 
 
 
+//Add recipe
 const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
     const recipe = await database.recipe.create({
         data: {
@@ -77,7 +82,19 @@ const DBinsertRecipe = async (title: string, description: string, steps: Array<s
     return mapToRecipe(recipe);
 }
 
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes}
+
+//Get all ingredients
+const DBgetAllIngredients = async (): Promise<Ingredient[]> => {
+    try {
+        const ingredients = await database.ingredient.findMany();
+        return ingredients;
+    } catch (error) {
+        throw new Error('Error');
+    }
+};
+
+
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients}
 
 
 
