@@ -7,12 +7,13 @@ const getAllUsers = (): Promise<User[]> => {
     return userDb.DBgetAllUsers();
 };
 
-const addUser = (username: string, password: string) => {
-    return userDb.DBaddUser(username, password);
+const addUser = async (username: string, password: string) => {
+    const encrypted = bcrypt.hash(password, 10) as unknown as string
+    return await userDb.DBaddUser(username, encrypted);
 }
 
-const deleteUser = (user_id: number) => {
-    return userDb.DBdeleteUser(user_id);
+const deleteUser = async (user_id: number) => {
+    return await userDb.DBdeleteUser(user_id);
 }
 
 
@@ -29,14 +30,19 @@ const getUserIDByUsername = async (username: string) => {
 
 const checkCredentials = async ( username: string, password: string ): Promise<string> =>{
     const user = await userDb.DBgetUserByUsername( username );
+    
     if(!user){
         throw new Error('Username is not known to the system');
     }
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
+
+        ///ENCRYPT PW IN DATABASE!!!!
+
         throw new Error('Incorrect password');
     }
 
+    
     return "done";
     //return generateJwtToken(user);
 }

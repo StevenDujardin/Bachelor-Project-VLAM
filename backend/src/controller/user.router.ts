@@ -1,6 +1,8 @@
 import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
 
+import * as bcrypt from "bcrypt";
+
 
 const userRouter = express.Router();
 
@@ -9,6 +11,7 @@ userRouter.get('/all', async (req, res) => {
     try {
         console.log("users")
         const users = await userService.getAllUsers()
+        console.log(bcrypt.hash("admin123", 10));
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ status: 'error'});
@@ -45,20 +48,23 @@ userRouter.delete('/delete', async (req, res) => {
 //LOGIN
 userRouter.post('/login', async (req, res) => {
     try {
-    
         console.log("LoginUser")
-        if(req.body.username){
-            res.status(400).send('Nickname is required');
+        if(!req.body.username){
+            res.status(400).send('Username is required');
             return
         }
-        if(req.body.password){
+        if(!req.body.password){
             res.status(400).send('Password is required');
             return
         }
         const username = req.body.username;
         const password = req.body.password;
+      
         const token = await userService.checkCredentials(username, password);
         const user_id = await userService.getUserIDByUsername(username);
+
+        console.log(user_id)
+        console.log(token)
         res.status(200)
             .json({ message: "Logged in successfully", token: token, user_id: user_id });
     } catch (error) {
