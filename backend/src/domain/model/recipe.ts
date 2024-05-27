@@ -3,7 +3,7 @@ export class Recipe {
     readonly title: string;
     readonly description: string;
     readonly steps: Array<string>;
-    readonly duration: string;
+    readonly duration: number;
     readonly difficulty: string;
     readonly type: string;
     readonly ingredients: Array<string>;
@@ -14,7 +14,7 @@ export class Recipe {
             title: string;
             description: string;
             steps: Array<string>;
-            duration: string;
+            duration: number;
             difficulty: string;
             type: string;
             ingredients: Array<string>;

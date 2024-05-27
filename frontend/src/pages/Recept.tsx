@@ -112,7 +112,7 @@ export const Recept: FC = () => {
                 </div>
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <Timer size={24} className="mr-2" />
-                  <p>{recipe.duration}</p>
+                  <p>{recipe.duration} min</p>
                 </div>
                 <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                   <SignalHigh size={24} className="mr-2" />

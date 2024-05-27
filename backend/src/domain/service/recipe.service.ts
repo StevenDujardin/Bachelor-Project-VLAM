@@ -2,6 +2,7 @@ import { Recipe } from "../model/recipe";
 import recipeDb from "../data-access/recipe.db"
 import {OpenAI} from "openai"
 import { TextContentBlock } from 'openai/resources/beta/threads/messages';
+import { Ingredient } from "@prisma/client";
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.DBgetAllRecipes();
@@ -16,8 +17,8 @@ const searchRecipe = (search : string): Promise<Recipe[]> => {
 };
 
 
-const filterRecipes = (typeDish: string, difficulty: string, durations: string[]): Promise<Recipe[]> => {
-  return recipeDb.DBfilterRecipes(typeDish, difficulty, durations);
+const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
+  return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
 };
 
 const generateRecipe = async (prompt: string): Promise<Recipe> => {
@@ -61,7 +62,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration, textJson.difficulty, textJson.type, textJson.ingredients);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');
@@ -69,4 +70,8 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
 }
 
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes }
+const getAllIngredients = (): Promise<Ingredient[]> => {
+  return recipeDb.DBgetAllIngredients();
+};
+
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients }
