@@ -25,7 +25,7 @@ export const Card: FC<CardProps> = ({
   };
   return (
     <div
-      className="flex flex-row lg:flex-row lg:w-80 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105"
+      className="flex flex-row lg:flex-row lg:w-80 h-full max-h-96 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105"
       onClick={redirectToRecept}
     >
       <div className="flex flex-row lg:flex-col gap-4 p-2 md:p-6">

@@ -3,7 +3,7 @@ import { FC } from "react";
 export const BestPractice: FC = () => {
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-80 object-cover bg-[#6cc24a]">
+      <div className="flex flex-col justify-end w-full  h-60 md:h-80 object-cover bg-[#6cc24a]">
         <div className="flex self-center mx-24 w-screen max-w-7xl">
           <h1 className="font-centerBold text-white text-4xl pb-16 px-8 md:px-0">
             Tips voor AI-Gegenereerde Recepten
@@ -30,6 +30,7 @@ export const BestPractice: FC = () => {
             Gebruik Lokaal Geproduceerde Ingrediënten
           </div>
           <div className="flex flex-col md:flex-row gap-8">
+
             <img
               src="https://www.techopedia.com/wp-content/uploads/2023/09/How-to-Write-AI-Prompts-1.png"
               alt="Gebruik Lokaal Geproduceerde Ingrediënten"
