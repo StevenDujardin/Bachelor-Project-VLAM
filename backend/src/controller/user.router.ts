@@ -11,7 +11,6 @@ userRouter.get('/all', async (req, res) => {
     try {
         console.log("users")
         const users = await userService.getAllUsers()
-        console.log(bcrypt.hash("admin123", 10));
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ status: 'error'});
@@ -59,12 +58,9 @@ userRouter.post('/login', async (req, res) => {
         }
         const username = req.body.username;
         const password = req.body.password;
-      
         const token = await userService.checkCredentials(username, password);
         const user_id = await userService.getUserIDByUsername(username);
-
-        console.log(user_id)
-        console.log(token)
+        
         res.status(200)
             .json({ message: "Logged in successfully", token: token, user_id: user_id });
     } catch (error) {
