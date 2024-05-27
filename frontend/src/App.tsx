@@ -7,7 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ReceptenOveview } from "./pages/ReceptenOveview";
 import { Recept } from "./pages/Recept";
 import { BestPractice } from "./pages/BestPractice";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 
 function App() {
   return (

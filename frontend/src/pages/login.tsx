@@ -9,7 +9,7 @@ const Login: FC = () => {
 
   return (
     <div className="flex h-screen items-center justify-center font-poppins ">
-      <form className="flex flex-col gap-10 p-8 bg-mantis-300     rounded-2xl   border border-mantis-200 shadow-lg">
+      <form className="flex flex-col gap-10 p-8 min-w-96  bg-mantis-300 rounded-2xl border border-mantis-200 shadow-lg">
         <div onDoubleClick={() => setEasterEgg(!easterEgg)}>
           <div className="flex max-w-full justify-center">
             <svg
@@ -50,9 +50,9 @@ const Login: FC = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 whitespace-nowrap">
             <label className="text-xl font-semibold text-black">Password</label>
-            <div className=" flex w-full max-w-full justify-between gap-5 border border-mantis-400 bg-mantis-100 rounded-md  px-3 py-4 text-50 max-md:flex-wrap">
+            <div className=" flex flex-row whitespace-nowrap w-full max-w-full justify-between gap-5 border border-mantis-400 bg-mantis-100 rounded-md  px-3 py-4 text-50 max-md:flex-wrap">
             <input
               type={passwordVisible ? "text" : "password"}
               placeholder="Password"
