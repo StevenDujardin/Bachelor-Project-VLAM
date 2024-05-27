@@ -87,7 +87,7 @@ export const Recept: FC = () => {
     <>
       <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center py-8">
-        <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100">
+        <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
           <div className="flex flex-col lg:flex-row gap-10 p-6">
             <img
               src={recipe?.image || ReceptExample.image}
@@ -124,7 +124,7 @@ export const Recept: FC = () => {
         </div>
       </div>
       <div className="flex flex-col  md:flex-row w-screen max-w-7xl self-center pb-8">
-        <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100">
+        <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
           <div className="flex flex-col w-full gap-4 p-6">
             <div className=" text-2xl font-light font-centerBold py-2">
               Ingredients
@@ -159,7 +159,7 @@ export const Recept: FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row lg:flex-row md:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100">
+        <div className="flex flex-row lg:flex-row md:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100 border border-mantis-200 shadow-lg">
           <div className="flex flex-col gap-4 p-6">
             <div className="text-2xl font-light font-centerBold py-2">
               Steps

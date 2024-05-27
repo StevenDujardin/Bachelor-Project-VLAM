@@ -59,7 +59,7 @@ export const Home: FC = () => {
 
         <form
           onSubmit={handleSubmit}
-          className=" flex  flex-col md:flex-row md:gap-8 m-4 md:m-10 p-4 md:p-20 bg-[#f3faf0] rounded-2xl shadow-xl"
+          className=" flex  flex-col md:flex-row md:gap-8 m-4 md:m-10 p-4 md:p-20 bg-mantis-50 border border-mantis-200 rounded-2xl shadow-xl"
         >
           <div className=" flex flex-col gap-4 md:w-2/3  lg:w-2/3 ">
             <label
@@ -72,7 +72,7 @@ export const Home: FC = () => {
             <textarea
               id="recipeRequest"
               name="recipeRequest"
-              className="w-full"
+              className="block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-mantis-200 focus:outline-none focus:ring-mantis-500 focus:border-mantis-500 "
               cols={30}
               rows={7}
               placeholder="Geef mij een recept voor een aardbeientaart"
@@ -82,7 +82,7 @@ export const Home: FC = () => {
 
             <button
               type="submit"
-              className="bg-[#046a38] text-white rounded-lg p-2"
+              className="bg-LVBO text-white rounded-lg p-2"
               {...(isLoading && { disabled: true })}
             >
               {isLoading ? "Laden..." : "Genereer Recept"}{" "}
