@@ -37,31 +37,29 @@ const checkCredentials = async ( username: string, password: string ): Promise<s
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
 
-        ///ENCRYPT PW IN DATABASE!!!!
-
         throw new Error('Incorrect password');
     }
 
-    
-    return "done";
-    //return generateJwtToken(user);
+    return generateJwtToken(user);
 }
 
-// const generateJwtToken= (user: User): string => {
-//     const JWTSecret = process.env.JWT_SECRET;
-//     const options ={ expiresIn : `${process.env.JWT_EXPIRES_HOURS}h`, issuer: 'whatt'};
+const generateJwtToken = (user: User): string => {
+    const JWTSecret = process.env.JWT_SECRET;
+    const options = { expiresIn: `${process.env.TOKEN_EXPIRES}h`, issuer: 'whatt' };
 
-//     try{
-//         const token = jwt.sign({ nickname: user.username, user_id: user.user_id}, JWTSecret, options);
-//         console.log(token);
-//         return token;
-//     }
-//     catch(error){
-//         console.log(error);
-//         throw new Error('Error generating JWT token. See console for details')
-//     }
+    if (!JWTSecret) {
+        throw new Error('JWT_SECRET is not defined');
+    }
 
-// }
+    try {
+        const token = jwt.sign({ nickname: user.username, user_id: user.user_id }, JWTSecret, options);
+        
+        return token;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error generating JWT token. See console for details');
+    }
+};
 
 
 
