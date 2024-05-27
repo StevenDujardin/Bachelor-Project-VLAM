@@ -59,7 +59,7 @@ export const Home: FC = () => {
 
         <form
           onSubmit={handleSubmit}
-          className=" flex  flex-col md:flex-row md:gap-8 m-4 md:m-10 p-4 md:p-20 bg-mantis-50 border border-mantis-200 rounded-2xl shadow-xl"
+          className=" flex  flex-col md:flex-row md:gap-8 m-4 md:m-10 p-4 md:p-10 bg-mantis-50 border border-mantis-200 rounded-2xl shadow-xl"
         >
           <div className=" flex flex-col gap-4 md:w-2/3  lg:w-2/3 ">
             <label

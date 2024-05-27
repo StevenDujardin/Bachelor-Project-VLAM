@@ -7,13 +7,15 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ReceptenOveview } from "./pages/ReceptenOveview";
 import { Recept } from "./pages/Recept";
 import { BestPractice } from "./pages/BestPractice";
+import Login from "./pages/login";
 
 function App() {
   return (
     <Router>
-      <div className="flex flex-col justify-center ">
+      <div className="flex flex-col justify-center">
         <Header />
         <Routes>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/over_ons" element={<OverOns />}></Route>
           <Route path="/recepten" element={<ReceptenOveview />}></Route>
