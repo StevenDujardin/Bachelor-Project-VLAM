@@ -53,20 +53,19 @@ const Login: FC = () => {
           <div className="flex flex-col gap-1 whitespace-nowrap">
             <label className="text-xl font-semibold text-black">Password</label>
             <div className=" flex flex-row whitespace-nowrap w-full max-w-full justify-between gap-5 border border-mantis-400 bg-mantis-100 rounded-md  px-3 py-4 text-50 max-md:flex-wrap">
-            <input
-              type={passwordVisible ? "text" : "password"}
-              placeholder="Password"
-              className="w-full bg-transparent font-normal outline-none placeholder:font-normal"
-            ></input>
-            <div
-              className="my-auto aspect-square w-6 shrink-0"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? <EyeOff size={24} /> : <Eye size={24} />}
+              <input
+                type={passwordVisible ? "text" : "password"}
+                placeholder="Password"
+                className="w-full bg-transparent font-normal outline-none placeholder:font-normal"
+              ></input>
+              <div
+                className="my-auto aspect-square w-6 shrink-0"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? <EyeOff size={24} /> : <Eye size={24} />}
+              </div>
             </div>
           </div>
-          </div>
-          
         </div>
 
         <button

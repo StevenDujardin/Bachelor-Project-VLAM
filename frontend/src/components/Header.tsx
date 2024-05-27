@@ -16,7 +16,6 @@ export const Header: FC = () => {
         <div
           className={`flex py-3 pr-4 h-11 justify-end font-poppins font-light text-sm ${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "text-LVBO" : " text-white  shadow-slate-500 text-shadow-sm"}`}
         >
-          
           <Link to="/over_ons" className={`mx-3 ${isActive("/over_ons")}`}>
             Over ons
           </Link>
