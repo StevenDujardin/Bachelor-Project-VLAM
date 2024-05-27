@@ -45,7 +45,7 @@ export const Card: FC<CardProps> = ({
             </div>
             <div className="flex">
               <Timer size={24} className="mr-2" />
-              <p>{duration}</p>
+              <p>{duration} min</p>
             </div>
             <div className="flex">
               <SignalHigh size={24} className="mr-2" />
