@@ -1,37 +1,17 @@
-import { FC } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { FC, useState } from "react";
 
-export const Header: FC = () => {
-  const location = useLocation();
+import { Eye, EyeOff } from "lucide-react";
 
-  const isActive = (path: string) => {
-    return location.pathname === path
-      ? `${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "border-b-2 border-LVBO" : " border-b-2 border-white"}`
-      : "";
-  };
+const Login: FC = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const [easterEgg, setEasterEgg] = useState(false);
 
   return (
-    <div className=" flex justify-center">
-      <div className="mx-28 w-screen max-w-7xl self-center font-centerBold absolute top-0 z-10">
-        <div
-          className={`flex py-3 pr-4 h-11 justify-end font-poppins font-light text-sm ${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "text-LVBO" : " text-white  shadow-slate-500 text-shadow-sm"}`}
-        >
-          
-          <Link to="/over_ons" className={`mx-3 ${isActive("/over_ons")}`}>
-            Over ons
-          </Link>
-          <Link
-            to="/best_practices"
-            className={`mx-3 ${isActive("/best_practices")}`}
-          >
-            Best Practices
-          </Link>
-          <Link to="/login" className={`mx-3 ${isActive("/login")}`}>
-            Login
-          </Link>
-        </div>
-        <div className="absolute translate-x-6 -translate-y-2">
-          <Link to="/">
+    <div className="flex h-screen items-center justify-center font-poppins ">
+      <form className="flex flex-col gap-10 p-8 bg-mantis-300     rounded-2xl   border border-mantis-200 shadow-lg">
+        <div onDoubleClick={() => setEasterEgg(!easterEgg)}>
+          <div className="flex max-w-full justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="97"
@@ -51,25 +31,61 @@ export const Header: FC = () => {
                 fill="#fff"
               ></path>
             </svg>
-          </Link>
-        </div>
-        <div className="md:rounded-2xl px-8 min-h-20 bg-[#046a38] flex flex-row justify-end align-middle shadow-2xl">
-          <div className="flex flex-row justify-between h-20 gap-4 text-white ">
-            <Link
-              to="/"
-              className={`min-h-full pt-7 px-2 hover:border-b-2 ${isActive("/")}`}
-            >
-              Kook AI
-            </Link>
-            <Link
-              to="/recepten"
-              className={`min-h-full pt-7 px-2 self-center hover:border-b-2 ${isActive("/recepten")}`}
-            >
-              Alle AI Recepten
-            </Link>
           </div>
+          {easterEgg && (
+            <div className="mt-2 rounded bg-mantis-100 p-2 text-center font-bold text-shades-0">
+              <p>{"by Pip and Tokke :)"}</p>
+            </div>
+          )}
         </div>
-      </div>
+
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <label className="text-xl font-semibold text-shades-0">Email</label>
+            <input
+              type="text"
+              placeholder="Email"
+              className="border border-mantis-400 bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none"
+              // {...register('email', { required: true })}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-xl font-semibold text-black">Password</label>
+            <div className=" flex w-full max-w-full justify-between gap-5 border border-mantis-400 bg-mantis-100 rounded-md  px-3 py-4 text-50 max-md:flex-wrap">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Password"
+              className="w-full bg-transparent font-normal outline-none placeholder:font-normal"
+            ></input>
+            <div
+              className="my-auto aspect-square w-6 shrink-0"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? <EyeOff size={24} /> : <Eye size={24} />}
+            </div>
+          </div>
+          </div>
+          
+        </div>
+
+        <button
+          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl font-bold text-white"
+          type="submit"
+          // onClick={handleSubmit(onSubmit)}
+        >
+          Login
+        </button>
+
+        <p className="self-center text-base font-normal not-italic leading-8 text-black">
+          Don't have an account?{" "}
+          <a href="#" className="text-mantis-800">
+            Sign up
+          </a>
+        </p>
+      </form>
     </div>
   );
 };
+
+export default Login;
