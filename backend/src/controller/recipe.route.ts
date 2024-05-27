@@ -32,7 +32,7 @@ recipeRouter.get('/recipes', async (req, res) => {
         // Extract query parameters
         
         const type = req.query.type as string;
-        const duration = req.query.duration as string[];
+        const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
         console.log(type)
 

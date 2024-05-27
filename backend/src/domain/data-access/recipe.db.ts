@@ -44,17 +44,17 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
 
   
 
-  const DBfilterRecipes = async (type: string, difficulty: string, durations: string[]): Promise<Recipe[]> => {
+  const DBfilterRecipes = async (type: string, difficulty: string, duration: number): Promise<Recipe[]> => {
   
     try {
       const recipes = await database.recipe.findMany({
         where: {
           ...(type && { type: { equals: type, mode: 'insensitive' } }),
           ...(difficulty && { difficulty: { equals: difficulty, mode: 'insensitive' } }),
-          ...(durations && durations.length > 0 && { duration: { in: durations } }),
+          ...(duration && { duration: { lte: duration } }),
         },
       });
-      return recipes;
+      return mapToRecipes(recipes);
     } catch (error) {
       throw new Error('Error filtering recipes');
     }
@@ -62,7 +62,7 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
 
 
 
-const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: string, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
+const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
     const recipe = await database.recipe.create({
         data: {
             title: title,
@@ -74,7 +74,7 @@ const DBinsertRecipe = async (title: string, description: string, steps: Array<s
             ingredients: ingredients
         }
     });
-    return recipe;
+    return mapToRecipe(recipe);
 }
 
 export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes}

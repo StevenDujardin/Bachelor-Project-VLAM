@@ -16,8 +16,8 @@ const searchRecipe = (search : string): Promise<Recipe[]> => {
 };
 
 
-const filterRecipes = (typeDish: string, difficulty: string, durations: string[]): Promise<Recipe[]> => {
-  return recipeDb.DBfilterRecipes(typeDish, difficulty, durations);
+const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
+  return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
 };
 
 const generateRecipe = async (prompt: string): Promise<Recipe> => {
@@ -61,7 +61,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration, textJson.difficulty, textJson.type, textJson.ingredients);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');

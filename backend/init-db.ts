@@ -12,7 +12,7 @@ const main = async () => {
       data: {
           title: "AardbeienTaart",
           description: "Gooi aardbeien op een taart",
-          duration: "2 min",
+          duration: 2,
           steps: ["Neem taart", "Gooi er aardbeien op"],
           difficulty: "makkelijk",
           type: "dessert",
@@ -25,7 +25,7 @@ const main = async () => {
     data: {
         title: "CaesarsaladeKip",
         description: "Slaatje met Kip",
-        duration: "5 min",
+        duration: 15,
         steps: ["Neem taart", "Gooi er aardbeien op"],
         difficulty: "makkelijk",
         type: "dessert",
@@ -40,7 +40,7 @@ const main = async () => {
     data: {
         title: "Pasta Carbonara",
         type: "Pasta",
-        duration: "30 min",
+        duration: 25,
         difficulty: "Easy",
         description: "Een heerlijke salade met kazen van bij ons? Dat kan! Probeer deze heerlijke maaltijdsalade met Flandrien kaas die de show steelt. Gecombineerd met het fruit en de karnemelkdressing krijg je een frisse toets bij het gerecht. Puur genieten!",
         ingredients: ["500g pasta", "4 eggs", "200 g bacon", "150 g cheese", "salt"],
