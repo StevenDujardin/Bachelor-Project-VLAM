@@ -4,7 +4,7 @@ import recipeService from "../domain/service/recipe.service"
 
 const recipeRouter = express.Router();
 
-recipeRouter.get('/recipes/:id', async (req: Request, res: Response) => {
+recipeRouter.get('/recipes/:id', async (req, res) => {
     try {
         console.log("getRecipeWithID")
         const id = Number(req.params.id)

@@ -28,3 +28,9 @@ model Ingredient {
   ingredient_id Int    @id @default(autoincrement())
   name          String
 }
+
+model User {
+  user_id   Int  @id @default(autoincrement())
+  username  String
+  password  String
+}
