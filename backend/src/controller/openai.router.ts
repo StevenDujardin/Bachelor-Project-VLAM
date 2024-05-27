@@ -1,7 +1,5 @@
 import express, { Request, Response} from 'express';
-import {OpenAI} from "openai"
 import recipeService from "../domain/service/recipe.service"
-import { TextContentBlock } from 'openai/resources/beta/threads/messages';
 
 
 const openAIRouter = express.Router();

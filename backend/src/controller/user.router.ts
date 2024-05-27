@@ -2,7 +2,6 @@ import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
 
 
-
 const userRouter = express.Router();
 
 //ALL USERS
@@ -19,7 +18,7 @@ userRouter.get('/all', async (req, res) => {
 //ADD
 userRouter.post('/add', async (req, res) => {
     try {
-        console.log("addUsers")
+        console.log("addUser")
         const username = req.body.username;
         const password = req.body.password;
         const users = await userService.addUser(username, password);
@@ -34,9 +33,8 @@ userRouter.delete('/delete', async (req, res) => {
     try {
         console.log("delete")
         const username = req.body.username;
-        const password = req.body.password;
-        const users = await userService.deleteUser(username);
-        res.status(200).json(users);
+        const user = await userService.deleteUser(username);
+        res.status(200).json({message: "Deleted user ${username}"});
     } catch (error) {
         res.status(500).json({ status: 'error'});
     }

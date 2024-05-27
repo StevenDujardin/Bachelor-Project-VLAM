@@ -3,17 +3,18 @@ import userDb from "../data-access/user.db";
 import * as bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
-const getAllUsers = (): Promise<User[]> => {
+const getAllUsers = async (): Promise<User[]> => {
     return userDb.DBgetAllUsers();
 };
 
 const addUser = async (username: string, password: string) => {
     const encrypted = bcrypt.hash(password, 10) as unknown as string
-    return await userDb.DBaddUser(username, encrypted);
+    return userDb.DBaddUser(username, encrypted);
 }
 
-const deleteUser = async (user_id: number) => {
-    return await userDb.DBdeleteUser(user_id);
+const deleteUser = async (username: string) => {
+    const user_id = await getUserIDByUsername(username);
+    return userDb.DBdeleteUser(user_id);
 }
 
 

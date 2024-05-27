@@ -52,15 +52,12 @@ const main = async () => {
     }
   });
 
+
+
+
+
   //Ingredients
 
-  const ingredient_name = await prisma.ingredient.create({
-    data:{
-      name: "ingredient_name"
-    }
-  });
-
-  
   const aardappelen = await prisma.ingredient.create({
     data:{
       name: "aardappelen"
@@ -4197,15 +4194,24 @@ const nori = await prisma.ingredient.create({
   });
 
 
+  
   //Users
   const user =  await prisma.user.create({
     data: {
-      username: "user",
-      password: "$2b$10$Bs22AkAIQ7eey8JL/G6XY.KYQIY8CR4D6BiWaUQs2rcNCkq5shM0S"
+      username: "Admin",
+      password: "$2b$10$lnHyDzIO0OdFcs1VuGcf8eVoYQzl.apZqFzMIYu2z2Gc0DsVr4E96"
+      //admin123
 
     }
-  
-});
+  });
+
+  const loginuser = await prisma.user.create({
+    data:{
+      username: "admin",
+      password: "$2b$10$rjuNHPfIBYO7hXem9BXdwOfna7jD0/f3HNdlRy4jL/1UXnRASABPi"
+      //admin
+    }
+  });
 
 const admin =  await prisma.user.create({
   data: {
