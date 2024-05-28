@@ -35,7 +35,6 @@ recipeRouter.get('/', async (req, res) => {
         const type = req.query.type as string;
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
-        console.log(type)
 
         const result = await recipeService.filterRecipes(type, difficulty , duration);
         res.status(200).json(result);
