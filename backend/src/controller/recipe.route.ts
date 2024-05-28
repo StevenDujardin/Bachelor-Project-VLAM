@@ -9,7 +9,12 @@ recipeRouter.get('/:id', async (req, res) => {
         console.log("getRecipeWithID")
         const id = Number(req.params.id)
         const recipe  = await recipeService.getRecipeWithID(id);
-        res.status(200).json(recipe);
+        if(!recipe){
+            res.status(404).json({ status: 'error', message: 'No recipe found with this ID'})
+        }
+        else{
+            res.status(200).json(recipe);
+        }
     } catch (error) {
         res.status(500).json({ status: 'error'});
     }
@@ -21,7 +26,12 @@ recipeRouter.get('/search/:search', async (req: Request, res: Response) => {
         const search = req.params.search;
         //search on title and description 
         const result  = await recipeService.searchRecipe(search);
-        res.status(200).json(result);
+        if(result.length === 0){
+            res.status(404).json({ status: 'error', message: 'No recipes found'})
+        }
+        else{
+            res.status(200).json(result);
+        }
     } catch (error) {
         res.status(500).json({ status: 'error'});
     }
