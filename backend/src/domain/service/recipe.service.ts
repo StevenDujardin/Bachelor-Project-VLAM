@@ -12,12 +12,12 @@ const getRecipeWithID = (id : number): Promise<Recipe> => {
     return recipeDb.DBgetRecipesWithID(id);
 };
 
-const searchRecipe = (search : string): Promise<Recipe[]> => {
-    return recipeDb.DBsearchRecipe(search);
+const searchRecipe = async (search : string): Promise<Recipe[]> => {
+    return await recipeDb.DBsearchRecipe(search);
 };
 
-const editRecipe = (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[]): Promise<Recipe> => {
-  return recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[]): Promise<Recipe> => {
+  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
 };
 
 

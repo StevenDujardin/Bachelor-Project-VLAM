@@ -47,17 +47,20 @@ recipeRouter.get('/', async (req, res) => {
 recipeRouter.put('/edit/:id', async (req, res) => {
     try {
         // Extract query parameters
-    
+        console.log("editRecipe")
+
         const recipe_id = Number(req.params.id)
         const title = req.body.title as string;
         const description = req.body.description;
         const steps = req.body.steps;
-        const duration = Number(req.query.duration);
-        const difficulty = req.query.difficulty as string;
+        const duration = req.body.duration as unknown as number;
+        const difficulty = req.body.difficulty as string;
         const type = req.body.type;
         const ingredients = req.body.ingredients;
         console.log(steps)
         console.log(ingredients)
+        console.log(duration)
+
 
         const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
         res.status(200).json(result);
