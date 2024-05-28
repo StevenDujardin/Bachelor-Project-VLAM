@@ -46,6 +46,49 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
     }
 };
 
+const DBeditRecipe = async (
+    recipe_id: number, 
+    title?: string, 
+    description?: string, 
+    steps?: string[], 
+    duration?: number, 
+    difficulty?: string, 
+    type?: string, 
+    ingredients?: string[]
+): Promise<Recipe> => {
+    try {
+        // Create an object with the fields to be updated, only including the fields that are not undefined
+        const updateData: { 
+            title?: string, 
+            description?: string, 
+            steps?: string[], 
+            duration?: number, 
+            difficulty?: string, 
+            type?: string, 
+            ingredients?: string[] 
+        } = {};
+
+        if (title !== undefined) updateData.title = title;
+        if (description !== undefined) updateData.description = description;
+        if (steps !== undefined) updateData.steps = steps;
+        if (duration !== undefined) updateData.duration = duration;
+        if (difficulty !== undefined) updateData.difficulty = difficulty;
+        if (type !== undefined) updateData.type = type;
+        if (ingredients !== undefined) updateData.ingredients = ingredients;
+
+        // Update the recipe with the given recipe_id
+        const recipe = await database.recipe.update({
+            where: { recipe_id: recipe_id },
+            data: updateData,
+        });
+
+        return mapToRecipe(recipe);
+    } catch (error) {
+        throw new Error('Error updating recipe');
+    }
+};
+
+
   
 
 //Filter recipes
@@ -94,7 +137,7 @@ const DBgetAllIngredients = async (): Promise<Ingredient[]> => {
 };
 
 
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients}
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe}
 
 
 

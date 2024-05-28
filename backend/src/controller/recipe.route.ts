@@ -4,8 +4,7 @@ import recipeService from "../domain/service/recipe.service"
 
 const recipeRouter = express.Router();
 
-//Get recipe with ID
-recipeRouter.get('/recipes/:id', async (req, res) => {
+recipeRouter.get('/:id', async (req, res) => {
     try {
         console.log("getRecipeWithID")
         const id = Number(req.params.id)
@@ -16,8 +15,7 @@ recipeRouter.get('/recipes/:id', async (req, res) => {
     }
 });
 
-//Search recipe
-recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) => {
+recipeRouter.get('/search/:search', async (req: Request, res: Response) => {
     try {
         console.log("search")
         const search = req.params.search;
@@ -29,9 +27,10 @@ recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) 
     }
 });
 
-//Get all recipes with filter
-recipeRouter.get('/recipes', async (req, res) => {
+recipeRouter.get('/', async (req, res) => {
     try {
+        // Extract query parameters
+        
         const type = req.query.type as string;
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
@@ -45,17 +44,28 @@ recipeRouter.get('/recipes', async (req, res) => {
       }
 });
 
-recipeRouter.get('/ingredients', async (req, res) => {
+recipeRouter.put('/edit/:id', async (req, res) => {
     try {
-        console.log("Ingredients")
-        const result = await recipeService.getAllIngredients();
+        // Extract query parameters
+    
+        const recipe_id = Number(req.params.id)
+        const title = req.body.title as string;
+        const description = req.body.description;
+        const steps = req.body.steps;
+        const duration = Number(req.query.duration);
+        const difficulty = req.query.difficulty as string;
+        const type = req.body.type;
+        const ingredients = req.body.ingredients;
+        console.log(steps)
+        console.log(ingredients)
+
+        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching recipes:', error);
-        res.status(500).send('An error occurred while fetching recipes');
+        res.status(500).send('An error occurred while editing');
       }
 });
-
 
 
 

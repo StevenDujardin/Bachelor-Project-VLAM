@@ -4197,11 +4197,6 @@ const nori = await prisma.ingredient.create({
   });
 
 
-  
-  
-  
-
-
   //Users
   const admin =  await prisma.user.create({
     data: {

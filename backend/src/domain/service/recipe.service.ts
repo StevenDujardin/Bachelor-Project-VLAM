@@ -16,6 +16,10 @@ const searchRecipe = (search : string): Promise<Recipe[]> => {
     return recipeDb.DBsearchRecipe(search);
 };
 
+const editRecipe = (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[]): Promise<Recipe> => {
+  return recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+};
+
 
 const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
   return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
@@ -74,4 +78,4 @@ const getAllIngredients = (): Promise<Ingredient[]> => {
   return recipeDb.DBgetAllIngredients();
 };
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients }
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients, editRecipe }
