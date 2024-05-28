@@ -46,6 +46,7 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
     }
 };
 
+//Edit recipe
 const DBeditRecipe = async (
     recipe_id: number, 
     title?: string, 
@@ -88,7 +89,16 @@ const DBeditRecipe = async (
     }
 };
 
+//Delete recipe
 
+const DBdeleteRecipe = async (recipe_id: number): Promise<Recipe> => {
+    const recipe = await database.recipe.delete({
+        where:{
+            recipe_id: recipe_id
+        }
+    });
+    return mapToRecipe(recipe);
+}
   
 
 //Filter recipes
@@ -136,8 +146,32 @@ const DBgetAllIngredients = async (): Promise<Ingredient[]> => {
     }
 };
 
+//Find ingredient by Name
+const DBgetIngredientIDByName = async (name: string ): Promise<number> => {
+    try {
+        const ingredient = await database.ingredient.findFirstOrThrow({
+            where: {
+                name: name,
+        }
+    });
+        return ingredient.ingredient_id;
+    } catch (error) {
+        throw new Error('Error');
+    }
+};
 
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe}
+
+//Delete ingredient by id
+const DBdeleteIngredientByID = async (ingredient_id: number): Promise<Ingredient> => {
+    const ingredient = await database.ingredient.delete({
+        where:{
+            ingredient_id: ingredient_id,
+        }
+    });
+    return ingredient;
+}
+
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe, DBdeleteRecipe, DBdeleteIngredientByID, DBgetIngredientIDByName}
 
 
 

@@ -34,7 +34,6 @@ recipeRouter.get('/', async (req, res) => {
         const type = req.query.type as string;
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
-        console.log(type)
 
         const result = await recipeService.filterRecipes(type, difficulty , duration);
         res.status(200).json(result);
@@ -69,6 +68,19 @@ recipeRouter.put('/edit/:id', async (req, res) => {
         res.status(500).send('An error occurred while editing');
       }
 });
+
+//Delete ingredient by name
+// recipeRouter.delete('/delete/ingredient/:name', async (req, res) => {
+//     try {
+//         console.log("deleteRecipeWithName")
+//         const name = req.params.name as string;
+//         const ingredient  = await recipeService.deleteIngredientByName(name);
+
+//         res.status(200).json(ingredient);
+//     } catch (error) {
+//         res.status(500).json({ status: 'error'});
+//     }
+// });
 
 
 
