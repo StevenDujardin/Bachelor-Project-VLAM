@@ -50,7 +50,7 @@ export const ReceptenOveview: FC = () => {
 
   const fetchRecipes = async (
     search = "",
-    filters: Record<string, string | number> = {},
+    filters: Record<string, string | number> = {}
   ) => {
     try {
       // Constructing query parameters from filters object
@@ -72,8 +72,27 @@ export const ReceptenOveview: FC = () => {
           headers: {
             Accept: "*/*",
           },
-        },
+        }
       );
+
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+
+  const SearchRecipes = async (search: string) => {
+    try {
+      console.log(search);
+      const response = await axios.get(
+        `http://localhost:3000/recipes/search/${search}`,
+        {
+          headers: {
+            Accept: "*/*",
+          },
+        }
+      );
+      console.log(search);
       setRecipes(response.data);
     } catch (error) {
       console.error("Error fetching recipes:", error);
@@ -85,8 +104,12 @@ export const ReceptenOveview: FC = () => {
   };
 
   const handleSearchSubmit = async (event: FormEvent) => {
-    event.preventDefault(); // Prevents the default form submit action
-    fetchRecipes(searchTerm);
+    event.preventDefault();
+    if (!searchTerm.trim()) {
+      fetchRecipes();
+    } else {
+      SearchRecipes(searchTerm);
+    }
   };
 
   return (
