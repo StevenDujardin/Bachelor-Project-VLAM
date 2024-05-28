@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 app.use(bodyParser.json());
 
-app.use("/recipe-api", recipeRouter);
+app.use("/recipes", recipeRouter);
 app.use("/generate", openAIRouter)
 app.use("/users", userRouter)
 

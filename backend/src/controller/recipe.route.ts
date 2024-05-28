@@ -5,7 +5,7 @@ import recipeService from "../domain/service/recipe.service"
 const recipeRouter = express.Router();
 
 //Get recipe with ID
-recipeRouter.get('/recipes/:id', async (req, res) => {
+recipeRouter.get('/:id', async (req, res) => {
     try {
         console.log("getRecipeWithID")
         const id = Number(req.params.id)
@@ -17,7 +17,7 @@ recipeRouter.get('/recipes/:id', async (req, res) => {
 });
 
 //Search recipe
-recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) => {
+recipeRouter.get('/search/:search', async (req: Request, res: Response) => {
     try {
         console.log("search")
         const search = req.params.search;
@@ -30,7 +30,7 @@ recipeRouter.get('/recipes/search/:search', async (req: Request, res: Response) 
 });
 
 //Get all recipes with filter
-recipeRouter.get('/recipes', async (req, res) => {
+recipeRouter.get('/', async (req, res) => {
     try {
         const type = req.query.type as string;
         const duration = Number(req.query.duration);

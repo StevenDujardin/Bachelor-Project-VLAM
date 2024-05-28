@@ -67,7 +67,7 @@ export const ReceptenOveview: FC = () => {
       });
 
       const response = await axios.get(
-        `http://localhost:3000/recipe-api/recipes?${queryParams.toString()}`,
+        `http://localhost:3000/recipes?${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",

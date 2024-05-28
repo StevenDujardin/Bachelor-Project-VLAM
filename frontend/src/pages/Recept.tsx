@@ -44,7 +44,7 @@ export const Recept: FC = () => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
+          `http://localhost:3000/recipes/${recipe_id}`,
           {
             headers: {
               Accept: "*/*",
