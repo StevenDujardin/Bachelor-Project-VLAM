@@ -1,7 +1,7 @@
 import { Recipe } from "../model/recipe"
 import { mapToRecipe, mapToRecipes } from "../mapper/recipe.mapper";
-import database from  "../../../util/database"
 import { data } from "autoprefixer";
+import database from  "../../util/database"
 import { Ingredient } from "@prisma/client";
 
 
