@@ -1,6 +1,6 @@
 import { Recipe } from "../model/recipe"
 import { mapToRecipe, mapToRecipes } from "../mapper/recipe.mapper";
-import database from  "../../../util/database"
+import database from  "../../util/database"
 import { Ingredient } from "@prisma/client";
 
 

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 
 export interface ReceptProps {
@@ -37,6 +37,7 @@ const ReceptExample: ReceptProps = {
 export const ReceptEdit: FC = () => {
   const [persons, setPersons] = useState(4);
   const [recipe, setRecipe] = useState<ReceptProps | null>(null);
+  const navigate = useNavigate();
 
   const { recipe_id } = useParams();
 
@@ -44,7 +45,7 @@ export const ReceptEdit: FC = () => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
+          `http://localhost:3000/recipes/${recipe_id}`,
           {
             headers: {
               Accept: "*/*",
@@ -100,7 +101,16 @@ export const ReceptEdit: FC = () => {
   const handleArrayChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number,
-    key: keyof Omit<ReceptProps, "image" | "title" | "type" | "duration" | "difficulty" | "recipe_id" | "description">
+    key: keyof Omit<
+      ReceptProps,
+      | "image"
+      | "title"
+      | "type"
+      | "duration"
+      | "difficulty"
+      | "recipe_id"
+      | "description"
+    >
   ) => {
     if (recipe) {
       const updatedArray = [...recipe[key]];
@@ -116,7 +126,7 @@ export const ReceptEdit: FC = () => {
     event.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
+        `http://localhost:3000/recipes/edit/${recipe_id}`,
         recipe,
         {
           headers: {
@@ -125,16 +135,32 @@ export const ReceptEdit: FC = () => {
           },
         }
       );
+
       console.log("Recipe updated successfully:", response.data);
     } catch (error) {
+      console.log(recipe.toString())
       console.error("Error updating recipe:", error);
     }
   };
 
+   const goBack = () => {
+    navigate(-1)
+  }
+
   return (
     <>
-        <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
-        <form onSubmit={handleSave} className="max-w-7xl w-screen self-center">
+      <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins">
+      <div className="flex self-center gap-2 justify-start w-screen max-w-7xl px-4">
+            <button onClick={goBack} className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none">
+              back
+            </button>
+            
+          </div>
+      </div>
+      <form
+        onSubmit={handleSave}
+        className="max-w-7xl w-screen self-center"
+      >
         <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
           <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10 p-6">
@@ -200,27 +226,7 @@ export const ReceptEdit: FC = () => {
               <div className="text-2xl font-light font-centerBold py-2">
                 Ingredients
               </div>
-              <div className="flex justify-between p-2 mx-4 rounded-full bg-white">
-                <button
-                  title="subtract person"
-                  className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
-                  onClick={() => adjustPersons(-1)}
-                >
-                  -
-                </button>
-                <div className="flex flex-col justify-center">
-                  <p>
-                    Voor <b>{persons}</b> personen
-                  </p>
-                </div>
-                <button
-                  title="add person"
-                  className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
-                  onClick={() => adjustPersons(1)}
-                >
-                  +
-                </button>
-              </div>
+              
               <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
                 {adjustedIngredients.map((ingredient, index) => (
                   <input
@@ -253,8 +259,7 @@ export const ReceptEdit: FC = () => {
               </ol>
             </div>
           </div>
-          </div>
-        </form>
+        </div>
         <div className="flex justify-center mb-8">
           <button
             type="submit"
@@ -263,6 +268,7 @@ export const ReceptEdit: FC = () => {
             Save
           </button>
         </div>
+      </form>
     </>
   );
 };

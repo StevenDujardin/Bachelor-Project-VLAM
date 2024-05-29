@@ -46,7 +46,7 @@ export const Recept: FC = () => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/recipe-api/recipes/${recipe_id}`,
+          `http://localhost:3000/recipes/${recipe_id}`,
           {
             headers: {
               Accept: "*/*",
@@ -89,7 +89,10 @@ export const Recept: FC = () => {
     <>
       <div className="flex flex-col justify-end  w-full h-52 object-cover bg-mantis-50 font-poppins">
         {loggedIn ? (
-          <div className="flex self-center justify-end w-screen max-w-7xl px-4">
+          <div className="flex self-center gap-2 justify-end w-screen max-w-7xl px-4">
+            <button className="bg-red-500 font-centerBold border border-red-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none">
+              Delete
+            </button>
             <Link to={`/recepten/${recipe_id}/edit`}
               className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
               type="submit"
