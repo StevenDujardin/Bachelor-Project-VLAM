@@ -91,7 +91,7 @@ const DBeditRecipe = async (
 
 //Delete recipe
 
-const DBdeleteRecipe = async (recipe_id: number): Promise<Recipe> => {
+const DBdeleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
     const recipe = await database.recipe.delete({
         where:{
             recipe_id: recipe_id
@@ -171,7 +171,7 @@ const DBdeleteIngredientByID = async (ingredient_id: number): Promise<Ingredient
     return ingredient;
 }
 
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe, DBdeleteRecipe, DBdeleteIngredientByID, DBgetIngredientIDByName}
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe, DBdeleteRecipeWithID, DBdeleteIngredientByID, DBgetIngredientIDByName}
 
 
 

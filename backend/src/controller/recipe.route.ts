@@ -53,6 +53,20 @@ recipeRouter.get('/', async (req, res) => {
       }
 });
 
+
+recipeRouter.delete('/delete/:id', async (req, res) => {
+    try {
+        console.log("deleteRecipeWithID")
+        const id = req.params.id as unknown as number;
+        const recipe  = await recipeService.deleteRecipeWithID(id);
+
+        res.status(200).json(recipe);
+    } catch (error) {
+        res.status(500).json({ status: 'error'});
+    }
+});
+
+
 recipeRouter.put('/edit/:id', async (req, res) => {
     try {
         // Extract query parameters

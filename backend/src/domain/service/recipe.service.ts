@@ -20,8 +20,8 @@ const editRecipe = async (recipe_id: number, title: string, description: string,
   return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
 };
 
-const deleteRecipe = async (recipe_id: number): Promise<Recipe> => {
-  return await recipeDb.DBdeleteRecipe(recipe_id);
+const deleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
+  return await recipeDb.DBdeleteRecipeWithID(recipe_id);
 };
 
 const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
@@ -92,4 +92,4 @@ const getIngredientIDByName = async (name: string): Promise<number> => {
 
 
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients, editRecipe, deleteRecipe, deleteIngredientByName, getIngredientIDByName }
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients, editRecipe, deleteRecipeWithID, deleteIngredientByName, getIngredientIDByName }
