@@ -1,10 +1,12 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 export const Header: FC = () => {
   const location = useLocation();
+  const authContext = useContext(AuthContext);
+  const loggedIn = authContext?.isLoggedIn();
 
-  const token = localStorage.getItem("token");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -13,7 +15,7 @@ export const Header: FC = () => {
 
   const isActive = (path: string) => {
     return location.pathname === path
-      ? `${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "border-b-2 border-LVBO" : " border-b-2 border-white"}`
+      ? `${location.pathname === "/login" ? "border-b-2 border-LVBO" : " border-b-2 border-white"}`
       : "";
   };
 
@@ -32,10 +34,10 @@ export const Header: FC = () => {
           >
             Best Practices
           </Link>
-          {token ? (
+          {loggedIn ? (
             <button onClick={handleLogout} className={`mx-3 ${isActive("/logout")}`}>Logout</button>
           ) : (
-            <Link to="/login" className={`mx-3 ${isActive("/login")}`}>
+            <Link to="/login" className={`mx-3  ${isActive("/login")}`}>
               Login
             </Link>
           )}

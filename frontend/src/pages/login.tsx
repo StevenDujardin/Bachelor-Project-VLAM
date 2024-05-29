@@ -35,19 +35,19 @@ const Login: FC = () => {
       );
 
       console.log(response.data);
-      // Handle successful login here (e.g., redirect to dashboard)
 
       setToken(response.data.token);
       localStorage.setItem("user_id", response.data.user_id);
-      navigate("/", { replace: true });
+      navigate(-1)
     } catch (error) {
       console.error("Login error:", error);
 
       if (error.response.status === 400) {
-        setErrorMessage(error.response.data); // Set the error message to be displayed
+        setErrorMessage(error.response.data); 
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
       }
 
-      // Handle login error here (e.g., show error message to user)
     }
   };
 
@@ -130,7 +130,7 @@ const Login: FC = () => {
           </div>
         </div>
         <button
-          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl font-bold text-white select-none"
+          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl text-white select-none"
           type="submit"
         >
           Login

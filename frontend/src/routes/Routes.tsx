@@ -9,18 +9,18 @@ import { Recept } from "../pages/Recept";
 import { BestPractice } from "../pages/BestPractice";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-
+import { ReceptEdit } from "../pages/ReceptEdit";
 
 const Layout = () => {
   return (
     <div>
-      <Header/>
-
+      <Header />
       <main>
-        <Outlet /> {/* This renders the current route's element */}
+        <div className="flex flex-col justify-center">
+          <Outlet /> {/* This renders the current route's element */}
+        </div>
       </main>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };
@@ -28,14 +28,13 @@ const Layout = () => {
 const Routes = () => {
   const { token } = useAuth();
 
-    // Define routes accessible only to non-authenticated users
-    const routesForNotAuthenticatedOnly = [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      
-    ];
+  // Define routes accessible only to non-authenticated users
+  const routesForNotAuthenticatedOnly = [
+    {
+      path: "/login",
+      element: <Login />,
+    },
+  ];
 
   // Define public routes accessible to all users
   const routesForPublic = [
@@ -59,7 +58,6 @@ const Routes = () => {
       path: "/best-practices",
       element: <BestPractice />,
     },
-   
   ];
 
   // Define routes accessible only to authenticated users
@@ -73,8 +71,8 @@ const Routes = () => {
           element: <div>User Home Page</div>,
         },
         {
-          path: "/profile",
-          element: <div>User Profile</div>,
+          path: "/recepten/:recipe_id/edit",
+          element: <ReceptEdit />,
         },
         {
           path: "/logout",
@@ -83,8 +81,6 @@ const Routes = () => {
       ],
     },
   ];
-
-
 
   // Combine and conditionally include routes based on authentication status
   const router = createBrowserRouter([

@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
+import { AuthContext } from "../provider/AuthProvider";
 
 export interface ReceptProps {
   image: string;
@@ -37,8 +38,9 @@ const ReceptExample: ReceptProps = {
 export const Recept: FC = () => {
   const [persons, setPersons] = useState(4);
   const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
-
   const { recipe_id } = useParams();
+  const authContext = useContext(AuthContext);
+  const loggedIn = authContext?.isLoggedIn();
   // Effect hook to fetch recipe on mount
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -49,7 +51,7 @@ export const Recept: FC = () => {
             headers: {
               Accept: "*/*",
             },
-          },
+          }
         );
         setRecipe(response.data);
       } catch (error) {
@@ -80,12 +82,24 @@ export const Recept: FC = () => {
   }
   const factor = persons / 4; // 4 is the base number of persons
   const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor),
+    adjustIngredientQuantity(ingredient, factor)
   );
 
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
+      <div className="flex flex-col justify-end  w-full h-52 object-cover bg-mantis-50 font-poppins">
+        {loggedIn ? (
+          <div className="flex self-center justify-end w-screen max-w-7xl px-4">
+            <Link to={`/recepten/${recipe_id}/edit`}
+              className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+              type="submit"
+            >
+              Edit
+            </Link>
+          </div>
+        ) : null}
+      </div>
+
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center py-8">
         <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
           <div className="flex flex-col lg:flex-row gap-10 p-6">

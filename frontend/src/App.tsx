@@ -6,9 +6,7 @@ import Routes from "./routes/Routes";
 function App() {
   return (
     <AuthProvider>
-      <div className="flex flex-col justify-center">
-        <Routes />
-      </div>
+      <Routes />
     </AuthProvider>
   );
 }
