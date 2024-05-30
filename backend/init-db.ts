@@ -12,9 +12,9 @@ const main = async () => {
       data: {
           title: "AardbeienTaart",
           description: "Gooi aardbeien op een taart",
-          duration: 2,
+          duration: 10,
           steps: ["Neem taart", "Gooi er aardbeien op"],
-          difficulty: "makkelijk",
+          difficulty: "Gemakkelijk",
           type: "dessert",
           ingredients: ["Aardbeien", "Taart"]   
 
@@ -27,8 +27,8 @@ const main = async () => {
         description: "Slaatje met Kip",
         duration: 15,
         steps: ["Neem taart", "Gooi er aardbeien op"],
-        difficulty: "makkelijk",
-        type: "dessert",
+        difficulty: "Gemakkelijk",
+        type: "Hoofdgerecht",
         ingredients: ["4 kippenbillen", "2 eierdooiers","2 teentjes look","½ limoen of citroen",
         "1 eetlepel mosterd","15 cl arachideolie","1 dl natuuryoghurt","cayennepeper",
         "Engelse saus (Worchestershiresaus)","3 zoute ansjovisfilets","1 krop Romeinse sla","1 ongesneden toastbrood"
@@ -39,9 +39,9 @@ const main = async () => {
   const PastaCarbonara = await prisma.recipe.create({
     data: {
         title: "Pasta Carbonara",
-        type: "Pasta",
+        type: "Hoofdgerecht",
         duration: 25,
-        difficulty: "Easy",
+        difficulty: "Gemiddeld",
         description: "Een heerlijke salade met kazen van bij ons? Dat kan! Probeer deze heerlijke maaltijdsalade met Flandrien kaas die de show steelt. Gecombineerd met het fruit en de karnemelkdressing krijg je een frisse toets bij het gerecht. Puur genieten!",
         ingredients: ["500g pasta", "4 eggs", "200 g bacon", "150 g cheese", "salt"],
         steps: [

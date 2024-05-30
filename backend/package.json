@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register 'tests/**/*.test.ts'",
-    "start": "ts-node src/app.ts"
+    "start": "ts-node src/app.ts",
+    "migrate": "npx prisma migrate dev",
+    "setup": "npx ts-node init-db.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +20,9 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "node": "^18.20.3",
-    "openai": "^4.47.1"
+    "openai": "^4.47.1",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -33,9 +37,6 @@
     "chai": "^5.1.1",
     "mocha": "^10.4.0",
     "nodemon": "^3.1.0",
-    "prisma": "^5.14.0",
-    "supertest": "^7.0.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "directories": {
