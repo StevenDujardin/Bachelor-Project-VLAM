@@ -4213,15 +4213,6 @@ const nori = await prisma.ingredient.create({
     }
   });
 
-const admin =  await prisma.user.create({
-  data: {
-    username: "admin",
-    password: "$2b$10$PNu/laKFPao0yUd6iBIkb.l0VrLe7FBg6Ey1j0Z1sBT0WTpMDHNV."
-
-  }
-
-});
-
 };
 
 main()
