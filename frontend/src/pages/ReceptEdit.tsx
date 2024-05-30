@@ -35,7 +35,6 @@ const ReceptExample: ReceptProps = {
 };
 
 export const ReceptEdit: FC = () => {
-  const [persons, setPersons] = useState(4);
   const [recipe, setRecipe] = useState<ReceptProps | null>(null);
   const navigate = useNavigate();
 
@@ -63,10 +62,6 @@ export const ReceptEdit: FC = () => {
     }
   }, [recipe_id]);
 
-  const adjustPersons = (delta: number) => {
-    setPersons((prev) => Math.min(8, Math.max(1, prev + delta)));
-  };
-
   const adjustIngredientQuantity = (ingredient: string, factor: number) => {
     const match = ingredient.match(/^(\d+)\s?(.*)$/);
     if (!match) return ingredient;
@@ -81,9 +76,8 @@ export const ReceptEdit: FC = () => {
     return <Loading />;
   }
 
-  const factor = persons / 4;
   const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor)
+    adjustIngredientQuantity(ingredient, 4)
   );
 
   const handleChange = (
@@ -138,29 +132,30 @@ export const ReceptEdit: FC = () => {
 
       console.log("Recipe updated successfully:", response.data);
     } catch (error) {
-      console.log(recipe.toString())
+      console.log(recipe.toString());
       console.error("Error updating recipe:", error);
     }
   };
 
-   const goBack = () => {
-    navigate(-1)
-  }
+ 
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins">
-      <div className="flex self-center gap-2 justify-start w-screen max-w-7xl px-4">
-            <button onClick={goBack} className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none">
-              back
-            </button>
-            
-          </div>
+      <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-100 font-poppins">
+        <div className="flex self-center gap-2 justify-start w-screen max-w-7xl px-4">
+          <button
+            onClick={goBack}
+            className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+          >
+            Terug
+          </button>
+        </div>
       </div>
-      <form
-        onSubmit={handleSave}
-        className="max-w-7xl w-screen self-center"
-      >
+      <form onSubmit={handleSave} className="max-w-7xl w-screen self-center">
         <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
           <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10 p-6">
@@ -224,9 +219,9 @@ export const ReceptEdit: FC = () => {
           <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col w-full gap-4 p-6">
               <div className="text-2xl font-light font-centerBold py-2">
-                Ingredients
+                Ingredienten
               </div>
-              
+
               <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
                 {adjustedIngredients.map((ingredient, index) => (
                   <input
@@ -244,17 +239,18 @@ export const ReceptEdit: FC = () => {
           <div className="flex flex-row lg:flex-row md:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100 border border-mantis-200 shadow-lg">
             <div className="flex flex-col gap-4 p-6 w-full">
               <div className="text-2xl font-light font-centerBold py-2">
-                Steps
+                Stappen
               </div>
               <ol className="flex flex-col w-full list-decimal pl-4 space-y-4 divide-y divide-LVBO font-poppins">
                 {recipe.steps.map((step, index) => (
-                  <textarea
-                    key={index}
-                    value={step}
-                    onChange={(e) => handleArrayChange(e, index, "steps")}
-                    className="bg-white rounded-lg p-2 w-full h-42"
-                    title="Recipe Steps"
-                  />
+                  <li key={index}>
+                    <textarea
+                      value={step}
+                      onChange={(e) => handleArrayChange(e, index, "steps")}
+                      className="bg-white rounded-lg p-2 w-full h-42"
+                      title="Recipe Steps"
+                    />
+                  </li>
                 ))}
               </ol>
             </div>
@@ -265,7 +261,7 @@ export const ReceptEdit: FC = () => {
             type="submit"
             className="bg-mantis-500 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
           >
-            Save
+            Opslaan
           </button>
         </div>
       </form>
@@ -273,4 +269,4 @@ export const ReceptEdit: FC = () => {
   );
 };
 
-export default ReceptEdit;
+
