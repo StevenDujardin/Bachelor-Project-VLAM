@@ -1,5 +1,6 @@
 import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
+import bcrypt from 'bcrypt'
 
 
 const userRouter = express.Router();
@@ -8,6 +9,7 @@ const userRouter = express.Router();
 userRouter.get('/all', async (req, res) => {
     try {
         console.log("users")
+
         const users = await userService.getAllUsers()
         res.status(200).json(users);
     } catch (error) {

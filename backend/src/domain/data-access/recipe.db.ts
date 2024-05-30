@@ -133,6 +133,7 @@ const DBinsertRecipe = async (title: string, description: string, steps: Array<s
             difficulty: difficulty,
             type: type,
             ingredients: ingredients
+
         }
     });
     return mapToRecipe(recipe);
@@ -174,7 +175,7 @@ const DBdeleteIngredientByID = async (ingredient_id: number): Promise<Ingredient
     return ingredient;
 }
 
-export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBeditRecipe, DBdeleteRecipeWithID, DBdeleteIngredientByID, DBgetIngredientIDByName}
+export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBdeleteRecipeWithID, DBeditRecipe, DBdeleteIngredientByID, DBgetIngredientIDByName}
 
 
 

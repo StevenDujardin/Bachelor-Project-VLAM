@@ -4198,7 +4198,7 @@ const nori = await prisma.ingredient.create({
   //Users
   const user =  await prisma.user.create({
     data: {
-      username: "Admin",
+      username: "user",
       password: "$2b$10$lnHyDzIO0OdFcs1VuGcf8eVoYQzl.apZqFzMIYu2z2Gc0DsVr4E96"
       //admin123
 
