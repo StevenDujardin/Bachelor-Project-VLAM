@@ -30,14 +30,15 @@ const ReceptExample: ReceptProps = {
   steps: [
     "Doe alle ingrediënten voor de dressing in een afsluitbaar potje of bokaal, kruid met peper en zout en schud tot een romige dressing. Zet koel weg.",
     "Snijd het brood in blokjes.Pers de look en roerbak 30 seconden in olijfolie. Voeg de broodblokjes en het takje rozemarijn toe en bak het brood goudbruin en knapperig. Kruid met peper en zout.",
-    "Hussel de rucola onder de groene sla en schik op een mooie schaal. Verdeel er de bramen en de in plakjes gesneden rode bietjes over. Verbrokkel er de kaas over en bestrooi met de croutons.Druppel er de dressing over en serveer.",
+    "Hussel de rucola onder de groene sla en schik op een mooie schaal. Verdeel er de bramen en de in plakjes gesneden rode bietjes over. Verbrokkel er de kaas over en bestrooi met de croutons. Druppel er de dressing over en serveer.",
   ],
 };
 
 export const ReceptEdit: FC = () => {
   const [recipe, setRecipe] = useState<ReceptProps | null>(null);
+  const [newStep, setNewStep] = useState(""); // State for the new step's text
+  const [addStepIndex, setAddStepIndex] = useState<number | null>(null); // State to hold index at which to add the new step
   const navigate = useNavigate();
-
   const { recipe_id } = useParams();
 
   useEffect(() => {
@@ -99,7 +100,7 @@ export const ReceptEdit: FC = () => {
     >
   ) => {
     if (recipe) {
-      const updatedArray = [...recipe[key]];
+      const updatedArray = [...(recipe[key] as string[])];
       updatedArray[index] = event.target.value;
       setRecipe({
         ...recipe,
@@ -108,12 +109,16 @@ export const ReceptEdit: FC = () => {
     }
   };
 
-  const handleAddStep = () => {
-    if (recipe) {
+  const handleAddStep = (index: number | null) => {
+    if (recipe && index !== null && newStep.trim()) {
+      const updatedSteps = [...recipe.steps];
+      updatedSteps.splice(index + 1, 0, newStep.trim());
       setRecipe({
         ...recipe,
-        steps: [...recipe.steps, ""],
+        steps: updatedSteps,
       });
+      setNewStep("");
+      setAddStepIndex(null);
     }
   };
 
@@ -142,7 +147,7 @@ export const ReceptEdit: FC = () => {
       );
 
       console.log("Recipe updated successfully:", response.data);
-      navigate(-1);
+      navigate("/recepten");
     } catch (error) {
       console.error("Error updating recipe:", error);
     }
@@ -172,7 +177,10 @@ export const ReceptEdit: FC = () => {
           </button>
         </div>
       </div>
-      <form onSubmit={handleSave} className="max-w-7xl w-screen self-center">
+      <form
+        onSubmit={handleSave}
+        className="max-w-7xl w-screen self-center font-poppins"
+      >
         <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
           <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10 p-6">
@@ -188,12 +196,14 @@ export const ReceptEdit: FC = () => {
                     onChange={(e) => handleChange(e, "title")}
                     className="text-5xl font-light font-centerBold py-2 mb-2 w-full p-2.5 whitespace-normal rounded-lg"
                     title="Recipe Title"
+                    required
                   />
                   <textarea
                     value={recipe.description}
                     onChange={(e) => handleChange(e, "description")}
                     className="text-xl font-light py-2 w-full min-h-44 p-2.5 rounded-lg"
                     title="Recipe Description"
+                    required
                   />
                 </div>
                 <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
@@ -205,6 +215,7 @@ export const ReceptEdit: FC = () => {
                       onChange={(e) => handleChange(e, "type")}
                       className="bg-LVBO text-white w-full"
                       title="Recipe Type"
+                      required
                     />
                   </div>
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
@@ -215,6 +226,7 @@ export const ReceptEdit: FC = () => {
                       onChange={(e) => handleChange(e, "duration")}
                       className="bg-LVBO text-white w-full"
                       title="Recipe Duration"
+                      required
                     />
                   </div>
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
@@ -225,6 +237,7 @@ export const ReceptEdit: FC = () => {
                       onChange={(e) => handleChange(e, "difficulty")}
                       className="bg-LVBO text-white w-full"
                       title="Recipe Difficulty"
+                      required
                     />
                   </div>
                 </div>
@@ -259,40 +272,77 @@ export const ReceptEdit: FC = () => {
               </div>
               <ol className="flex flex-col w-full list-decimal pl-4 space-y-4 font-poppins">
                 {recipe.steps.map((step, index) => (
-                  <li key={index} className="flex items-center">
+                  <div key={index}>
+                    <ol>
+                      <li className="flex items-center">
+                        <textarea
+                          value={step}
+                          onChange={(e) => handleArrayChange(e, index, "steps")}
+                          className="bg-white rounded-lg p-2 w-full h-42"
+                          title="Recipe Steps"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteStep(index)}
+                          className="ml-2 text-red-500"
+                          title="Delete Step"
+                        >
+                          <XCircle size={24} />
+                        </button>
+                      </li>
+                    </ol>
+                    {addStepIndex === index && (
+                      <div className="flex flex-col gap-2 items-start mt-2">
+                        <textarea
+                          value={newStep}
+                          onChange={(e) => setNewStep(e.target.value)}
+                          className="bg-white rounded-lg p-2 w-full h-20"
+                          placeholder="Typ hier een nieuwe stap..."
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleAddStep(index)}
+                          className="ml-2 bg-mantis-600 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-700"
+                        >
+                          Voeg stap toe
+                        </button>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setAddStepIndex(index)}
+                      className=" flex self-start mt-2 bg-LVBO text-white py-1 pl-1 pr-2 rounded-full transition duration-200 hover:bg-mantis-600"
+                    >
+                      <PlusCircle size={24} className="mr-2" />
+                      stap invoegen
+                    </button>
+                  </div>
+                ))}
+                {addStepIndex === recipe.steps.length && (
+                  <div className="flex flex-col items-center mt-2">
                     <textarea
-                      value={step}
-                      onChange={(e) => handleArrayChange(e, index, "steps")}
-                      className="bg-white rounded-lg p-2 w-full h-42"
-                      title="Recipe Steps"
+                      value={newStep}
+                      onChange={(e) => setNewStep(e.target.value)}
+                      className="bg-white rounded-lg p-2 w-full h-20"
+                      placeholder="Typ hier een nieuwe stap..."
                     />
                     <button
                       type="button"
-                      onClick={() => handleDeleteStep(index)}
-                      className="ml-2 text-red-600"
-                      title="Delete Step"
+                      onClick={() => handleAddStep(recipe.steps.length)}
+                      className="ml-2 bg-mantis-700 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-800"
                     >
-                      <XCircle size={24} />
+                      Voeg stap toe
                     </button>
-                  </li>
-                ))}
+                  </div>
+                )}
               </ol>
-              <button
-                type="button"
-                onClick={handleAddStep}
-                className="flex self-start mt-4 bg-LVBO text-white py-2 px-2 rounded-full transition duration-200 hover:bg-green-600"
-                title="Add Step"
-              >
-                <PlusCircle size={24} className="mr-2" />
-                Voeg stap toe
-              </button>
             </div>
           </div>
         </div>
         <div className="flex justify-center mb-8">
           <button
             type="submit"
-            className="bg-mantis-600 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
+            className="bg-mantis-500 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
           >
             Opslaan
           </button>
@@ -302,3 +352,4 @@ export const ReceptEdit: FC = () => {
   );
 };
 
+export default ReceptEdit;
