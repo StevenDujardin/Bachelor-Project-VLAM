@@ -42,11 +42,6 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vite": "^5.2.11"
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "../setupTests.ts"
-    ],
-    "testEnvironment": "jest-environment-jsdom"
   }
+  
 }
