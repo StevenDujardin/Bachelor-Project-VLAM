@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { ChefHat, SignalHigh, Timer } from "lucide-react";
+import { ChefHat, SignalHigh, Timer, PlusCircle, XCircle } from "lucide-react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
@@ -72,14 +72,6 @@ export const ReceptEdit: FC = () => {
     return `${newQuantity} ${unit}`;
   };
 
-  if (!recipe) {
-    return <Loading />;
-  }
-
-  const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, 4)
-  );
-
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: keyof ReceptProps
@@ -116,6 +108,25 @@ export const ReceptEdit: FC = () => {
     }
   };
 
+  const handleAddStep = () => {
+    if (recipe) {
+      setRecipe({
+        ...recipe,
+        steps: [...recipe.steps, ""],
+      });
+    }
+  };
+
+  const handleDeleteStep = (index: number) => {
+    if (recipe) {
+      const updatedSteps = recipe.steps.filter((_, i) => i !== index);
+      setRecipe({
+        ...recipe,
+        steps: updatedSteps,
+      });
+    }
+  };
+
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -131,17 +142,23 @@ export const ReceptEdit: FC = () => {
       );
 
       console.log("Recipe updated successfully:", response.data);
+      navigate(-1);
     } catch (error) {
-      console.log(recipe.toString());
       console.error("Error updating recipe:", error);
     }
   };
 
- 
-
   const goBack = () => {
     navigate(-1);
   };
+
+  if (!recipe) {
+    return <Loading />;
+  }
+
+  const adjustedIngredients = recipe.ingredients.map((ingredient) =>
+    adjustIngredientQuantity(ingredient, 4)
+  );
 
   return (
     <>
@@ -179,7 +196,7 @@ export const ReceptEdit: FC = () => {
                     title="Recipe Description"
                   />
                 </div>
-                <div className="flex flex-col sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
+                <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <ChefHat size={24} className="mr-2" />
                     <input
@@ -215,14 +232,13 @@ export const ReceptEdit: FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col  md:flex-row w-screen max-w-7xl self-center pb-8">
+        <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center pb-8">
           <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col w-full gap-4 p-6">
               <div className="text-2xl font-light font-centerBold py-2">
                 Ingredienten
               </div>
-
-              <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
+              <div className="flex flex-col gap-2  font-poppins">
                 {adjustedIngredients.map((ingredient, index) => (
                   <input
                     key={index}
@@ -241,25 +257,42 @@ export const ReceptEdit: FC = () => {
               <div className="text-2xl font-light font-centerBold py-2">
                 Stappen
               </div>
-              <ol className="flex flex-col w-full list-decimal pl-4 space-y-4 divide-y divide-LVBO font-poppins">
+              <ol className="flex flex-col w-full list-decimal pl-4 space-y-4 font-poppins">
                 {recipe.steps.map((step, index) => (
-                  <li key={index}>
+                  <li key={index} className="flex items-center">
                     <textarea
                       value={step}
                       onChange={(e) => handleArrayChange(e, index, "steps")}
                       className="bg-white rounded-lg p-2 w-full h-42"
                       title="Recipe Steps"
                     />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteStep(index)}
+                      className="ml-2 text-red-600"
+                      title="Delete Step"
+                    >
+                      <XCircle size={24} />
+                    </button>
                   </li>
                 ))}
               </ol>
+              <button
+                type="button"
+                onClick={handleAddStep}
+                className="flex self-start mt-4 bg-LVBO text-white py-2 px-2 rounded-full transition duration-200 hover:bg-green-600"
+                title="Add Step"
+              >
+                <PlusCircle size={24} className="mr-2" />
+                Voeg stap toe
+              </button>
             </div>
           </div>
         </div>
         <div className="flex justify-center mb-8">
           <button
             type="submit"
-            className="bg-mantis-500 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
+            className="bg-mantis-600 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
           >
             Opslaan
           </button>
@@ -268,5 +301,4 @@ export const ReceptEdit: FC = () => {
     </>
   );
 };
-
 
