@@ -45,14 +45,11 @@ describe("ReceptenOverview", () => {
 
     render(<ReceptenOverview />);
 
-    fireEvent.change(
-      screen.getByPlaceholderText("Naar welk recept je be op zoek?"),
-      {
-        target: { value: "Test" },
-      }
-    );
+    fireEvent.change(screen.getByPlaceholderText("Naar welk recept je be op zoek?"), {
+      target: { value: "Test" },
+    });
 
-    fireEvent.submit(screen.getByRole("form"));
+    fireEvent.submit(screen.getByRole("button", { name: /zoeken/i }));
 
     await waitFor(() => {
       expect(screen.getByText("Test Recept 1")).toBeInTheDocument();
