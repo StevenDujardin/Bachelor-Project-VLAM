@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 
@@ -42,12 +42,12 @@ const Login: FC = () => {
     } catch (error) {
       console.error("Login error:", error);
 
-      if (error.response.status === 400) {
-        setErrorMessage(error.response.data); 
+      if ((error as AxiosError).response?.status === 400) {
+        const errorMessage = (error as AxiosError).response?.data as string;
+        setErrorMessage(errorMessage);
       } else {
         setErrorMessage("An error occurred. Please try again.");
       }
-
     }
   };
 
