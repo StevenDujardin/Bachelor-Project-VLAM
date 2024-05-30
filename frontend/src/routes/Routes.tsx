@@ -4,7 +4,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { Home } from "../pages/Home";
 import { OverOns } from "../pages/OverOns";
 import Login from "../pages/login";
-import { ReceptenOveview } from "../pages/ReceptenOveview";
+import { ReceptenOverview } from "../pages/ReceptenOverview";
 import { Recept } from "../pages/Recept";
 import { BestPractice } from "../pages/BestPractice";
 import { Header } from "../components/Header";
@@ -48,7 +48,7 @@ const Routes = () => {
     },
     {
       path: "/recepten",
-      element: <ReceptenOveview />,
+      element: <ReceptenOverview />,
     },
     {
       path: "/recepten/:recipe_id",
