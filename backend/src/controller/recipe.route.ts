@@ -1,6 +1,6 @@
 import express, { Request, Response} from 'express';
 import recipeService from "../domain/service/recipe.service"
-
+import path from 'path';
 
 const recipeRouter = express.Router();
 
@@ -80,18 +80,34 @@ recipeRouter.put('/edit/:id', async (req, res) => {
         const difficulty = req.body.difficulty as string;
         const type = req.body.type;
         const ingredients = req.body.ingredients;
+        const location = req.body.location;
         console.log(steps)
         console.log(ingredients)
         console.log(duration)
 
 
-        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching recipes:', error);
         res.status(500).send('An error occurred while editing');
       }
 });
+
+recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) => {
+    try {
+      console.log("uploadImage")
+      let file = req.params.file;
+      let fileLocation = path.join(__dirname,'../backend/images/', file);
+      res.sendFile(`${fileLocation}`)
+      res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
+    } catch (error: Error | any) {
+      res.status(500).json({ status: error.message});
+    }
+  });
+  
+
+
 
 //Delete ingredient by name
 // recipeRouter.delete('/delete/ingredient/:name', async (req, res) => {
@@ -105,6 +121,10 @@ recipeRouter.put('/edit/:id', async (req, res) => {
 //         res.status(500).json({ status: 'error'});
 //     }
 // });
+
+
+
+
 
 
 

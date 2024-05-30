@@ -45,6 +45,7 @@ const DBsearchRecipe = async (search: string): Promise<Recipe[]> => {
     }
 };
 
+
 //Edit recipe
 const DBeditRecipe = async (
     recipe_id: number, 
@@ -54,7 +55,8 @@ const DBeditRecipe = async (
     duration?: number, 
     difficulty?: string, 
     type?: string, 
-    ingredients?: string[]
+    ingredients?: string[],
+    location?: string
 ): Promise<Recipe> => {
     try {
         // Create an object with the fields to be updated, only including the fields that are not undefined
@@ -65,7 +67,8 @@ const DBeditRecipe = async (
             duration?: number, 
             difficulty?: string, 
             type?: string, 
-            ingredients?: string[] 
+            ingredients?: string[],
+            location?: string
         } = {};
 
         if (title !== undefined) updateData.title = title;
@@ -75,6 +78,7 @@ const DBeditRecipe = async (
         if (difficulty !== undefined) updateData.difficulty = difficulty;
         if (type !== undefined) updateData.type = type;
         if (ingredients !== undefined) updateData.ingredients = ingredients;
+        if (location !== undefined) updateData.location = location;
 
         // Update the recipe with the given recipe_id
         const recipe = await database.recipe.update({
@@ -88,8 +92,8 @@ const DBeditRecipe = async (
     }
 };
 
-//Delete recipe
 
+//Delete recipe
 const DBdeleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
     const recipe = await database.recipe.delete({
         where:{
