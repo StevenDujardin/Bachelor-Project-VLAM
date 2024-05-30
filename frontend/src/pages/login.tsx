@@ -1,15 +1,62 @@
 import { FC, useState } from "react";
-
 import { Eye, EyeOff } from "lucide-react";
+import axios, { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../provider/AuthProvider";
 
 const Login: FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [easterEgg, setEasterEgg] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for storing error message
+
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
+
+  // Function to handle form submission
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    setErrorMessage(""); // Clear any previous error messages
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/users/login",
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      setToken(response.data.token);
+      localStorage.setItem("user_id", response.data.user_id);
+      navigate(-1)
+    } catch (error) {
+      console.error("Login error:", error);
+
+      if ((error as AxiosError).response?.status === 400) {
+        const errorMessage = (error as AxiosError).response?.data as string;
+        setErrorMessage(errorMessage);
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    }
+  };
 
   return (
     <div className="flex h-screen items-center justify-center font-poppins ">
-      <form className="flex flex-col gap-10 p-8 min-w-96  bg-mantis-300 rounded-2xl border border-mantis-200 shadow-lg">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-10 p-8 min-w-96  bg-mantis-300 rounded-2xl border border-mantis-200 shadow-lg"
+      >
         <div onDoubleClick={() => setEasterEgg(!easterEgg)}>
           <div className="flex max-w-full justify-center">
             <svg
@@ -33,49 +80,61 @@ const Login: FC = () => {
             </svg>
           </div>
           {easterEgg && (
-            <div className="mt-2 rounded bg-mantis-100 p-2 text-center font-bold text-shades-0">
-              <p>{"by Pip and Tokke :)"}</p>
+            <div className="mt-2 rounded bg-mantis-100 p-2 text-center font-bold text-shades-0 select-none">
+              <p>{"by Tactical, ProstiDude10, Morsatra, PIP :)"}</p>
             </div>
           )}
         </div>
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1">
-            <label className="text-xl font-semibold text-shades-0">Email</label>
+            <label className="text-xl font-semibold text-shades-0 select-none">
+              username
+            </label>
             <input
               type="text"
-              placeholder="Email"
-              className="border border-mantis-400 bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none"
-              // {...register('email', { required: true })}
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className={`w-full border ${errorMessage == "Username is required" ? "border-red-600" : "border-mantis-400"} bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none`}
+              // {...register('usename', { required: true })}
             />
           </div>
 
           <div className="flex flex-col gap-1 whitespace-nowrap">
-            <label className="text-xl font-semibold text-black">Password</label>
-            <div className=" flex flex-row whitespace-nowrap w-full max-w-full justify-between gap-5 border border-mantis-400 bg-mantis-100 rounded-md  px-3 py-4 text-50 max-md:flex-wrap">
+            <label className="text-xl font-semibold text-black select-none">
+              Password
+            </label>
+            <div className="flex flex-row-reverse">
               <input
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
-                className="w-full bg-transparent font-normal outline-none placeholder:font-normal"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={` w-full border ${errorMessage == "Password is required" ? "border-red-600" : "border-mantis-400"} bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none`}
               ></input>
               <div
-                className="my-auto aspect-square w-6 shrink-0"
+                className="absolute -translate-x-4 translate-y-4 my-auto aspect-square w-6 shrink-0"
                 onClick={() => setPasswordVisible(!passwordVisible)}
               >
                 {passwordVisible ? <EyeOff size={24} /> : <Eye size={24} />}
               </div>
             </div>
           </div>
+          <div className="relative flex justify-center w-full">
+            {errorMessage && (
+              <div className="absolute -translate-y-3 w-full text-center p-2  text-red-500 rounded-md select-none">
+                {errorMessage}
+              </div>
+            )}
+          </div>
         </div>
-
         <button
-          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl font-bold text-white"
+          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl text-white select-none"
           type="submit"
-          // onClick={handleSubmit(onSubmit)}
         >
           Login
         </button>
-
         <p className="self-center text-base font-normal not-italic leading-8 text-black">
           Don't have an account?{" "}
           <a href="#" className="text-mantis-800">

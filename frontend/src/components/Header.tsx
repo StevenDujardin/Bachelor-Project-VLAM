@@ -1,12 +1,21 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 export const Header: FC = () => {
   const location = useLocation();
+  const authContext = useContext(AuthContext);
+  const loggedIn = authContext?.isLoggedIn();
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  }
 
   const isActive = (path: string) => {
     return location.pathname === path
-      ? `${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "border-b-2 border-LVBO" : " border-b-2 border-white"}`
+      ? `${location.pathname === "/login" ? "border-b-2 border-LVBO" : " border-b-2 border-white"}`
       : "";
   };
 
@@ -16,18 +25,22 @@ export const Header: FC = () => {
         <div
           className={`flex py-3 pr-4 h-11 justify-end font-poppins font-light text-sm ${location.pathname === "/recepten" || location.pathname === "/login" || /\/recepten\/\d+/.test(location.pathname) ? "text-LVBO" : " text-white  shadow-slate-500 text-shadow-sm"}`}
         >
-          <Link to="/over_ons" className={`mx-3 ${isActive("/over_ons")}`}>
+          <Link to="/over-ons" className={`mx-3 ${isActive("/over-ons")}`}>
             Over ons
           </Link>
           <Link
-            to="/best_practices"
-            className={`mx-3 ${isActive("/best_practices")}`}
+            to="/best-practices"
+            className={`mx-3 ${isActive("/best-practices")}`}
           >
             Best Practices
           </Link>
-          <Link to="/login" className={`mx-3 ${isActive("/login")}`}>
-            Login
-          </Link>
+          {loggedIn ? (
+            <button onClick={handleLogout} className={`mx-3 ${isActive("/logout")}`}>Logout</button>
+          ) : (
+            <Link to="/login" className={`mx-3  ${isActive("/login")}`}>
+              Login
+            </Link>
+          )}
         </div>
         <div className="absolute translate-x-6 -translate-y-2">
           <Link to="/">

@@ -12,10 +12,17 @@ const getRecipeWithID = (id : number): Promise<Recipe> => {
     return recipeDb.DBgetRecipesWithID(id);
 };
 
-const searchRecipe = (search : string): Promise<Recipe[]> => {
-    return recipeDb.DBsearchRecipe(search);
+const searchRecipe = async (search : string): Promise<Recipe[]> => {
+    return await recipeDb.DBsearchRecipe(search);
 };
 
+const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[]): Promise<Recipe> => {
+  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+};
+
+const deleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
+  return await recipeDb.DBdeleteRecipeWithID(recipe_id);
+};
 
 const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
   return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
@@ -74,4 +81,15 @@ const getAllIngredients = (): Promise<Ingredient[]> => {
   return recipeDb.DBgetAllIngredients();
 };
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients }
+const deleteIngredientByName = async (name: string): Promise<Ingredient> => {
+  const ingredient_id = await getIngredientIDByName(name) as unknown as number;
+  return recipeDb.DBdeleteIngredientByID(ingredient_id);
+}
+
+const getIngredientIDByName = async (name: string): Promise<number> => {
+  return await recipeDb.DBgetIngredientIDByName(name);
+};
+
+
+
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients, editRecipe, deleteRecipeWithID, deleteIngredientByName, getIngredientIDByName }

@@ -2,9 +2,9 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import * as bodyParser from "body-parser";
-import { recipeRouter } from './src/controller/recipe.route';
-import { openAIRouter } from './src/controller/openai.router';
-import { userRouter } from './src/controller/user.router';
+import { recipeRouter } from './controller/recipe.route';
+import { openAIRouter } from './controller/openai.router';
+import { userRouter } from './controller/user.router';
 
 import cors from 'cors'; 
 
@@ -30,3 +30,5 @@ app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
+
+export default app;
