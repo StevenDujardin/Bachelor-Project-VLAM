@@ -56,4 +56,9 @@ describe("ReceptenOverview", () => {
     });
     expect(screen.queryByText("Test Recept 2")).not.toBeInTheDocument();
   });
+<<<<<<< Updated upstream
 });
+=======
+});
+//gerald weet het niet meer
+>>>>>>> Stashed changes
