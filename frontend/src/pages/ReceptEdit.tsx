@@ -38,6 +38,7 @@ export const ReceptEdit: FC = () => {
   const [recipe, setRecipe] = useState<ReceptProps | null>(null);
   const [newStep, setNewStep] = useState(""); // State for the new step's text
   const [addStepIndex, setAddStepIndex] = useState<number | null>(null); // State to hold index at which to add the new step
+  const [newIngredient, setNewIngredient] = useState(""); // State for the new ingredient's text
   const navigate = useNavigate();
   const { recipe_id } = useParams();
 
@@ -62,16 +63,6 @@ export const ReceptEdit: FC = () => {
       fetchRecipe();
     }
   }, [recipe_id]);
-
-  const adjustIngredientQuantity = (ingredient: string, factor: number) => {
-    const match = ingredient.match(/^(\d+)\s?(.*)$/);
-    if (!match) return ingredient;
-
-    const [, quantity, unit] = match;
-    const newQuantity = parseFloat(quantity) * factor;
-
-    return `${newQuantity} ${unit}`;
-  };
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -132,6 +123,29 @@ export const ReceptEdit: FC = () => {
     }
   };
 
+  const handleAddIngredient = () => {
+    if (recipe && newIngredient.trim()) {
+      const updatedIngredients = [...recipe.ingredients, newIngredient.trim()];
+      setRecipe({
+        ...recipe,
+        ingredients: updatedIngredients,
+      });
+      setNewIngredient("");
+    }
+  };
+
+  const handleDeleteIngredient = (index: number) => {
+    if (recipe) {
+      const updatedIngredients = recipe.ingredients.filter(
+        (_, i) => i !== index
+      );
+      setRecipe({
+        ...recipe,
+        ingredients: updatedIngredients,
+      });
+    }
+  };
+
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -147,7 +161,7 @@ export const ReceptEdit: FC = () => {
       );
 
       console.log("Recipe updated successfully:", response.data);
-      navigate("/recepten");
+      navigate(`/recepten/${recipe_id}`);
     } catch (error) {
       console.error("Error updating recipe:", error);
     }
@@ -161,24 +175,28 @@ export const ReceptEdit: FC = () => {
     return <Loading />;
   }
 
-  const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, 4)
-  );
-
   return (
     <>
       <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-100 font-poppins">
-        <div className="flex self-center gap-2 justify-start w-screen max-w-7xl px-4">
+        <div className="flex self-center gap-2 justify-between w-screen max-w-7xl px-4">
           <button
             onClick={goBack}
             className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
           >
             Terug
           </button>
+          <button
+            type="submit"
+            form="edit-form"
+            className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+          >
+            Opslaan
+          </button>
         </div>
       </div>
       <form
         onSubmit={handleSave}
+        id="edit-form"
         className="max-w-7xl w-screen self-center font-poppins"
       >
         <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
@@ -187,7 +205,7 @@ export const ReceptEdit: FC = () => {
               <img
                 src={recipe?.image || ReceptExample.image}
                 alt="img"
-                className=" lg:w-3/5 object-cover rounded-lg shadow-lg"
+                className="lg:w-3/5 object-cover rounded-lg shadow-lg"
               ></img>
               <div className="flex flex-col justify-between lg:w-2/5">
                 <div className="flex flex-col">
@@ -206,7 +224,7 @@ export const ReceptEdit: FC = () => {
                     required
                   />
                 </div>
-                <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full  xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
+                <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <ChefHat size={24} className="mr-2" />
                     <input
@@ -249,19 +267,44 @@ export const ReceptEdit: FC = () => {
           <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col w-full gap-4 p-6">
               <div className="text-2xl font-light font-centerBold py-2">
-                Ingredienten
+                Ingrediënten
               </div>
               <div className="flex flex-col gap-2  font-poppins">
-                {adjustedIngredients.map((ingredient, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={ingredient}
-                    onChange={(e) => handleArrayChange(e, index, "ingredients")}
-                    className="bg-white rounded-lg p-2"
-                    title="Recipe Ingredients"
-                  />
+                {recipe.ingredients.map((ingredient, index) => (
+                  <div key={index} className="flex items-center">
+                    <textarea
+                      value={ingredient}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "ingredients")
+                      }
+                      className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
+                      title="Recipe Ingredients"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteIngredient(index)}
+                      className="ml-2 text-red-500"
+                      title="Delete Ingredient"
+                    >
+                      <XCircle size={24} />
+                    </button>
+                  </div>
                 ))}
+                <div className="flex flex-col gap-2 items-center">
+                  <textarea
+                    value={newIngredient}
+                    onChange={(e) => setNewIngredient(e.target.value)}
+                    className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
+                    placeholder="Typ hier een nieuw ingrediënt..."
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddIngredient}
+                    className="ml-2 bg-mantis-600 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-700"
+                  >
+                    Voeg ingrediënt toe
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -278,7 +321,7 @@ export const ReceptEdit: FC = () => {
                         <textarea
                           value={step}
                           onChange={(e) => handleArrayChange(e, index, "steps")}
-                          className="bg-white rounded-lg p-2 w-full h-42"
+                          className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
                           title="Recipe Steps"
                         />
                         <button
@@ -296,7 +339,7 @@ export const ReceptEdit: FC = () => {
                         <textarea
                           value={newStep}
                           onChange={(e) => setNewStep(e.target.value)}
-                          className="bg-white rounded-lg p-2 w-full h-20"
+                          className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
                           placeholder="Typ hier een nieuwe stap..."
                         />
                         <button
@@ -311,7 +354,7 @@ export const ReceptEdit: FC = () => {
                     <button
                       type="button"
                       onClick={() => setAddStepIndex(index)}
-                      className=" flex self-start mt-2 bg-LVBO text-white py-1 pl-1 pr-2 rounded-full transition duration-200 hover:bg-mantis-600"
+                      className="flex self-start mt-2 bg-LVBO text-white py-1 pl-1 pr-2 rounded-full transition duration-200 hover:bg-mantis-600"
                     >
                       <PlusCircle size={24} className="mr-2" />
                       stap invoegen
@@ -323,7 +366,7 @@ export const ReceptEdit: FC = () => {
                     <textarea
                       value={newStep}
                       onChange={(e) => setNewStep(e.target.value)}
-                      className="bg-white rounded-lg p-2 w-full h-20"
+                      className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
                       placeholder="Typ hier een nieuwe stap..."
                     />
                     <button
@@ -338,14 +381,6 @@ export const ReceptEdit: FC = () => {
               </ol>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center mb-8">
-          <button
-            type="submit"
-            className="bg-mantis-500 text-white py-2 px-4 rounded-full transition duration-200 hover:bg-mantis-600"
-          >
-            Opslaan
-          </button>
         </div>
       </form>
     </>

@@ -1,4 +1,4 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Home } from "../pages/Home";
@@ -93,7 +93,10 @@ const Routes = () => {
         ...routesForAuthenticatedOnly,
       ],
     },
-    // Handle any other paths as needed
+    {
+      path: "*",
+      element: <Navigate to="/" replace />, // Catch-all route to redirect unknown paths to "/"
+    },
   ]);
   // Provide the router configuration using RouterProvider
   return <RouterProvider router={router} />;
