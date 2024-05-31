@@ -22,6 +22,7 @@ model Recipe {
   type        String
   difficulty  String
   ingredients String[]
+  image       String
 }
 
 model Ingredient {

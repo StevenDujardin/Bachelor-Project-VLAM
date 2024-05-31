@@ -16,8 +16,8 @@ const searchRecipe = async (search : string): Promise<Recipe[]> => {
     return await recipeDb.DBsearchRecipe(search);
 };
 
-const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[]): Promise<Recipe> => {
-  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[], location: string): Promise<Recipe> => {
+  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
 };
 
 const deleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {

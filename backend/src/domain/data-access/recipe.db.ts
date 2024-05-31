@@ -4,6 +4,8 @@ import database from  "../../util/database"
 import { Ingredient } from "@prisma/client";
 
 
+
+
 //Get all recipes
 const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     try {
@@ -174,6 +176,8 @@ const DBdeleteIngredientByID = async (ingredient_id: number): Promise<Ingredient
     });
     return ingredient;
 }
+
+
 
 export default { DBgetAllRecipes, DBgetRecipesWithID, DBinsertRecipe , DBsearchRecipe, DBfilterRecipes, DBgetAllIngredients, DBdeleteRecipeWithID, DBeditRecipe, DBdeleteIngredientByID, DBgetIngredientIDByName}
 

@@ -1,6 +1,7 @@
 import express, { Request, Response} from 'express';
 import recipeService from "../domain/service/recipe.service"
 import path from 'path';
+import multer from "multer";
 
 const recipeRouter = express.Router();
 
@@ -80,13 +81,12 @@ recipeRouter.put('/edit/:id', async (req, res) => {
         const difficulty = req.body.difficulty as string;
         const type = req.body.type;
         const ingredients = req.body.ingredients;
-        //const location = req.body.location;
+        const location = req.body.location;
         console.log(steps)
         console.log(ingredients)
         console.log(duration)
 
-
-        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients);
+        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -94,6 +94,7 @@ recipeRouter.put('/edit/:id', async (req, res) => {
       }
 });
 
+//Upload image
 recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) => {
     try {
       console.log("uploadImage")
@@ -107,6 +108,36 @@ recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) =>
   });
   
 
+  //Get Image
+  recipeRouter.get("/image/get/location", (req, res) => {
+    res.sendFile(path.join(__dirname, "../images/location"));
+  });
+
+// Set up multer for handling file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname, '../images/'));
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    }
+  });
+  
+  const upload = multer({ storage: storage });
+  
+  recipeRouter.post('/image/upload', upload.single('file'), async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ status: 'No file uploaded' });
+      }
+  
+      console.log("uploadImage");
+      let fileLocation = path.join(__dirname, '/images/', req.file.filename);
+      res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
+    } catch (error: any) {
+      res.status(500).json({ status: error.message });
+    }
+  });
 
 
 //Delete ingredient by name
@@ -121,11 +152,6 @@ recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) =>
 //         res.status(500).json({ status: 'error'});
 //     }
 // });
-
-
-
-
-
 
 
 
