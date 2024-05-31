@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register 'tests/**/*.test.ts'",
+    "test": "mocha -r ts-node/register 'tests/**/*.test.js'",
     "start": "ts-node src/app.ts",
     "migrate": "npx prisma migrate reset --force",
     "setup": "npx ts-node init-db.ts"
@@ -22,6 +22,7 @@
     "node": "^18.20.3",
     "openai": "^4.47.1",
     "prisma": "^5.14.0",
+    "supertest": "^7.0.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
