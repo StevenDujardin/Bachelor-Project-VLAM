@@ -8,6 +8,7 @@ CREATE TABLE "Recipe" (
     "type" TEXT NOT NULL,
     "difficulty" TEXT NOT NULL,
     "ingredients" TEXT[],
+    "image" TEXT NOT NULL,
 
     CONSTRAINT "Recipe_pkey" PRIMARY KEY ("recipe_id")
 );

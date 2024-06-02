@@ -85,6 +85,8 @@ recipeRouter.put('/edit/:id', async (req, res) => {
         console.log(steps)
         console.log(ingredients)
         console.log(duration)
+        console.log(location)
+
 
         const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
         res.status(200).json(result);
@@ -101,6 +103,8 @@ recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) =>
       let file = req.params.file;
       let fileLocation = path.join(__dirname,'../backend/images/', file);
       res.sendFile(`${fileLocation}`)
+      //TODO Write image location to DB
+      //TODO Retrieve location from DB and pull image in recipe overview
       res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
     } catch (error: Error | any) {
       res.status(500).json({ status: error.message});
@@ -108,36 +112,6 @@ recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) =>
   });
   
 
-  //Get Image
-  recipeRouter.get("/image/get/location", (req, res) => {
-    res.sendFile(path.join(__dirname, "../images/location"));
-  });
-
-// Set up multer for handling file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../images/'));
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    }
-  });
-  
-  const upload = multer({ storage: storage });
-  
-  recipeRouter.post('/image/upload', upload.single('file'), async (req: Request, res: Response) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ status: 'No file uploaded' });
-      }
-  
-      console.log("uploadImage");
-      let fileLocation = path.join(__dirname, '/images/', req.file.filename);
-      res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
-    } catch (error: any) {
-      res.status(500).json({ status: error.message });
-    }
-  });
 
 
 //Delete ingredient by name
