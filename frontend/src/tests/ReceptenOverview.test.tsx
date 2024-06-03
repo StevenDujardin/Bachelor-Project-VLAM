@@ -49,7 +49,7 @@ describe("ReceptenOverview", () => {
 
     render(<ReceptenOverview />);
 
-    fireEvent.change(screen.getByPlaceholderText("Naar welk recept ben je op zoek?"), {
+    fireEvent.change(screen.getByPlaceholderText("Naar welk recept je be op zoek?"), {
       target: { value: "Test" },
     });
 
