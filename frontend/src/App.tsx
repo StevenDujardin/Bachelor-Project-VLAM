@@ -21,7 +21,6 @@ function App() {
           <Route path="/recepten" element={<ReceptenOverview />}></Route>
           <Route path="/recepten/:recipe_id" element={<Recept />}></Route>
           <Route path="/best_practices" element={<BestPractice />}></Route>
-
           <Route></Route>
         </Routes>
         <Footer />

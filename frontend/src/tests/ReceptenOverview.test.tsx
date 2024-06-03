@@ -30,13 +30,17 @@ describe("ReceptenOverview", () => {
 
   it("fetches and displays recipes", async () => {
     mock.onGet("http://localhost:3000/recipes").reply(200, mockRecipes);
-    
+
     render(<ReceptenOverview />);
 
     await waitFor(() => {
       expect(screen.getByText("Test Recept 1")).toBeInTheDocument();
+      expect(screen.getByText("Test Recept 2")).toBeInTheDocument();
     });
-    expect(screen.getByText("Test Recept 2")).toBeInTheDocument();
+
+    // Check if the duration is displayed correctly
+    expect(screen.getByText("30 minuten")).toBeInTheDocument();
+    expect(screen.getByText("15 minuten")).toBeInTheDocument();
   });
 
   it("handles search input and fetches filtered recipes", async () => {
@@ -45,7 +49,7 @@ describe("ReceptenOverview", () => {
 
     render(<ReceptenOverview />);
 
-    fireEvent.change(screen.getByPlaceholderText("Naar welk recept je be op zoek?"), {
+    fireEvent.change(screen.getByPlaceholderText("Naar welk recept ben je op zoek?"), {
       target: { value: "Test" },
     });
 
@@ -53,12 +57,11 @@ describe("ReceptenOverview", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Test Recept 1")).toBeInTheDocument();
+      expect(screen.queryByText("Test Recept 2")).not.toBeInTheDocument();
     });
-    expect(screen.queryByText("Test Recept 2")).not.toBeInTheDocument();
+
+    // Check if the duration is displayed correctly for the filtered recipe
+    expect(screen.getByText("30 minuten")).toBeInTheDocument();
+    expect(screen.queryByText("15 minuten")).not.toBeInTheDocument();
   });
-<<<<<<< Updated upstream
 });
-=======
-});
-//gerald weet het niet meer
->>>>>>> Stashed changes
