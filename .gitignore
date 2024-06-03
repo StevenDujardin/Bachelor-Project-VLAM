@@ -11,4 +11,5 @@
 .env
 node_modules/
 node_modules/
-backend/src/images/
+backend/images/
+backend/images

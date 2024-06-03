@@ -72,7 +72,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, "");
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');

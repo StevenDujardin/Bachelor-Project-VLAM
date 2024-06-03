@@ -96,18 +96,35 @@ recipeRouter.put('/edit/:id', async (req, res) => {
       }
 });
 
-//Upload image
-recipeRouter.post('/image/upload/:file*', async (req: Request, res: Response) => {
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname, '../../images/'));
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    }
+  });
+  
+  const upload = multer({ storage });
+  
+  recipeRouter.post('/image/upload', upload.single('file'), async (req: Request, res: Response) => {
     try {
-      console.log("uploadImage")
-      let file = req.params.file;
-      let fileLocation = path.join(__dirname,'../backend/images/', file);
-      res.sendFile(`${fileLocation}`)
-      //TODO Write image location to DB
-      //TODO Retrieve location from DB and pull image in recipe overview
+      console.log("uploadImage");
+  
+      if (!req.file) {
+        throw new Error("File upload failed");
+      }
+  
+      let fileLocation = req.file.path;
+      res.sendFile(fileLocation);
+  
+      // TODO: Write image location to DB
+      // TODO: Retrieve location from DB and pull image in recipe overview
+  
       res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
     } catch (error: Error | any) {
-      res.status(500).json({ status: error.message});
+      res.status(500).json({ status: error.message });
     }
   });
   
