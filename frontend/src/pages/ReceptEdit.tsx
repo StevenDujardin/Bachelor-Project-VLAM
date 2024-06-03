@@ -1,20 +1,9 @@
-import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { ChefHat, SignalHigh, Timer, PlusCircle, XCircle } from "lucide-react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
-
-export interface ReceptProps {
-  image: string;
-  title: string;
-  type: string;
-  duration: string;
-  difficulty: string;
-  recipe_id: number;
-  description: string;
-  ingredients: string[];
-  steps: string[];
-}
+import { ReceptProps } from "./Recept";
 
 const ReceptExample: ReceptProps = {
   image:
@@ -35,10 +24,12 @@ const ReceptExample: ReceptProps = {
 };
 
 export const ReceptEdit: FC = () => {
-  const [recipe, setRecipe] = useState<ReceptProps | null>(null);
+  const [recipe, setRecipe] = useState<ReceptProps>();
   const [newStep, setNewStep] = useState(""); // State for the new step's text
   const [addStepIndex, setAddStepIndex] = useState<number | null>(null); // State to hold index at which to add the new step
   const [newIngredient, setNewIngredient] = useState(""); // State for the new ingredient's text
+  const [imageFile, setImageFile] = useState<File | null>(null); // State for the new image file
+
   const navigate = useNavigate();
   const { recipe_id } = useParams();
 
@@ -81,13 +72,7 @@ export const ReceptEdit: FC = () => {
     index: number,
     key: keyof Omit<
       ReceptProps,
-      | "image"
-      | "title"
-      | "type"
-      | "duration"
-      | "difficulty"
-      | "recipe_id"
-      | "description"
+      "title" | "type" | "duration" | "difficulty" | "recipe_id" | "description"
     >
   ) => {
     if (recipe) {
@@ -146,9 +131,46 @@ export const ReceptEdit: FC = () => {
     }
   };
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setImageFile(event.target.files[0]);
+    }
+  };
+
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
+      let imagePath = recipe?.image;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("file", imageFile);
+
+        const uploadResponse = await axios.post(
+          "http://localhost:3000/recipes/image/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        imagePath = uploadResponse.data.path;
+        console.log("Image uploaded successfully:", imagePath);
+
+        setRecipe({
+          ...recipe,
+          image: imagePath,
+        })
+      
+      }
+
+      
+
+
+
       const response = await axios.put(
         `http://localhost:3000/recipes/edit/${recipe_id}`,
         recipe,
@@ -207,6 +229,13 @@ export const ReceptEdit: FC = () => {
                 alt="img"
                 className="lg:w-3/5 object-cover rounded-lg shadow-lg"
               ></img>
+              <input
+                type="file"
+                onChange={handleImageChange}
+                className="p-2 border border-gray-300 rounded-md"
+                title="Recipe Image"
+              />
+
               <div className="flex flex-col justify-between lg:w-2/5">
                 <div className="flex flex-col">
                   <textarea
