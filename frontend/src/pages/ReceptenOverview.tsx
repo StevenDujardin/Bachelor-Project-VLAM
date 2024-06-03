@@ -64,7 +64,7 @@
             },
           }
         );
-
+        console.log(response.data);
         setRecipes(response.data);
       } catch (error) {
         console.error("Error fetching recipes:", error);

@@ -8,7 +8,7 @@ describe("Login component", () => {
     render(<Login />);
 
     // Check if email input field is rendered
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Username");
     expect(emailInput).toBeInTheDocument();
 
     // Check if password input field is rendered

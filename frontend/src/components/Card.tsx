@@ -1,6 +1,5 @@
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 
 export interface CardProps {
   image: string;
@@ -19,9 +18,8 @@ export const Card: FC<CardProps> = ({
   difficulty,
   recipe_id,
 }) => {
-  const navigate = useNavigate();
   const redirectToRecept = () => {
-    navigate(`/recepten/${recipe_id}`);
+    window.location.href = "/recepten/" + recipe_id;
   };
   return (
     <div

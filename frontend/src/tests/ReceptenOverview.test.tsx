@@ -3,7 +3,6 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom";
 import { ReceptenOverview } from "../pages/ReceptenOverview";
-
 const mock = new MockAdapter(axios);
 
 const mockRecipes = [
@@ -29,18 +28,18 @@ describe("ReceptenOverview", () => {
   });
 
   it("fetches and displays recipes", async () => {
-    mock.onGet("http://localhost:3000/recipes").reply(200, mockRecipes);
-
+    mock.onGet("http://localhost:3000/recipes?").reply(200, mockRecipes);
     render(<ReceptenOverview />);
-
+    
     await waitFor(() => {
+      debugger;
       expect(screen.getByText("Test Recept 1")).toBeInTheDocument();
       expect(screen.getByText("Test Recept 2")).toBeInTheDocument();
     });
 
     // Check if the duration is displayed correctly
-    expect(screen.getByText("30 minuten")).toBeInTheDocument();
-    expect(screen.getByText("15 minuten")).toBeInTheDocument();
+    expect(screen.getByText("30 min")).toBeInTheDocument();
+    expect(screen.getByText("15 min")).toBeInTheDocument();
   });
 
   it("handles search input and fetches filtered recipes", async () => {
@@ -61,7 +60,7 @@ describe("ReceptenOverview", () => {
     });
 
     // Check if the duration is displayed correctly for the filtered recipe
-    expect(screen.getByText("30 minuten")).toBeInTheDocument();
-    expect(screen.queryByText("15 minuten")).not.toBeInTheDocument();
+    expect(screen.getByText("30 min")).toBeInTheDocument();
+    expect(screen.queryByText("15 min")).not.toBeInTheDocument();
   });
 });
