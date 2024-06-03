@@ -7,6 +7,7 @@ export class Recipe {
     readonly difficulty: string;
     readonly type: string;
     readonly ingredients: Array<string>;
+    readonly image: string;
 
 
     constructor(recipe: {
@@ -18,6 +19,7 @@ export class Recipe {
             difficulty: string;
             type: string;
             ingredients: Array<string>;
+            image: string;
     }) {
         this.recipe_id = recipe.recipe_id;
         this.title = recipe.title;
@@ -27,7 +29,8 @@ export class Recipe {
         this.difficulty = recipe.difficulty;
         this.type = recipe.type;
         this.ingredients = recipe.ingredients;
-    
+        this.image = recipe.image;
+
     }
 
 }

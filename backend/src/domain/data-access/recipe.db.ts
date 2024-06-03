@@ -4,8 +4,6 @@ import database from  "../../util/database"
 import { Ingredient } from "@prisma/client";
 
 
-
-
 //Get all recipes
 const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     try {

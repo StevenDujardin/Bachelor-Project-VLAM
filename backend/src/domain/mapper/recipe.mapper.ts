@@ -9,7 +9,8 @@ const mapToRecipe = ({
                        duration,
                        difficulty,
                        type, 
-                       ingredients
+                       ingredients,
+                       image,
                      }: RecipePrisma): Recipe => {
     return new Recipe({
         recipe_id,
@@ -19,7 +20,8 @@ const mapToRecipe = ({
         duration,
         difficulty,
         type,
-        ingredients
+        ingredients,
+        image,
     });
 };
 
