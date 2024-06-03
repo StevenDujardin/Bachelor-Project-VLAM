@@ -1,5 +1,6 @@
 import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
+import bcrypt from 'bcrypt'
 
 
 const userRouter = express.Router();
@@ -59,9 +60,9 @@ userRouter.post('/login', async (req, res) => {
         const user_id = await userService.getUserIDByUsername(username);
         
         res.status(200)
-            .json({ message: "Logged in successfully", token: token, user_id: user_id });
-    } catch (error) {
-        res.status(500).json({ status: 'error'});
+            .json({ message: "Logged in successfully", token: token, user_id: user_id, username: username });
+    } catch (error: Error | any) {
+        res.status(500).json({"error": "Gebruikersnaam of wachtwoord is niet juist"});
     }
 });
 

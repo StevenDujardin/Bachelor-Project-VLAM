@@ -1,11 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node app.ts"
+    "test": "mocha -r ts-node/register 'tests/**/*.test.js'",
+    "start": "ts-node src/app.ts",
+    "migrate": "npx prisma migrate reset --force",
+    "setup": "npx ts-node init-db.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,17 +19,31 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "node": "^18.20.3",
-    "openai": "^4.47.1"
+    "openai": "^4.47.1",
+    "prisma": "^5.14.0",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/chai": "^4.3.16",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/mocha": "^10.0.6",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.12.13",
+    "@types/supertest": "^6.0.2",
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
     "nodemon": "^3.1.0",
-    "prisma": "^5.14.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
 }

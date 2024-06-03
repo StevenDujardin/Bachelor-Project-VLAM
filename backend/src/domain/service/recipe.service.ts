@@ -12,14 +12,24 @@ const getRecipeWithID = (id : number): Promise<Recipe> => {
     return recipeDb.DBgetRecipesWithID(id);
 };
 
-const searchRecipe = (search : string): Promise<Recipe[]> => {
-    return recipeDb.DBsearchRecipe(search);
+const searchRecipe = async (search : string): Promise<Recipe[]> => {
+    return await recipeDb.DBsearchRecipe(search);
 };
 
+const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[], location: string): Promise<Recipe> => {
+  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
+};
+
+const deleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
+  return await recipeDb.DBdeleteRecipeWithID(recipe_id);
+};
 
 const filterRecipes = (typeDish: string, difficulty: string, duration: number): Promise<Recipe[]> => {
   return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
 };
+
+
+
 
 const generateRecipe = async (prompt: string): Promise<Recipe> => {
     const openai = new OpenAI({apiKey:process.env.OPENAI_SECRET_KEY});
@@ -62,7 +72,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, "");
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');
@@ -74,4 +84,15 @@ const getAllIngredients = (): Promise<Ingredient[]> => {
   return recipeDb.DBgetAllIngredients();
 };
 
-export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients }
+const deleteIngredientByName = async (name: string): Promise<Ingredient> => {
+  const ingredient_id = await getIngredientIDByName(name) as unknown as number;
+  return recipeDb.DBdeleteIngredientByID(ingredient_id);
+}
+
+const getIngredientIDByName = async (name: string): Promise<number> => {
+  return await recipeDb.DBgetIngredientIDByName(name);
+};
+
+
+
+export default { getAllRecipes, getRecipeWithID, generateRecipe, searchRecipe, filterRecipes, getAllIngredients, deleteRecipeWithID, deleteIngredientByName, getIngredientIDByName, editRecipe }

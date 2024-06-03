@@ -16,7 +16,8 @@ const main = async () => {
           steps: ["Neem taart", "Gooi er aardbeien op"],
           difficulty: "Gemakkelijk",
           type: "dessert",
-          ingredients: ["Aardbeien", "Taart"]   
+          ingredients: ["Aardbeien", "Taart"],
+          image: "", 
 
       }
   });
@@ -32,7 +33,8 @@ const main = async () => {
         ingredients: ["4 kippenbillen", "2 eierdooiers","2 teentjes look","½ limoen of citroen",
         "1 eetlepel mosterd","15 cl arachideolie","1 dl natuuryoghurt","cayennepeper",
         "Engelse saus (Worchestershiresaus)","3 zoute ansjovisfilets","1 krop Romeinse sla","1 ongesneden toastbrood"
-      ,"klontjes boter","olijfolie","100 g Parmezaanse kaas in blok"]
+      ,"klontjes boter","olijfolie","100 g Parmezaanse kaas in blok"],
+      image: "", 
 
     }
 });
@@ -49,6 +51,7 @@ const main = async () => {
           "Snijd het brood in blokjes.Pers de look en roerbak 30 seconden in olijfolie. Voeg de broodblokjes en het takje rozemarijn toe en bak het brood goudbruin en knapperig. Kruid met peper en zout.",
           "Hussel de rucola onder de groene sla en schik op een mooie schaal. Verdeel er de bramen en de in plakjes gesneden rode bietjes over. Verbrokkel er de kaas over en bestrooi met de croutons.Druppel er de dressing over en serveer.",
         ],
+        image: "",
     }
   });
 
@@ -4196,10 +4199,11 @@ const nori = await prisma.ingredient.create({
 
   
   //Users
-  const admin =  await prisma.user.create({
+  const user =  await prisma.user.create({
     data: {
-      username: "Admin",
-      password: "$2b$10$lnHyDzIO0OdFcs1VuGcf8eVoYQzl.apZqFzMIYu2z2Gc0DsVr4E96"
+      username: "user",
+      password: "$2b$10$WPjlJWr4FT5xl5XF1tTrtuqP7rzX0xayKtV4RisfXS4sOXhJ0PwlS"
+      
       //admin123
 
     }

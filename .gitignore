@@ -9,5 +9,7 @@
 *.sln
 *.sw?
 .env
-backend/node_modules
-/node_modules
+node_modules/
+node_modules/
+backend/images/
+backend/images

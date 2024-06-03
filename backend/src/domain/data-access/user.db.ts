@@ -1,6 +1,6 @@
 import { User } from "../model/user"
 import { mapToUser, mapToUsers } from "../mapper/user.mapper";
-import database from  "../../../util/database"
+import database from  "../../util/database"
 
 
 const DBgetAllUsers = async (): Promise<User[]> => {

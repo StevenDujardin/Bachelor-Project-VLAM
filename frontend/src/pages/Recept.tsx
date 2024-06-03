@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { ChefHat, SignalHigh, Timer } from "lucide-react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Loading } from "./Loading";
+import { AuthContext } from "../provider/AuthProvider";
 
 export interface ReceptProps {
   image: string;
@@ -37,8 +38,12 @@ const ReceptExample: ReceptProps = {
 export const Recept: FC = () => {
   const [persons, setPersons] = useState(4);
   const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const navigate = useNavigate();
 
   const { recipe_id } = useParams();
+  const authContext = useContext(AuthContext);
+  const loggedIn = authContext?.isLoggedIn();
   // Effect hook to fetch recipe on mount
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -49,7 +54,7 @@ export const Recept: FC = () => {
             headers: {
               Accept: "*/*",
             },
-          },
+          }
         );
         setRecipe(response.data);
       } catch (error) {
@@ -80,12 +85,56 @@ export const Recept: FC = () => {
   }
   const factor = persons / 4; // 4 is the base number of persons
   const adjustedIngredients = recipe.ingredients.map((ingredient) =>
-    adjustIngredientQuantity(ingredient, factor),
+    adjustIngredientQuantity(ingredient, factor)
   );
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/recipes/delete/${recipe_id}`,
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Recipe deleted successfully:", response.data);
+      navigate("/recepten");
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+    }
+  };
 
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-52 object-cover bg-mantis-50 font-poppins"></div>
+      <div className="flex flex-col justify-end  w-full h-52 object-cover bg-mantis-100 font-poppins">
+        {loggedIn ? (
+          <div className="flex self-center gap-2 justify-end w-screen max-w-7xl px-4">
+            <button
+              onClick={() => setShowDeletePopup(true)}
+              className="bg-red-500 font-centerBold border border-red-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+            >
+              Verwijderen
+            </button>
+            {showDeletePopup && (
+              <DeletePopup
+                onConfirm={handleDelete}
+                onCancel={() => setShowDeletePopup(false)}
+              />
+            )}
+            <Link
+              to={`/recepten/${recipe_id}/edit`}
+              className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+              type="submit"
+            >
+              Aanpassen
+            </Link>
+          </div>
+        ) : null}
+      </div>
+
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center py-8">
         <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
           <div className="flex flex-col lg:flex-row gap-10 p-6">
@@ -127,7 +176,7 @@ export const Recept: FC = () => {
         <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
           <div className="flex flex-col w-full gap-4 p-6">
             <div className=" text-2xl font-light font-centerBold py-2">
-              Ingredients
+              Ingredienten
             </div>
             <div className="flex justify-between p-2 mx-4 rounded-full bg-white">
               <button
@@ -162,7 +211,7 @@ export const Recept: FC = () => {
         <div className="flex flex-row lg:flex-row md:w-2/3 mx-4 rounded-2xl overflow-hidden object-cover bg-mantis-100 border border-mantis-200 shadow-lg">
           <div className="flex flex-col gap-4 p-6">
             <div className="text-2xl font-light font-centerBold py-2">
-              Steps
+              Stappen
             </div>
             <ol className="list-decimal pl-4 space-y-4 divide-y divide-LVBO font-poppins">
               {recipe.steps.map((step, index) => (
@@ -177,3 +226,30 @@ export const Recept: FC = () => {
     </>
   );
 };
+
+const DeletePopup: FC<{ onConfirm: () => void; onCancel: () => void }> = ({
+  onConfirm,
+  onCancel,
+}) => (
+  <div className="fixed inset-0 z-20 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="bg-white rounded-lg p-6">
+      <h2 className="text-xl mb-4">
+        ben je zeker dat je dit recept wil verwijderen?
+      </h2>
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={onCancel}
+          className="bg-gray-300 text-black py-2 px-4 rounded-full"
+        >
+          Terug
+        </button>
+        <button
+          onClick={onConfirm}
+          className="bg-red-500 text-white py-2 px-4 rounded-full"
+        >
+          Verwijderen
+        </button>
+      </div>
+    </div>
+  </div>
+);
