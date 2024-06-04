@@ -199,9 +199,7 @@ export const ReceptenOverview: FC = () => {
             <Card
               key={recipe.recipe_id}
               recipe_id={recipe.recipe_id}
-              image={
-                "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-              }
+              image={recipe?.image || "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
               title={recipe.title}
               type={recipe.type}
               duration={recipe.duration}
