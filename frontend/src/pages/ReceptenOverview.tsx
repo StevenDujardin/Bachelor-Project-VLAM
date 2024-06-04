@@ -194,22 +194,20 @@
             </button>
           </form>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8 animate-fadeIn">
-            {recipes.map((recipe) => (
-              <Card
-                key={recipe.recipe_id}
-                recipe_id={recipe.recipe_id}
-                image={
-                  "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
-                }
-                title={recipe.title}
-                type={recipe.type}
-                duration={recipe.duration}
-                difficulty={recipe.difficulty}
-              />
-            ))}
-          </div>
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8 animate-fadeIn">
+          {recipes.map((recipe) => (
+            <Card
+              key={recipe.recipe_id}
+              recipe_id={recipe.recipe_id}
+              image={recipe?.image || "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
+              title={recipe.title}
+              type={recipe.type}
+              duration={recipe.duration}
+              difficulty={recipe.difficulty}
+            />
+          ))}
         </div>
-      </>
-    );
-  };
+      </div>
+    </>
+  );
+};

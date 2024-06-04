@@ -1,20 +1,9 @@
-import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { ChefHat, SignalHigh, Timer, PlusCircle, XCircle } from "lucide-react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
-
-export interface ReceptProps {
-  image: string;
-  title: string;
-  type: string;
-  duration: string;
-  difficulty: string;
-  recipe_id: number;
-  description: string;
-  ingredients: string[];
-  steps: string[];
-}
+import { ReceptProps } from "./Recept";
 
 const ReceptExample: ReceptProps = {
   image:
@@ -35,10 +24,13 @@ const ReceptExample: ReceptProps = {
 };
 
 export const ReceptEdit: FC = () => {
-  const [recipe, setRecipe] = useState<ReceptProps | null>(null);
+  const [recipe, setRecipe] = useState<ReceptProps>();
   const [newStep, setNewStep] = useState(""); // State for the new step's text
   const [addStepIndex, setAddStepIndex] = useState<number | null>(null); // State to hold index at which to add the new step
   const [newIngredient, setNewIngredient] = useState(""); // State for the new ingredient's text
+  const [imageFile, setImageFile] = useState<File | null>(null); // State for the new image file
+  const [imagePreview, setImagePreview] = useState<string>(""); // State for the new image preview URL
+
   const navigate = useNavigate();
   const { recipe_id } = useParams();
 
@@ -54,6 +46,7 @@ export const ReceptEdit: FC = () => {
           }
         );
         setRecipe(response.data);
+        setImagePreview(response.data.image); // Set initial image preview
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -81,13 +74,13 @@ export const ReceptEdit: FC = () => {
     index: number,
     key: keyof Omit<
       ReceptProps,
-      | "image"
       | "title"
       | "type"
       | "duration"
       | "difficulty"
       | "recipe_id"
       | "description"
+      | "image"
     >
   ) => {
     if (recipe) {
@@ -146,24 +139,72 @@ export const ReceptEdit: FC = () => {
     }
   };
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setImageFile(file);
+
+      // Create a preview URL for the selected image
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
+  };
+
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/recipes/edit/${recipe_id}`,
-        recipe,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
 
-      console.log("Recipe updated successfully:", response.data);
-      navigate(`/recepten/${recipe_id}`);
-    } catch (error) {
-      console.error("Error updating recipe:", error);
+    if (recipe) {
+      try {
+        let imagePath = recipe.image;
+
+        // Only upload if imageFile state is not null (meaning a new image was selected)
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append("file", imageFile);
+
+          const uploadResponse = await axios.post(
+            "http://localhost:3000/recipes/image/upload",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+
+          imagePath = uploadResponse.data.path;
+        }
+
+        // Update the local recipe state with the new image path
+        const updatedRecipe = {
+          ...recipe,
+          image: imagePath,
+        };
+
+        // Update the state and wait for it to complete before proceeding
+        await new Promise((resolve) => {
+          setRecipe(updatedRecipe);
+          resolve(true);
+        });
+
+       
+        // Now that the state has been updated, proceed to make the PUT request
+        const response = await axios.put(
+          `http://localhost:3000/recipes/edit/${recipe_id}`,
+          updatedRecipe, // Make sure you're sending the updatedRecipe with the new image path
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log("Recipe updated successfully:", response.data);
+        navigate(`/recepten/${recipe_id}`);
+      } catch (error) {
+        console.error("Error updating recipe:", error);
+      }
     }
   };
 
@@ -202,11 +243,20 @@ export const ReceptEdit: FC = () => {
         <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
           <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10 p-6">
-              <img
-                src={recipe?.image || ReceptExample.image}
-                alt="img"
-                className="lg:w-3/5 object-cover rounded-lg shadow-lg"
-              ></img>
+              <div className="flex flex-col lg:w-3/5">
+                <img
+                  src={imagePreview || ReceptExample.image} // Use imagePreview for the src
+                  alt="img"
+                  className="object-hidden rounded-lg shadow-lg"
+                ></img>
+                <input
+                  type="file"
+                  onChange={handleImageChange}
+                  className="p-2 "
+                  title="Recipe Image"
+                />
+              </div>
+
               <div className="flex flex-col justify-between lg:w-2/5">
                 <div className="flex flex-col">
                   <textarea

@@ -16,6 +16,9 @@ export default {
         DEFAULT: "0 2px 4px var(--tw-shadow-color)",
         lg: "0 8px 16px var(--tw-shadow-color)",
       },
+      maxHeight: {
+        142: '596px',
+      },
       colors: {
         mantis: {
           50: "#f3faf0",
