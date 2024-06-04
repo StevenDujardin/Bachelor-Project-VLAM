@@ -2,6 +2,7 @@ import express, { Request, Response} from 'express';
 import recipeService from "../domain/service/recipe.service"
 import path from 'path';
 import multer from "multer";
+import fs from 'fs';
 
 const recipeRouter = express.Router();
 
@@ -75,20 +76,16 @@ recipeRouter.put('/edit/:id', async (req, res) => {
 
         const recipe_id = Number(req.params.id)
         const title = req.body.title as string;
-        const description = req.body.description;
+        const description = req.body.description as string;
         const steps = req.body.steps;
-        const duration = req.body.duration as unknown as number;
+        const duration = Number(req.body.duration);
         const difficulty = req.body.difficulty as string;
-        const type = req.body.type;
+        const type = req.body.type as string;
         const ingredients = req.body.ingredients;
-        const location = req.body.location;
-        console.log(steps)
-        console.log(ingredients)
-        console.log(duration)
-        console.log(location)
+        const image = req.body.image as string;
+        console.log(req.body)
 
-
-        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
+        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image);
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -108,7 +105,7 @@ recipeRouter.put('/edit/:id', async (req, res) => {
   
   const upload = multer({ storage });
   
-  recipeRouter.post('/image/upload', upload.single('file'), async (req: Request, res: Response) => {
+  recipeRouter.post('/image/upload/', upload.single('file'), async (req: Request, res: Response) => {
     try {
       console.log("uploadImage");
   
@@ -119,15 +116,37 @@ recipeRouter.put('/edit/:id', async (req, res) => {
       let fileLocation = req.file.path;
       res.sendFile(fileLocation);
   
+      let fileUrl = `http://localhost:3000/recipes/image/${req.file.filename}`;
+  
       // TODO: Write image location to DB
       // TODO: Retrieve location from DB and pull image in recipe overview
   
-      res.status(200).json({ status: "File uploaded successfully", path: fileLocation });
+
+      res.status(200).json({ status: "File uploaded successfully", path: fileUrl });
     } catch (error: Error | any) {
       res.status(500).json({ status: error.message });
     }
   });
-  
+
+recipeRouter.get('/image/:filename', async (req: Request, res: Response) => {
+    try {
+        console.log("getImage");
+        const filename = req.params.filename;
+        const directoryPath = path.join(__dirname, '../../images/');
+        const imagePath = path.join(directoryPath, filename);
+
+        // Check if file exists before sending it
+        if (fs.existsSync(imagePath)) {
+            res.sendFile(imagePath);
+        } else {
+            res.status(404).json({ status: 'error', message: 'Image not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching image:', error);
+        res.status(500).send('An error occurred while fetching the image');
+    }
+});
+
 
 
 

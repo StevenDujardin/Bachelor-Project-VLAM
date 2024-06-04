@@ -3,7 +3,6 @@ import { mapToRecipe, mapToRecipes } from "../mapper/recipe.mapper";
 import database from  "../../util/database"
 import { Ingredient } from "@prisma/client";
 
-
 //Get all recipes
 const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     try {
@@ -56,7 +55,7 @@ const DBeditRecipe = async (
     difficulty?: string, 
     type?: string, 
     ingredients?: string[],
-    location?: string
+    image?: string
 ): Promise<Recipe> => {
     try {
         // Create an object with the fields to be updated, only including the fields that are not undefined
@@ -68,7 +67,7 @@ const DBeditRecipe = async (
             difficulty?: string, 
             type?: string, 
             ingredients?: string[],
-            location?: string
+            image?: string
         } = {};
 
         if (title !== undefined) updateData.title = title;
@@ -78,12 +77,14 @@ const DBeditRecipe = async (
         if (difficulty !== undefined) updateData.difficulty = difficulty;
         if (type !== undefined) updateData.type = type;
         if (ingredients !== undefined) updateData.ingredients = ingredients;
-        if (location !== undefined) updateData.location = location;
-
+        if (image !== undefined) updateData.image = image;
+    
         // Update the recipe with the given recipe_id
+  console.log(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image)
+
         const recipe = await database.recipe.update({
             where: { recipe_id: recipe_id },
-            data: updateData,
+            data: updateData
         });
 
         return mapToRecipe(recipe);
@@ -123,8 +124,7 @@ const DBfilterRecipes = async (type: string, difficulty: string, duration: numbe
 
 
 //Add recipe
-const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>, location: string): Promise<Recipe> => {
-    const image = ""
+const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
     const recipe = await database.recipe.create({
         data: {
             title: title,
@@ -134,7 +134,7 @@ const DBinsertRecipe = async (title: string, description: string, steps: Array<s
             difficulty: difficulty,
             type: type,
             ingredients: ingredients,
-            image: image,
+            image: "",
 
         }
     });
