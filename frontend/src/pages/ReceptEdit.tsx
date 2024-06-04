@@ -72,7 +72,7 @@ export const ReceptEdit: FC = () => {
     index: number,
     key: keyof Omit<
       ReceptProps,
-      "title" | "type" | "duration" | "difficulty" | "recipe_id" | "description"
+      "title" | "type" | "duration" | "difficulty" | "recipe_id" | "description" | "image"
     >
   ) => {
     if (recipe) {
@@ -139,55 +139,64 @@ export const ReceptEdit: FC = () => {
 
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      let imagePath = recipe?.image;
-
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-
-        const uploadResponse = await axios.post(
-          "http://localhost:3000/recipes/image/upload",
-          formData,
+  
+    if (recipe) {
+      try {
+        let imagePath = recipe.image;
+  
+        // Only upload if imageFile state is not null (meaning a new image was selected)
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append("file", imageFile);
+  
+          const uploadResponse = await axios.post(
+            "http://localhost:3000/recipes/image/upload",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+  
+          imagePath = uploadResponse.data.path;
+        }
+  
+        // Update the local recipe state with the new image path
+        const updatedRecipe = {
+          ...recipe,
+          image: imagePath,
+        };
+  
+        // Update the state and wait for it to complete before proceeding
+        await new Promise((resolve) => {
+          setRecipe(updatedRecipe);
+          resolve(true);
+        });
+  
+        console.log("Recipe updated:", updatedRecipe);
+        console.log("Image path:", imagePath);
+        console.log("image ", recipe.image); 
+        // Now that the state has been updated, proceed to make the PUT request
+        const response = await axios.put(
+          `http://localhost:3000/recipes/edit/${recipe_id}`,
+          updatedRecipe, // Make sure you're sending the updatedRecipe with the new image path
           {
             headers: {
-              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+              "Content-Type": "application/json",
             },
           }
         );
-
-        imagePath = uploadResponse.data.path;
-        console.log("Image uploaded successfully:", imagePath);
-
-        setRecipe({
-          ...recipe,
-          image: imagePath,
-        })
-      
+  
+        console.log("Recipe updated successfully:", response.data);
+        navigate(`/recepten/${recipe_id}`);
+      } catch (error) {
+        console.error("Error updating recipe:", error);
       }
-
-      
-
-
-
-      const response = await axios.put(
-        `http://localhost:3000/recipes/edit/${recipe_id}`,
-        recipe,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Recipe updated successfully:", response.data);
-      navigate(`/recepten/${recipe_id}`);
-    } catch (error) {
-      console.error("Error updating recipe:", error);
     }
   };
+  
 
   const goBack = () => {
     navigate(-1);

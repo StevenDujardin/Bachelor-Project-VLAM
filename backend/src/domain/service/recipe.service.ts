@@ -16,8 +16,8 @@ const searchRecipe = async (search : string): Promise<Recipe[]> => {
     return await recipeDb.DBsearchRecipe(search);
 };
 
-const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[], location: string): Promise<Recipe> => {
-  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
+const editRecipe = async (recipe_id: number, title: string, description: string, steps: string[], duration: number, difficulty: string, type: string, ingredients: string[], image: string): Promise<Recipe> => {
+  return await recipeDb.DBeditRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image);
 };
 
 const deleteRecipeWithID = async (recipe_id: number): Promise<Recipe> => {
@@ -72,7 +72,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, "");
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');
