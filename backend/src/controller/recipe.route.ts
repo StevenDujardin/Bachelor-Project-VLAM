@@ -76,20 +76,16 @@ recipeRouter.put('/edit/:id', async (req, res) => {
 
         const recipe_id = Number(req.params.id)
         const title = req.body.title as string;
-        const description = req.body.description;
+        const description = req.body.description as string;
         const steps = req.body.steps;
         const duration = Number(req.body.duration);
         const difficulty = req.body.difficulty as string;
-        const type = req.body.type;
+        const type = req.body.type as string;
         const ingredients = req.body.ingredients;
-        const location = req.body.image;
-        console.log(steps)
-        console.log(ingredients)
-        console.log(duration)
-        console.log(location)
+        const image = req.body.image as string;
+        console.log(req.body)
 
-
-        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, location);
+        const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image);
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching recipes:', error);
