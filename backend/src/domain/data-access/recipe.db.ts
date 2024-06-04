@@ -79,7 +79,6 @@ const DBeditRecipe = async (
         if (type !== undefined) updateData.type = type;
         if (ingredients !== undefined) updateData.ingredients = ingredients;
         if (location !== undefined) updateData.location = location;
-
         // Update the recipe with the given recipe_id
         const recipe = await database.recipe.update({
             where: { recipe_id: recipe_id },
@@ -123,8 +122,7 @@ const DBfilterRecipes = async (type: string, difficulty: string, duration: numbe
 
 
 //Add recipe
-const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>, location: string): Promise<Recipe> => {
-    const image = ""
+const DBinsertRecipe = async (title: string, description: string, steps: Array<string>, duration: number, difficulty: string, type: string, ingredients: Array<string>): Promise<Recipe> => {
     const recipe = await database.recipe.create({
         data: {
             title: title,
@@ -134,7 +132,7 @@ const DBinsertRecipe = async (title: string, description: string, steps: Array<s
             difficulty: difficulty,
             type: type,
             ingredients: ingredients,
-            image: image,
+            image: "",
 
         }
     });
