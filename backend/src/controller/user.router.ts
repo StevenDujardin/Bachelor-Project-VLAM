@@ -1,9 +1,15 @@
 import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
-import bcrypt from 'bcrypt'
+
+import jwt from 'jsonwebtoken';
+
+
 
 
 const userRouter = express.Router();
+
+
+
 
 //ALL USERS
 userRouter.get('/all', async (req, res) => {
@@ -58,9 +64,10 @@ userRouter.post('/login', async (req, res) => {
         const password = req.body.password;
         const token = await userService.checkCredentials(username, password);
         const user_id = await userService.getUserIDByUsername(username);
-        
+        res.cookie('token', token, { httpOnly: true, secure: true });
+
         res.status(200)
-            .json({ message: "Logged in successfully", token: token, user_id: user_id, username: username });
+            .json({ message: "Logged in successfully",user_id: user_id, username: username });
     } catch (error: Error | any) {
         res.status(500).json({"error": "Gebruikersnaam of wachtwoord is niet juist"});
     }
@@ -68,8 +75,38 @@ userRouter.post('/login', async (req, res) => {
 
 //LOGOUT
 userRouter.post('/logout', async (req , res) => {
-    return res.clearCookie("token").status(200).json({message : `Successfully logged out`})
+    res.clearCookie('token'); // Ensure you clear the appropriate cookie
+    res.status(200).json({message : `Successfully logged out`})
 });
 
+
+// AUTH STATUS
+userRouter.get('/auth/status', (req, res) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        console.log("not logged in")
+        return res.status(401).json({ isLoggedIn: false });
+    }
+    const JWTSecret = process.env.JWT_SECRET;
+
+    if (!JWTSecret) {
+        return res.status(500).json({ error: 'JWT secret is not defined' });
+    }
+
+    try {
+
+    jwt.verify(token, JWTSecret) 
+
+    console.log("logged in")
+        res.status(200).json({ isLoggedIn: true });
+    } catch (err) {
+        
+            console.log("not logged in")
+            res.status(401).json({ isLoggedIn: false });
+        
+        
+    };
+});
 
 export { userRouter }
