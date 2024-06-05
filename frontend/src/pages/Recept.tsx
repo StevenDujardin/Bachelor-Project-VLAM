@@ -37,7 +37,7 @@ const ReceptExample: ReceptProps = {
 
 export const Recept: FC = () => {
   const [persons, setPersons] = useState(4);
-  const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
+  const [recipe, setRecipe] = useState<ReceptProps>(); // Initialize recipe state to null
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const navigate = useNavigate();
 
@@ -56,7 +56,11 @@ export const Recept: FC = () => {
             },
           }
         );
+        
         setRecipe(response.data);
+        if (recipe) {
+          setRecipe({...recipe, image:"https://www.lekkervanbijons.be/sites/default/files/styles/960w_ratio_2_1/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=-zeKi844"});
+        }
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -70,6 +74,30 @@ export const Recept: FC = () => {
   const adjustPersons = (delta: number) => {
     setPersons((prev) => Math.min(8, Math.max(1, prev + delta))); // Ensure at least 1 person and at most 8
   };
+
+  useEffect(() => {
+    console.log("banana");
+    if (recipe) {
+      updateImage(recipe.image);
+    }
+  }, []);
+
+  const updateImage = (url: string) => {
+    const interval = setInterval(async () => {
+      try {
+        const response = await axios.get(url);
+        if (response.status === 200 || response.status===304) {
+          console.log(recipe);
+          if(recipe) {
+            setRecipe({ ...recipe, image:url });
+            clearInterval(interval);
+          }
+        }
+      } catch (error) {
+        console.log('Image still being generated...')
+      }
+    }, 5000)
+  }
 
   const adjustIngredientQuantity = (ingredient: string, factor: number) => {
     const match = ingredient.match(/^(\d+)\s?(.*)$/);
