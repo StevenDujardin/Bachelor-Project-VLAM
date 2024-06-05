@@ -91,7 +91,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
         const resp = await openai.images.generate({ model: "dall-e-3", prompt: imagePrompt, style: "vivid", n: 1 });
         const image = resp.data[0].url;
         const filename = crypto.randomBytes(16).toString('hex');
-        downloadImage(image, filename);
+        await downloadImage(image, filename);
 
         return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `http://localhost:3000/recipes/image/${filename}.png`);
         
