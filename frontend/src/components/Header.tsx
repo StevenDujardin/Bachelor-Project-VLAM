@@ -1,17 +1,26 @@
 import { FC, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import axios from "axios";
 
 export const Header: FC = () => {
   const location = useLocation();
-  const authContext = useContext(AuthContext);
-  const loggedIn = authContext?.isLoggedIn();
 
+  const { isLoggedIn, setLoggedIn } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:3000/users/logout",
+        {},
+        { withCredentials: true }
+      );
+      setLoggedIn(false);
+      window.location.reload();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   const isActive = (path: string) => {
     return location.pathname === path
@@ -34,8 +43,13 @@ export const Header: FC = () => {
           >
             Best Practices
           </Link>
-          {loggedIn ? (
-            <button onClick={handleLogout} className={`mx-3 ${isActive("/logout")}`}>Logout</button>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className={`mx-3 ${isActive("/logout")}`}
+            >
+              Logout
+            </button>
           ) : (
             <Link to="/login" className={`mx-3  ${isActive("/login")}`}>
               Login

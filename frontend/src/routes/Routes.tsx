@@ -1,9 +1,10 @@
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { useAuth } from "../provider/AuthProvider";
+import { useAuth } from "../provider/useAuth";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Home } from "../pages/Home";
 import { OverOns } from "../pages/OverOns";
 import Login from "../pages/login";
+
 import { ReceptenOverview } from "../pages/ReceptenOverview";
 import { Recept } from "../pages/Recept";
 import { BestPractice } from "../pages/BestPractice";
@@ -26,7 +27,7 @@ const Layout = () => {
 };
 
 const Routes = () => {
-  const { token } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
@@ -66,10 +67,7 @@ const Routes = () => {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        {
-          path: "/",
-          element: <div>User Home Page</div>,
-        },
+        
         {
           path: "/recepten/:recipe_id/edit",
           element: <ReceptEdit />,
@@ -89,7 +87,7 @@ const Routes = () => {
       element: <Layout />, // Apply the layout with header and footer here
       children: [
         ...routesForPublic,
-        ...(!token ? routesForNotAuthenticatedOnly : []),
+        ...(!isLoggedIn ? routesForNotAuthenticatedOnly : []),
         ...routesForAuthenticatedOnly,
       ],
     },

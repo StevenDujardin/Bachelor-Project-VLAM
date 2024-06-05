@@ -3,22 +3,21 @@ import {
   createContext,
   FC,
   ReactNode,
-  useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
 
 // Define an interface for the AuthContext
-interface AuthContextType {
-  token: string | null;
-  setToken: (newToken: string) => void;
-  isLoggedIn: () => boolean;
-
+export interface AuthContextType {
+  isLoggedIn: boolean;
+  setLoggedIn: (value: boolean) => void;
 }
 
 // Create the context with a default value of undefined as it will always be provided by AuthProvider
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 // Define props for AuthProvider component
 interface AuthProviderProps {
   children: ReactNode;
@@ -26,46 +25,32 @@ interface AuthProviderProps {
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   // State to hold the authentication token
-  const [token, setToken_] = useState(localStorage.getItem("token"));
-
-  const isLoggedIn = (): boolean => {
-    return token !== null;
-  };
-  // Function to set the authentication token
-  const setToken = (newToken: string) => {
-    setToken_(newToken);
-  };
-
+  const [isLoggedIn, setLoggedIn] = useState<boolean>(true);
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      localStorage.setItem("token", token);
-    } else {
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("token");
-    }
-  }, [token]);
+    axios
+      .get("http://localhost:3000/users/auth/status", { withCredentials: true })
+      .then((response) => {
+        if (response.data.isLoggedIn) {
+          setLoggedIn(true);
+          console.log("Successfully authenticated");
+        } else {
+          setLoggedIn(false);
+        }
+      })
+      .catch(() => setLoggedIn(false));
+  }, []);
 
   // Memoized value of the authentication context
   const contextValue = useMemo(
     () => ({
-      token,
-      setToken,
-      isLoggedIn
+      isLoggedIn,
+      setLoggedIn,
     }),
-    [token, isLoggedIn]
+    [isLoggedIn]
   );
 
   // Provide the authentication context to the children components
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
-};
-
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 };
