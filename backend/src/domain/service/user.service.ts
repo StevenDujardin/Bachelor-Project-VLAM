@@ -64,4 +64,7 @@ const generateJwtToken = (user: User): string => {
 
 
 
-export default { getAllUsers, addUser, deleteUser, getUserIDByUsername, checkCredentials }
+
+
+
+export default { getAllUsers, addUser, deleteUser, getUserIDByUsername, checkCredentials };

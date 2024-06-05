@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../provider/AuthProvider";
+import { useAuth } from "../provider/useAuth";
 
 const Login: FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -12,7 +12,7 @@ const Login: FC = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // State for storing error message
 
-  const { setToken } = useAuth();
+  const { setLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   // Function to handle form submission
@@ -27,6 +27,7 @@ const Login: FC = () => {
           password,
         },
         {
+          withCredentials: true,
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -36,7 +37,7 @@ const Login: FC = () => {
 
       console.log(response.data);
 
-      setToken(response.data.token);
+      setLoggedIn(true);
       localStorage.setItem("user_id", response.data.user_id);
       navigate(-1)
     } catch (error) {

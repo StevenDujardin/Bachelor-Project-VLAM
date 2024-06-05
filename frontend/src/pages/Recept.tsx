@@ -43,7 +43,7 @@ export const Recept: FC = () => {
 
   const { recipe_id } = useParams();
   const authContext = useContext(AuthContext);
-  const loggedIn = authContext?.isLoggedIn();
+  const loggedIn = authContext?.isLoggedIn;
   // Effect hook to fetch recipe on mount
   useEffect(() => {
     const fetchRecipe = async () => {
