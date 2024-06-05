@@ -3,6 +3,9 @@ import recipeDb from "../data-access/recipe.db"
 import {OpenAI} from "openai"
 import { TextContentBlock } from 'openai/resources/beta/threads/messages';
 import { Ingredient } from "@prisma/client";
+import axios from "axios";
+import fs from 'fs';
+import crypto from 'crypto';
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.DBgetAllRecipes();
@@ -28,7 +31,19 @@ const filterRecipes = (typeDish: string, difficulty: string, duration: number): 
   return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
 };
 
-
+const downloadImage = async (url: string | undefined, filename: string): Promise<any> => {
+  const writer = fs.createWriteStream(`images/${filename}.png`);
+  const response = await axios({
+    url,
+    method: "GET",
+    responseType: "stream",
+  })
+  response.data.pipe(writer);
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve);
+    writer.on('error', reject);
+  });
+}
 
 
 const generateRecipe = async (prompt: string): Promise<Recipe> => {
@@ -72,7 +87,13 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients);
+        const imagePrompt = textJson.imagePrompt;
+        const resp = await openai.images.generate({ model: "dall-e-3", prompt: imagePrompt, style: "vivid", n: 1 });
+        const image = resp.data[0].url;
+        const filename = crypto.randomBytes(16).toString('hex');
+        await downloadImage(image, filename);
+
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `http://localhost:3000/recipes/image/${filename}.png`);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');
