@@ -93,7 +93,7 @@ const Routes = () => {
     },
     {
       path: "*",
-      element: <Navigate to="/login" replace />, // Catch-all route to redirect unknown paths to "/"
+      element: <Navigate to="/" replace />, // Catch-all route to redirect unknown paths to "/"
     },
   ]);
   // Provide the router configuration using RouterProvider
