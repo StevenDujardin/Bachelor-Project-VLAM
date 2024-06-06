@@ -4,7 +4,43 @@ import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
-//ALL USERS
+/**
+ * @swagger
+ * /users/all:
+ *   get:
+ *     summary: Retrieve all users
+ *     responses:
+ *       '200':
+ *         description: A list of all users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     example: 12345
+ *                   username:
+ *                     type: string
+ *                     example: john_doe
+ *                   email:
+ *                     type: string
+ *                     example: john_doe@exampl.com
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *     tags:
+ *       - Users
+ */
 userRouter.get('/all', async (req, res) => {
     try {
         console.log("users")
