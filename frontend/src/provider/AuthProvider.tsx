@@ -15,8 +15,11 @@ export interface AuthContextType {
 }
 
 // Create the context with a default value of undefined as it will always be provided by AuthProvider
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
+const defaultIsLoggedIn = false; // Default logged in state
+const defaultSetLoggedIn = () => {}; // Default function for setting the state
+
+export const AuthContext = createContext<AuthContextType>(
+  { isLoggedIn: defaultIsLoggedIn, setLoggedIn: defaultSetLoggedIn }
 );
 // Define props for AuthProvider component
 interface AuthProviderProps {
