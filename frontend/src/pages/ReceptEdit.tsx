@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { ChefHat, SignalHigh, Timer, PlusCircle, XCircle } from "lucide-react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -33,12 +33,16 @@ export const ReceptEdit: FC = () => {
 
   const navigate = useNavigate();
   const { recipe_id } = useParams();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/recipes/${recipe_id}`,
+          `${apiUrl}/recipes/${recipe_id}`,
           {
             headers: {
               Accept: "*/*",
@@ -163,7 +167,7 @@ export const ReceptEdit: FC = () => {
           formData.append("file", imageFile);
 
           const uploadResponse = await axios.post(
-            "http://localhost:3000/recipes/image/upload",
+            `${apiUrl}/recipes/image/upload`,
             formData,
             {
               headers: {
@@ -190,7 +194,7 @@ export const ReceptEdit: FC = () => {
        
         // Now that the state has been updated, proceed to make the PUT request
         const response = await axios.put(
-          `http://localhost:3000/recipes/edit/${recipe_id}`,
+          `${apiUrl}/recipes/edit/${recipe_id}`,
           updatedRecipe, // Make sure you're sending the updatedRecipe with the new image path
           {
             headers: {

@@ -10,13 +10,14 @@ import cookieParser from 'cookie-parser';
 
 import cors from 'cors'; 
 
+const URL_FRONTEND = process.env.URL_FRONTEND;
 
 const app = express();
 dotenv.config();
 const port = 3000;
 
 app.use(cors({
-  origin: 'http://localhost:3001', // Replace with your frontend URL
+  origin: URL_FRONTEND, // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies) to be included
 }));
 
@@ -25,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-   res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+   res.header('Access-Control-Allow-Origin', URL_FRONTEND);
    res.header('Access-Control-Allow-Credentials', 'true');
    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

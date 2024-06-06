@@ -20,6 +20,7 @@ export const Card: FC<CardProps> = ({
   recipe_id,
 }) => {
   const navigate = useNavigate();
+
   const redirectToRecept = () => {
     navigate(`/recepten/${recipe_id}`);
   };

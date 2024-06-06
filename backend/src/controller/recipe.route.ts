@@ -106,6 +106,7 @@ recipeRouter.put('/edit/:id', async (req, res) => {
   const upload = multer({ storage });
   
   recipeRouter.post('/image/upload/', upload.single('file'), async (req: Request, res: Response) => {
+    const API_URL = process.env.API_URL;
     try {
       console.log("uploadImage");
   
@@ -116,7 +117,7 @@ recipeRouter.put('/edit/:id', async (req, res) => {
       let fileLocation = req.file.path;
       res.sendFile(fileLocation);
   
-      let fileUrl = `http://localhost:3000/recipes/image/${req.file.filename}`;
+      let fileUrl = `${API_URL}/recipes/image/${req.file.filename}`;
   
       // TODO: Write image location to DB
       // TODO: Retrieve location from DB and pull image in recipe overview

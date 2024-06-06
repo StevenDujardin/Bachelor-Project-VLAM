@@ -27,8 +27,10 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   // State to hold the authentication token
   const [isLoggedIn, setLoggedIn] = useState<boolean>(true);
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     axios
-      .get("http://localhost:3000/users/auth/status", { withCredentials: true })
+      .get(`${apiUrl}/users/auth/status`, { withCredentials: true })
       .then((response) => {
         if (response.data.isLoggedIn) {
           setLoggedIn(true);

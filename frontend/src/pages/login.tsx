@@ -14,6 +14,8 @@ const Login: FC = () => {
 
   const { setLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   // Function to handle form submission
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +23,7 @@ const Login: FC = () => {
     setErrorMessage(""); // Clear any previous error messages
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/login",
+        `${apiUrl}/users/login`,
         {
           username,
           password,

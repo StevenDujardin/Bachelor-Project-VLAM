@@ -5,13 +5,15 @@ import axios from "axios";
 
 export const Header: FC = () => {
   const location = useLocation();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   const { isLoggedIn, setLoggedIn } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/users/logout",
+        `${apiUrl}/users/logout`,
         {},
         { withCredentials: true }
       );
