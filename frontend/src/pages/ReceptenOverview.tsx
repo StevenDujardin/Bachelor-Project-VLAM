@@ -11,6 +11,8 @@ export const ReceptenOverview: FC = () => {
     Record<string, string | number | (string | number)[]>
   >({});
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleFilterSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -57,7 +59,7 @@ export const ReceptenOverview: FC = () => {
       });
 
       const response = await axios.get(
-        `http://localhost:3000/recipes?${queryParams.toString()}`,
+        `${apiUrl}/recipes?${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
@@ -74,7 +76,7 @@ export const ReceptenOverview: FC = () => {
   const searchRecipes = async (search: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/recipes/search/${search}`,
+        `${apiUrl}/recipes/search/${search}`,
         {
           headers: {
             Accept: "*/*",

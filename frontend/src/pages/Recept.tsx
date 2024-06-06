@@ -40,16 +40,20 @@ export const Recept: FC = () => {
   const [recipe, setRecipe] = useState<ReceptProps>(); // Initialize recipe state to null
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+
 
   const { recipe_id } = useParams();
   const authContext = useContext(AuthContext);
   const loggedIn = authContext?.isLoggedIn;
   // Effect hook to fetch recipe on mount
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/recipes/${recipe_id}`,
+          `${apiUrl}/recipes/${recipe_id}`,
           {
             headers: {
               Accept: "*/*",
@@ -92,7 +96,7 @@ export const Recept: FC = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/recipes/delete/${recipe_id}`,
+        `${apiUrl}/recipes/delete/${recipe_id}`,
         {
           headers: {
             Accept: "*/*",

@@ -15,6 +15,8 @@ export const Home: FC = () => {
   const [duration, setDuration] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   // Function to handle textarea change
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -34,7 +36,7 @@ export const Home: FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/generate", {
+      const response = await axios.post(`${apiUrl}/generate`, {
         message: message,
         type: type,
         duration: duration,
