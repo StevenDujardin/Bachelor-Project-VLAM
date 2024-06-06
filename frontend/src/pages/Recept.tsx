@@ -37,13 +37,13 @@ const ReceptExample: ReceptProps = {
 
 export const Recept: FC = () => {
   const [persons, setPersons] = useState(4);
-  const [recipe, setRecipe] = useState<ReceptProps | null>(null); // Initialize recipe state to null
+  const [recipe, setRecipe] = useState<ReceptProps>(); // Initialize recipe state to null
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const navigate = useNavigate();
 
   const { recipe_id } = useParams();
   const authContext = useContext(AuthContext);
-  const loggedIn = authContext?.isLoggedIn();
+  const loggedIn = authContext?.isLoggedIn;
   // Effect hook to fetch recipe on mount
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -56,6 +56,7 @@ export const Recept: FC = () => {
             },
           }
         );
+        
         setRecipe(response.data);
       } catch (error) {
         console.error("Error fetching recipe:", error);
