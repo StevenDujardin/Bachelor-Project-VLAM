@@ -1,15 +1,8 @@
 import express, { Request, Response} from 'express';
 import userService from "../domain/service/user.service"
-
 import jwt from 'jsonwebtoken';
 
-
-
-
 const userRouter = express.Router();
-
-
-
 
 //ALL USERS
 userRouter.get('/all', async (req, res) => {
@@ -22,7 +15,42 @@ userRouter.get('/all', async (req, res) => {
     }
 });
 
-//ADD
+/**
+ * @swagger
+ * /users/add:
+ *   post:
+ *     summary: Add a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: john_doe
+ *               password:
+ *                 type: string
+ *                 example: secret123
+ *     responses:
+ *       '200':
+ *         description: The user was successfully added
+ *         content:
+ *           application/json:
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *     tags:
+ *       - Users
+ */
 userRouter.post('/add', async (req, res) => {
     try {
         console.log("addUser")
@@ -35,7 +63,45 @@ userRouter.post('/add', async (req, res) => {
     }
 });
 
-//DELETE
+/**
+ * @swagger
+ * /users/delete:
+ *   delete:
+ *     summary: Delete a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: john_doe
+ *     responses:
+ *       '200':
+ *         description: The user was successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Deleted user john_doe
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *     tags:
+ *       - Users
+ */
 userRouter.delete('/delete', async (req, res) => {
     try {
         console.log("delete")
@@ -48,7 +114,65 @@ userRouter.delete('/delete', async (req, res) => {
 });
 
 
-//LOGIN
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Log in a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: john_doe
+ *               password:
+ *                 type: string
+ *                 example: secret123
+ *     responses:
+ *       '200':
+ *         description: The user was successfully logged in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Logged in successfully
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *                 user_id:
+ *                   type: integer
+ *                   example: 1
+ *                 username:
+ *                   type: string
+ *                   example: john_doe
+ *       '400':
+ *         description: Bad request
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: Username is required
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Gebruikersnaam of wachtwoord is niet juist
+ *     tags:
+ *       - Users
+ */
 userRouter.post('/login', async (req, res) => {
     try {
         console.log("LoginUser")
@@ -73,7 +197,25 @@ userRouter.post('/login', async (req, res) => {
     }
 });
 
-//LOGOUT
+/**
+ * @swagger
+ * /users/logout:
+ *   post:
+ *     summary: Log out a user
+ *     responses:
+ *       '200':
+ *         description: The user was successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Successfully logged out
+ *     tags:
+ *       - Users
+ */
 userRouter.post('/logout', async (req , res) => {
     res.clearCookie('token'); // Ensure you clear the appropriate cookie
     res.status(200).json({message : `Successfully logged out`})
