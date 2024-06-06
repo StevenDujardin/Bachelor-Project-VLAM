@@ -92,7 +92,7 @@ const Login: FC = () => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1">
             <label className="text-xl font-semibold text-shades-0 select-none">
-              username
+              Username
             </label>
             <input
               type="text"
@@ -117,7 +117,7 @@ const Login: FC = () => {
                 className={` w-full border ${errorMessage == "Password is required" ? "border-red-600" : "border-mantis-400"} bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none`}
               ></input>
               <div
-                className="absolute -translate-x-4 translate-y-4 my-auto aspect-square w-6 shrink-0"
+                className="absolute -translate-x-4 translate-y-4 my-auto aspect-square w-6 shrink-0 text-lvboSpectrum-700"
                 onClick={() => setPasswordVisible(!passwordVisible)}
               >
                 {passwordVisible ? <EyeOff size={24} /> : <Eye size={24} />}
@@ -133,17 +133,12 @@ const Login: FC = () => {
           </div>
         </div>
         <button
-          className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 text-xl text-white select-none"
+          className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 transition duration-200 active:bg-lvboSpectrum-700 border border-lvboSpectrum-400 font-centerBold  rounded-md px-4 py-2 text-xl text-white select-none"
           type="submit"
         >
           Login
         </button>
-        <p className="self-center text-base font-normal not-italic leading-8 text-black">
-          Don't have an account?{" "}
-          <a href="#" className="text-mantis-800">
-            Sign up
-          </a>
-        </p>
+        
       </form>
     </div>
   );

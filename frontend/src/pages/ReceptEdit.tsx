@@ -62,7 +62,7 @@ export const ReceptEdit: FC = () => {
   }, [recipe_id]);
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     key: keyof ReceptProps
   ) => {
     if (recipe) {
@@ -226,14 +226,14 @@ export const ReceptEdit: FC = () => {
         <div className="flex self-center gap-2 justify-between w-screen max-w-7xl px-4">
           <button
             onClick={goBack}
-            className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+            className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 transition duration-200 active:bg-lvboSpectrum-700 border border-lvboSpectrum-700 font-centerBold rounded-md px-4 py-2 my-2 text-xl text-white select-none"
           >
             Terug
           </button>
           <button
             type="submit"
             form="edit-form"
-            className="bg-LVBO font-centerBold border border-mantis-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+            className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 transition duration-200 active:bg-lvboSpectrum-700 border border-lvboSpectrum-700 font-centerBold rounded-md px-4 py-2 my-2 text-xl text-white select-none"
           >
             Opslaan
           </button>
@@ -281,14 +281,18 @@ export const ReceptEdit: FC = () => {
                 <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <ChefHat size={24} className="mr-2" />
-                    <input
-                      type="text"
-                      value={recipe.type}
-                      onChange={(e) => handleChange(e, "type")}
-                      className="bg-LVBO text-white w-full"
-                      title="Recipe Type"
-                      required
-                    />
+                    
+                    <select
+                  title="Type"
+                  value={recipe.type}
+                  onChange={(e) => handleChange(e, "type")}
+                  className=" bg-LVBO w-full rounded-lg border border-mantis-200 focus:outline-none focus:ring-mantis-500 focus:border-mantis-500"
+                >
+                  <option value="Dranken">Dranken</option>
+                  <option value="Voorgerecht">Voorgerecht</option>
+                  <option value="Hoofdgerecht">Hoofdgerecht</option>
+                  <option value="Dessert">Dessert</option>
+                </select>
                   </div>
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <Timer size={24} className="mr-2" />

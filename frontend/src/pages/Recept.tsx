@@ -119,7 +119,7 @@ export const Recept: FC = () => {
           <div className="flex self-center gap-2 justify-end w-screen max-w-7xl px-4">
             <button
               onClick={() => setShowDeletePopup(true)}
-              className="bg-red-500 font-centerBold border border-red-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+              className="bg-red-500 hover:bg-red-600 transition duration-200 active:bg-red-700 font-centerBold border border-red-700 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
             >
               Verwijderen
             </button>
@@ -131,7 +131,7 @@ export const Recept: FC = () => {
             )}
             <Link
               to={`/recepten/${recipe_id}/edit`}
-              className="bg-LVBO font-centerBold border border-mantis-400 rounded-md px-4 py-2 my-2 text-xl text-white select-none"
+              className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 transition duration-200 active:bg-lvboSpectrum-700 border border-lvboSpectrum-700 font-centerBold  rounded-md px-4 py-2 my-2 text-xl text-white select-none"
               type="submit"
             >
               Aanpassen
@@ -244,13 +244,13 @@ const DeletePopup: FC<{ onConfirm: () => void; onCancel: () => void }> = ({
       <div className="flex justify-end gap-4">
         <button
           onClick={onCancel}
-          className="bg-gray-300 text-black py-2 px-4 rounded-full"
+          className="bg-gray-300 hover:bg-gray-400 transition-colors duration-200 text-black py-2 px-4 rounded-lg"
         >
           Terug
         </button>
         <button
           onClick={onConfirm}
-          className="bg-red-500 text-white py-2 px-4 rounded-full"
+          className="bg-red-500 hover:bg-red-600 transition duration-200 active:bg-red-700 text-white py-2 px-4 rounded-lg"
         >
           Verwijderen
         </button>
