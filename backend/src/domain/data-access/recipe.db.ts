@@ -80,7 +80,7 @@ const DBeditRecipe = async (
         if (image !== undefined) updateData.image = image;
     
         // Update the recipe with the given recipe_id
-  console.log(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image)
+        //console.log(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image)
 
         const recipe = await database.recipe.update({
             where: { recipe_id: recipe_id },

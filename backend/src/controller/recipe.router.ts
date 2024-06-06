@@ -217,7 +217,6 @@ recipeRouter.delete('/delete/:id', async (req, res) => {
         console.log("deleteRecipeWithID")
         const id = Number(req.params.id);
         const recipe  = await recipeService.deleteRecipeWithID(id);
-
         res.status(200).json(recipe);
     } catch (error) {
         res.status(500).json({ status: 'error'});
