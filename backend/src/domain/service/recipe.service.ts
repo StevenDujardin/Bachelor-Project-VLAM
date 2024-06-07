@@ -46,17 +46,28 @@ const downloadImage = async (url: string | undefined, filename: string): Promise
 }
 
 
-const generateRecipe = async (prompt: string): Promise<Recipe> => {
+const generateRecipe = async (prompt: string, type: string, difficulty: string, duration: string): Promise<Recipe> => {
+    const API_URL = process.env.API_URL;
     const openai = new OpenAI({apiKey:process.env.OPENAI_SECRET_KEY});
     const assistant = await openai.beta.assistants.retrieve(
         "asst_fDgYsQlhKOttJtOaHPujJESr"
       );  
+      let finalPrompt = prompt;
+      if(type) {
+        finalPrompt += ` Het recept moet een ${type} zijn.`
+      }
+      if(difficulty) {
+        finalPrompt += ` Het moet een ${difficulty} recept zijn.`;
+      } 
+      if(duration) {
+        finalPrompt += ` Het moet minder dan ${duration} minuten duren om te maken.`
+      }
       const thread = await openai.beta.threads.create();
       const message = await openai.beta.threads.messages.create(
         thread.id,
         {
           role: "user",
-          content: prompt,
+          content: finalPrompt,
         }
       );
     
@@ -93,7 +104,7 @@ const generateRecipe = async (prompt: string): Promise<Recipe> => {
         const filename = crypto.randomBytes(16).toString('hex');
         await downloadImage(image, filename);
 
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `http://localhost:3000/recipes/image/${filename}.png`);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `${API_URL}/recipes/image/${filename}.png`);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');

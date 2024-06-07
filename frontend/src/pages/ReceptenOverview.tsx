@@ -11,6 +11,8 @@ export const ReceptenOverview: FC = () => {
     Record<string, string | number | (string | number)[]>
   >({});
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleFilterSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -57,7 +59,7 @@ export const ReceptenOverview: FC = () => {
       });
 
       const response = await axios.get(
-        `http://localhost:3000/recipes?${queryParams.toString()}`,
+        `${apiUrl}/recipes?${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
@@ -74,7 +76,7 @@ export const ReceptenOverview: FC = () => {
   const searchRecipes = async (search: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/recipes/search/${search}`,
+        `${apiUrl}/recipes/search/${search}`,
         {
           headers: {
             Accept: "*/*",
@@ -109,7 +111,7 @@ export const ReceptenOverview: FC = () => {
         <div className="flex justify-center md:px-24">
           <form
             onSubmit={handleSearchSubmit}
-            className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl"
+            className="flex w-full max-w-5xl pl-6 m-4 mb-8 bg-white shadow-md rounded-xl focus:shadow-xl"
           >
             <input
               className=" py-6 w-full outline-none"
@@ -123,10 +125,10 @@ export const ReceptenOverview: FC = () => {
           </form>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max pt-20">
+      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-20 ">
         <form onSubmit={handleFilterSubmit} className="md:w-80 pb-8">
           <div className=" font-centerBold text-xl">Filters</div>
-          <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
+          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Type gerecht:</div>
             <div className="flex flex-col p-4 gap-2 divide-y">
               {["dranken", "voorgerecht", "hoofdgerecht", "dessert"].map(
@@ -148,9 +150,9 @@ export const ReceptenOverview: FC = () => {
               )}
             </div>
           </div>
-          <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
+          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Tijdsduur:</div>
-            <div className="flex flex-col p-2 gap-2 divide-y">
+            <div className="flex flex-col p-4 gap-2 divide-y">
               {["15", "30", "45", "60", "120"].map((duration) => (
                 <div className="flex gap-2 pt-2" key={duration}>
                   <input
@@ -166,9 +168,9 @@ export const ReceptenOverview: FC = () => {
               ))}
             </div>
           </div>
-          <div className=" m-2 p-2 bg-mantis-50 rounded-xl">
+          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Moeilijkheidsgraad:</div>
-            <div className="flex flex-col p-2 gap-2 divide-y">
+            <div className="flex flex-col p-4 gap-2 divide-y">
               {["gemakkelijk", "gemiddeld", "moeilijk"].map((difficulty) => (
                 <div className="flex gap-2 pt-2" key={difficulty}>
                   <input
@@ -188,7 +190,7 @@ export const ReceptenOverview: FC = () => {
           </div>
           <button
             type="submit"
-            className=" flex justify-self-center mx-2 py-2 px-4 bg-mantis-500 text-white rounded-md hover:bg-mantis-600 transition duration-200"
+            className=" flex justify-self-center mx-2 py-2 px-4 text-white font-centerBold rounded-md bg-mantis-500 hover:bg-mantis-600 transition duration-200 active:bg-mantis-700"
           >
             Filters toepassen
           </button>

@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha -r ts-node/register 'tests/**/*.test.js'",
     "start": "ts-node src/app.ts",
-    "migrate": "npx prisma migrate reset --force",
+    "migrate": "npx prisma generate",
     "setup": "npx ts-node init-db.ts"
   },
   "keywords": [],

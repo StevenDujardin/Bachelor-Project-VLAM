@@ -10,6 +10,7 @@ import swaggerUi from "swagger-ui-express";
 
 import cors from 'cors'; 
 
+const URL_FRONTEND = process.env.URL_FRONTEND;
 
 const app = express();
 dotenv.config();
@@ -39,10 +40,21 @@ const swaggerOpts = {
   ],
   apis: ["./src/controller/*.router.ts"],
 };
+app.use(cors({
+  origin: URL_FRONTEND, // Replace with your frontend URL
+  credentials: true, // Allow credentials (cookies) to be included
+}));
 
 const swaggerSpec = swaggerJSDoc(swaggerOpts);
 
 app.use(cors());
+app.use((req, res, next) => {
+   res.header('Access-Control-Allow-Origin', URL_FRONTEND);
+   res.header('Access-Control-Allow-Credentials', 'true');
+   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+   next();
+});
 
 app.get('/', (req, res) => {
   res.send('Backend is runnning');
