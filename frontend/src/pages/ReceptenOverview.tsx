@@ -63,7 +63,7 @@ export const ReceptenOverview: FC = () => {
       });
 
       const response = await axios.get(
-        `${apiUrl}/recipes?page=${page}&pageSize=3&${queryParams.toString()}`,
+        `${apiUrl}/recipes?page=${page}&pageSize=9&${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
