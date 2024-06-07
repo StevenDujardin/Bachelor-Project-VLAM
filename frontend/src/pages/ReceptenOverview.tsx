@@ -9,7 +9,9 @@ export const ReceptenOverview: FC = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [recipes, setRecipes] = useState<ReceptProps[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [, setFilters] = useState<
+  const [isSearching, setIsSearching] = useState(false);
+
+  const [filters, setFilters] = useState<
     Record<string, string | number | (string | number)[]>
   >({});
 
@@ -18,8 +20,7 @@ export const ReceptenOverview: FC = () => {
   const handleFilterSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newFilters: Record<string, string | number | (string | number)[]> =
-      {};
+    const newFilters: Record<string, string | number | (string | number)[]> = {};
     const formData = new FormData(event.currentTarget);
 
     formData.forEach((value, key) => {
@@ -37,21 +38,21 @@ export const ReceptenOverview: FC = () => {
     });
 
     setFilters(newFilters);
-    fetchRecipes(currentPage, searchTerm, newFilters);
+    setCurrentPage(1); // Reset to first page for new filter
+    fetchRecipes(1, newFilters);
   };
 
   useEffect(() => {
-    fetchRecipes(currentPage);
+    fetchRecipes(currentPage, filters);
   }, [currentPage]);
 
   const fetchRecipes = async (
     page: number,
-    search = "",
     filters: Record<string, string | number | (string | number)[]> = {}
   ) => {
     try {
+      setIsSearching(false);
       const queryParams = new URLSearchParams();
-      if (search) queryParams.append("search", search);
       Object.keys(filters).forEach((key) => {
         const value = filters[key];
         if (Array.isArray(value)) {
@@ -62,7 +63,7 @@ export const ReceptenOverview: FC = () => {
       });
 
       const response = await axios.get(
-        `${apiUrl}/recipes?page=${page}&pageSize=2&${queryParams.toString()}`,
+        `${apiUrl}/recipes?page=${page}&pageSize=3&${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
@@ -94,15 +95,17 @@ export const ReceptenOverview: FC = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     if (!event.target.value.trim()) {
-      fetchRecipes();
+      fetchRecipes(currentPage, filters); // Add the missing arguments
     }
   };
 
   const handleSearchSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!searchTerm.trim()) {
-      fetchRecipes();
+      setIsSearching(false);
+      fetchRecipes(currentPage, filters); // Add the missing arguments
     } else {
+      setIsSearching(true);
       searchRecipes(searchTerm);
     }
   };
@@ -129,7 +132,7 @@ export const ReceptenOverview: FC = () => {
           >
             <input
               className=" py-6 w-full outline-none"
-              placeholder="Naar welk recept je be op zoek?"
+              placeholder="Naar welk recept ben je op zoek?"
               value={searchTerm}
               onChange={handleSearchChange}
             ></input>
@@ -141,7 +144,7 @@ export const ReceptenOverview: FC = () => {
       </div>
       <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-20">
         <form onSubmit={handleFilterSubmit} className="md:w-80 pb-8">
-          <div className=" font-centerBold text-xl">Filters</div>
+          <div className=" font-centerBold text-xl pl-2">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Type gerecht:</div>
             <div className="flex flex-col p-4 gap-2 divide-y">
@@ -155,6 +158,7 @@ export const ReceptenOverview: FC = () => {
                       name="type[]"
                       value={type}
                       id={type}
+                      defaultChecked={(filters.type as string[])?.includes(type)}
                     ></input>
                     <label htmlFor={type}>
                       {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -176,6 +180,7 @@ export const ReceptenOverview: FC = () => {
                     name="duration"
                     value={duration}
                     id={duration}
+                    defaultChecked={filters.duration === duration}
                   ></input>
                   <label htmlFor={duration}> &lt;= {duration} minuten</label>
                 </div>
@@ -194,6 +199,7 @@ export const ReceptenOverview: FC = () => {
                     name="difficulty[]"
                     value={difficulty}
                     id={difficulty}
+                    defaultChecked={(filters.difficulty as string[])?.includes(difficulty)}
                   ></input>
                   <label htmlFor={difficulty}>
                     {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
@@ -227,46 +233,56 @@ export const ReceptenOverview: FC = () => {
               />
             ))}
           </div>
-          <nav aria-label="Page navigation example" className="mt-8">
-            <ul className="flex items-center justify-center -space-x-px h-10 text-base">
-              <li>
-                <button
-                  onClick={handlePrevPage}
-                  disabled={currentPage === 1}
-                  className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
-                >
-                  <span className="sr-only">Previous</span>
-                  <ChevronLeft />
-                </button>
-              </li>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <li key={page}>
-                    <button
-                      onClick={() => setCurrentPage(page)}
-                      className={`flex items-center justify-center px-4 h-10 leading-tight ${
-                        currentPage === page
-                        ? "text-white bg-mantis-600 border border-mantis-600 hover:bg-mantis-700"
-                        : "text-gray-500 bg-white border border-gray-300 hover:bg-mantis-500 hover:border-mantis-500 hover:text-white"
-                    }`}
-                    >
-                      {page}
-                    </button>
-                  </li>
-                )
-              )}
-              <li>
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
-                >
-                  <span className="sr-only">Next</span>
-                  <ChevronRight />
-                </button>
-              </li>
-            </ul>
-          </nav>
+          {!isSearching && (
+            <nav aria-label="Page navigation example" className="mt-8">
+              <ul className="flex items-center justify-center  h-10 text-base">
+                <li>
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                    className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    <span className="sr-only">Previous</span>
+                    <ChevronLeft />
+                  </button>
+                </li>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(
+                    (page) =>
+                      page === 1 ||
+                      page === totalPages ||
+                      (page >= currentPage - 2 && page <= currentPage + 2)
+                  )
+                  .map((page, index, arr) => (
+                    <li className="flex items-center" key={page}>
+                      {index > 0 && arr[index - 1] !== page - 1 && (
+                        <span className="px-4 py-2 h-10 border border-x-0 border-gray-300 select-none ">...</span>
+                      )}
+                      <button
+                        onClick={() => setCurrentPage(page)}
+                        className={`flex items-center justify-center px-4 h-10 leading-tight ${
+                          currentPage === page
+                            ? "text-white bg-mantis-600 border border-mantis-600 hover:bg-mantis-700"
+                            : "text-gray-500 bg-white border-y border-gray-300 hover:bg-mantis-500 hover:border-mantis-500 hover:text-white"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    </li>
+                  ))}
+                <li>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    <span className="sr-only">Next</span>
+                    <ChevronRight />
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          )}
         </div>
       </div>
     </>

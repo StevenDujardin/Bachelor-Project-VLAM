@@ -24,25 +24,20 @@ recipeRouter.get('/:id', async (req, res) => {
 
 recipeRouter.get('/search/:search', async (req: Request, res: Response) => {
   try {
-      console.log("search");
-      const search = req.params.search;
+    console.log("search")
+    const search = req.params.search;
+    //search on title and description 
+    const result  = await recipeService.searchRecipe(search);
+    if(result.length === 0){
+        res.status(404).json({ status: 'error', message: 'No recipes found'})
+    }
+    else{
+        res.status(200).json(result);
+    }
+} catch (error) {
+    res.status(500).json({ status: 'error'});
+}
 
-      const page = parseInt(req.query.page as string);
-      const pageSize = parseInt(req.query.pageSize as string);
-
-      // Calculate the start and end indexes for the requested page
-      const startIndex = (page - 1) * pageSize;
-      const endIndex = page * pageSize;
-
-      const result = await recipeService.searchRecipe(search);
-
-      const paginatedResult = result.slice(startIndex, endIndex);
-
-      const totalPages = Math.ceil(result.length / pageSize);
-      res.status(200).json({ data: paginatedResult, totalPages });
-  } catch (error) {
-      res.status(500).json({ status: 'error' });
-  }
 });
 
 recipeRouter.get('/', async (req, res) => {
@@ -58,15 +53,15 @@ recipeRouter.get('/', async (req, res) => {
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
 
-          // Calculate the start and end indexes for the requested page
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = page * pageSize;
+        // Calculate the start and end indexes for the requested page
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
 
         const result = await recipeService.filterRecipes(type, difficulty , duration);
         const paginatedResult = result.slice(startIndex, endIndex);
 
         // Calculate the total number of pages
-  const totalPages = Math.ceil(result.length / pageSize);
+        const totalPages = Math.ceil(result.length / pageSize);
 
         res.status(200).json({ data: paginatedResult, totalPages });
       } catch (error) {
