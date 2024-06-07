@@ -179,13 +179,24 @@ recipeRouter.get('/search/:search', async (req: Request, res: Response) => {
 recipeRouter.get('/', async (req, res) => {
     try {
         // Extract query parameters
+        const page = parseInt(req.query.page as string);
+        const pageSize = parseInt(req.query.pageSize as string);
         
         const type = req.query.type as string;
         const duration = Number(req.query.duration);
         const difficulty = req.query.difficulty as string;
 
+        // Calculate the start and end indexes for the requested page
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
+
         const result = await recipeService.filterRecipes(type, difficulty , duration);
-        res.status(200).json(result);
+        const paginatedResult = result.slice(startIndex, endIndex);
+
+        const totalPages = Math.ceil(result.length / pageSize);
+
+
+        res.status(200).json({ data: paginatedResult, totalPages });
       } catch (error) {
         console.error('Error fetching recipes:', error);
         res.status(500).send('An error occurred while fetching recipes');
