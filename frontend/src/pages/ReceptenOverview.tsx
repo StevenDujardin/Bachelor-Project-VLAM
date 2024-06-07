@@ -1,10 +1,12 @@
-import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { FC, useEffect, useState, FormEvent } from "react";
 import { Card } from "../components/Card";
 import axios from "axios";
 import { ReceptProps } from "./Recept";
 
 export const ReceptenOverview: FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [recipes, setRecipes] = useState<ReceptProps[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [, setFilters] = useState<
@@ -35,14 +37,15 @@ export const ReceptenOverview: FC = () => {
     });
 
     setFilters(newFilters);
-    fetchRecipes(searchTerm, newFilters);
+    fetchRecipes(currentPage, searchTerm, newFilters);
   };
 
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    fetchRecipes(currentPage);
+  }, [currentPage]);
 
   const fetchRecipes = async (
+    page: number,
     search = "",
     filters: Record<string, string | number | (string | number)[]> = {}
   ) => {
@@ -59,15 +62,17 @@ export const ReceptenOverview: FC = () => {
       });
 
       const response = await axios.get(
-        `${apiUrl}/recipes?${queryParams.toString()}`,
+        `${apiUrl}/recipes?page=${page}&pageSize=2&${queryParams.toString()}`,
         {
           headers: {
             Accept: "*/*",
           },
         }
       );
+      const { data, totalPages } = response.data;
 
-      setRecipes(response.data);
+      setRecipes(data);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
@@ -75,14 +80,11 @@ export const ReceptenOverview: FC = () => {
 
   const searchRecipes = async (search: string) => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/recipes/search/${search}`,
-        {
-          headers: {
-            Accept: "*/*",
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/recipes/search/${search}`, {
+        headers: {
+          Accept: "*/*",
+        },
+      });
       setRecipes(response.data);
     } catch (error) {
       console.error("Error fetching recipes:", error);
@@ -102,6 +104,18 @@ export const ReceptenOverview: FC = () => {
       fetchRecipes();
     } else {
       searchRecipes(searchTerm);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -125,7 +139,7 @@ export const ReceptenOverview: FC = () => {
           </form>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-20 ">
+      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-20">
         <form onSubmit={handleFilterSubmit} className="md:w-80 pb-8">
           <div className=" font-centerBold text-xl">Filters</div>
           <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
@@ -196,18 +210,63 @@ export const ReceptenOverview: FC = () => {
           </button>
         </form>
 
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8 animate-fadeIn">
-          {recipes.map((recipe) => (
-            <Card
-              key={recipe.recipe_id}
-              recipe_id={recipe.recipe_id}
-              image={recipe?.image || "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"}
-              title={recipe.title}
-              type={recipe.type}
-              duration={recipe.duration}
-              difficulty={recipe.difficulty}
-            />
-          ))}
+        <div className="flex flex-col w-full">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8 animate-fadeIn">
+            {recipes.map((recipe) => (
+              <Card
+                key={recipe.recipe_id}
+                recipe_id={recipe.recipe_id}
+                image={
+                  recipe?.image ||
+                  "https://www.lekkervanbijons.be/sites/default/files/styles/default_thumb_cropped/public/images/Maaltijdsalade%20met%20fruit%2C%20Flandrien%20kaas%20en%20karnemelkdressing%20%2002.jpg?itok=IsrdEPoA"
+                }
+                title={recipe.title}
+                type={recipe.type}
+                duration={recipe.duration}
+                difficulty={recipe.difficulty}
+              />
+            ))}
+          </div>
+          <nav aria-label="Page navigation example" className="mt-8">
+            <ul className="flex items-center justify-center -space-x-px h-10 text-base">
+              <li>
+                <button
+                  onClick={handlePrevPage}
+                  disabled={currentPage === 1}
+                  className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                >
+                  <span className="sr-only">Previous</span>
+                  <ChevronLeft />
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <li key={page}>
+                    <button
+                      onClick={() => setCurrentPage(page)}
+                      className={`flex items-center justify-center px-4 h-10 leading-tight ${
+                        currentPage === page
+                        ? "text-white bg-mantis-600 border border-mantis-600 hover:bg-mantis-700"
+                        : "text-gray-500 bg-white border border-gray-300 hover:bg-mantis-500 hover:border-mantis-500 hover:text-white"
+                    }`}
+                    >
+                      {page}
+                    </button>
+                  </li>
+                )
+              )}
+              <li>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
+                >
+                  <span className="sr-only">Next</span>
+                  <ChevronRight />
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </>

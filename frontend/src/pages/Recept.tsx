@@ -146,7 +146,7 @@ export const Recept: FC = () => {
             <img
               src={recipe?.image || ReceptExample.image}
               alt="img"
-              className=" lg:w-3/5 max-h-142 overflow-hidden object-cover rounded-lg shadow-lg"
+              className=" lg:w-3/5 h-142 overflow-hidden object-cover rounded-lg shadow-lg"
             ></img>
 
             <div className="flex flex-col justify-between lg:w-2/5">

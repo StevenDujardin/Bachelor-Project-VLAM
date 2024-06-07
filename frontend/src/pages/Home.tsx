@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { Sparkles } from "lucide-react";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,6 @@ export const Home: FC = () => {
   const [difficulty, setDifficulty] = useState("");
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
-
 
   // Function to handle textarea change
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,11 +73,15 @@ export const Home: FC = () => {
               Welkom bij Kook AI
             </h1>
           </div>
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-col justify-center items-center text-center">
             <p className="font-poppins text-lg font-light px-6 md:w-1/2">
-              Kook AI is een website waar je recepten kan vinden voor elke dag
-              met lekkers uit eigen land. Heb je vragen over een recept, laat
-              het ons weten via
+              Ontdek unieke recepten gegenereerd door onze geavanceerde AI. Geef
+              je voorkeuren aan en geniet van op maat gemaakte culinaire
+              mogelijkheden.
+            </p>
+            <br />
+            <p className="font-poppins text-lg font-light px-6 md:w-1/2">
+              Koken is nog nooit zo eenvoudig en leuk geweest!
             </p>
           </div>
         </div>
@@ -85,9 +89,9 @@ export const Home: FC = () => {
         <div className=" m-4 md:m-10 p-4 md:p-10 bg-mantis-50 border border-mantis-200 rounded-2xl shadow-xl">
           <label
             htmlFor="recipeRequest"
-            className="text-2xl  font-light font-centerBold"
+            className="text-2xl flex gap-1 items-center  font-light font-centerBold"
           >
-            Kook AI
+          Kook AI <Sparkles size={18} fill="green" className="text-green-700"></Sparkles>
           </label>
           <form
             onSubmit={handleSubmit}
@@ -103,7 +107,6 @@ export const Home: FC = () => {
                 placeholder="Geef mij een recept voor een aardbeientaart"
                 value={message}
                 onChange={handleChange}
-                
               ></textarea>
               {error && (
                 <p className="text-center font-semibold text-red-500">

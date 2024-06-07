@@ -251,7 +251,7 @@ export const ReceptEdit: FC = () => {
                 <img
                   src={imagePreview || ReceptExample.image} // Use imagePreview for the src
                   alt="img"
-                  className="object-hidden rounded-lg shadow-lg"
+                  className="  h-142 overflow-hidden object-cover rounded-lg shadow-lg"
                 ></img>
                 <input
                   type="file"
@@ -266,14 +266,14 @@ export const ReceptEdit: FC = () => {
                   <textarea
                     value={recipe.title}
                     onChange={(e) => handleChange(e, "title")}
-                    className="text-5xl font-light font-centerBold py-2 mb-2 w-full p-2.5 whitespace-normal rounded-lg"
+                    className="text-5xl font-light font-centerBold min-h-40 py-2 mb-2 w-full p-2.5 whitespace-normal rounded-lg"
                     title="Recipe Title"
                     required
                   />
                   <textarea
                     value={recipe.description}
                     onChange={(e) => handleChange(e, "description")}
-                    className="text-xl font-light py-2 w-full min-h-44 p-2.5 rounded-lg"
+                    className="text-xl font-light py-2 w-full min-h-96 p-2.5 rounded-lg"
                     title="Recipe Description"
                     required
                   />
