@@ -23,6 +23,15 @@ const recipeRouter = express.Router();
  *         description: A recipe object
  *         content:
  *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 instructions:
+ *                   type: string
  *       '404':
  *         description: No recipe found with this ID
  *         content:
@@ -49,6 +58,7 @@ const recipeRouter = express.Router();
  *     tags:
  *       - Recipes
  */
+
 recipeRouter.get('/:id', async (req, res) => {
     try {
         console.log("getRecipeWithID")
@@ -199,6 +209,31 @@ recipeRouter.get('/', async (req, res) => {
  *         description: The deleted recipe object
  *         content:
  *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 title:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 steps:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 duration:
+ *                   type: integer
+ *                 difficulty:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                 ingredients:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 image:
+ *                   type: string
  *       '500':
  *         description: Internal server error
  *         content:
@@ -212,6 +247,7 @@ recipeRouter.get('/', async (req, res) => {
  *     tags:
  *       - Recipes
  */
+
 recipeRouter.delete('/delete/:id', async (req, res) => {
     try {
         console.log("deleteRecipeWithID")
@@ -267,16 +303,45 @@ recipeRouter.delete('/delete/:id', async (req, res) => {
  *         description: The updated recipe object
  *         content:
  *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 title:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 steps:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 duration:
+ *                   type: integer
+ *                 difficulty:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                 ingredients:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 image:
+ *                   type: string
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               type: string
- *               example: An error occurred while editing
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: An error occurred while editing
  *     tags:
  *       - Recipes
  */
+
 recipeRouter.put('/edit/:id', async (req, res) => {
     try {
         // Extract query parameters
@@ -291,7 +356,6 @@ recipeRouter.put('/edit/:id', async (req, res) => {
         const type = req.body.type as string;
         const ingredients = req.body.ingredients;
         const image = req.body.image as string;
-        console.log(req.body)
 
         const result = await recipeService.editRecipe(recipe_id, title, description, steps, duration, difficulty, type, ingredients, image);
         res.status(200).json(result);

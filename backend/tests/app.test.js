@@ -85,7 +85,7 @@ import("supertest").then((supertest) => {
     describe("DELETE /recipes/delete/:id", function () {
       it("responds with json containing the deleted recipe", function (done) {
         request(server)
-          .delete("/recipes/delete/2")
+          .delete("/recipes/delete/1")
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(200)
@@ -102,11 +102,11 @@ import("supertest").then((supertest) => {
         request(server)
           .put("/recipes/edit/5")
           .send({
-            title: "New Recipe Title",
-            description: "New Description",
+            title: "Test",
+            description: "New Test",
             steps: ["Step 1", "Step 2"],
             duration: 45,
-            difficulty: "medium",
+            difficulty: "gemiddeld",
             type: "dessert",
             ingredients: ["ingredient1", "ingredient2"],
             image: "/path/to/image.jpg",
@@ -122,4 +122,97 @@ import("supertest").then((supertest) => {
       });
     });
   });
+
+  describe("User Router", function () {
+    describe("GET /users/all", function () {
+      it("responds with json containing all users", function (done) {
+        request(server)
+          .get("/users/all")
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(200)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.body).to.be.an("array");
+            done();
+          });
+        });
+      });
+    });
+
+    describe("POST /login", function () {
+      it("should respond with 400 when username is not provided", function (done) {
+          request(server)
+              .post("/users/login")
+              .send({ password: "password123" })
+              .set("Accept", "application/json")
+              .expect(400)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  expect(res.text).to.equal('Username is required');
+                  done();
+              });
+        });
+
+      it("should respond with 400 when password is not provided", function (done) {
+          request(server)
+              .post("/users/login")
+              .send({ username: "testuser" })
+              .set("Accept", "application/json")
+              .expect(400)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  expect(res.text).to.equal('Password is required');
+                  done();
+              });
+        });
+
+      it("should respond with 200 and set a cookie when credentials are correct", function (done) {
+          request(server)
+              .post("/users/login")
+              .send({ username: "user", password: "user" })
+              .set("Accept", "application/json")
+              .expect("Content-Type", /json/)
+              .expect(200)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  expect(res.body).to.have.property("message", "Logged in successfully");
+                  expect(res.body).to.have.property("user_id");
+                  expect(res.body).to.have.property("username", "user");
+                  done();
+              });
+        });
+
+      it("should respond with 500 when credentials are incorrect", function (done) {
+          request(server)
+              .post("/users/login")
+              .send({ username: "testuser", password: "wrongpassword" })
+              .set("Accept", "application/json")
+              .expect("Content-Type", /json/)
+              .expect(500)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  expect(res.body).to.have.property("error", "Gebruikersnaam of wachtwoord is niet juist");
+                  done();
+              });
+        });
+    });
+
+    describe("POST /logout", function () {
+      it("should respond with 200 and clear the cookie", function (done) {
+          request(server)
+              .post("/users/logout")
+              .set("Accept", "application/json")
+              .expect("Content-Type", /json/)
+              .expect(200)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  expect(res.body).to.have.property("message", "Successfully logged out");
+                  expect(res.headers['set-cookie']).to.not.be.undefined;
+                  done();
+              });
+        });
+    });
+
 });
+
