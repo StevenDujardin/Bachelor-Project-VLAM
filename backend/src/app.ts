@@ -7,6 +7,7 @@ import { openAIRouter } from './controller/openai.router';
 import { userRouter } from './controller/user.router';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import cookieParser from "cookie-parser";
 
 import cors from 'cors'; 
 
@@ -46,6 +47,7 @@ app.use(cors({
 }));
 
 const swaggerSpec = swaggerJSDoc(swaggerOpts);
+app.use(cookieParser());
 
 app.use(cors());
 app.use((req, res, next) => {
