@@ -55,7 +55,31 @@ const main = async () => {
     }
   });
 
+  const kip = await prisma.recipe.create({
+    data: {
+        title: "kip",
+        description: "kip",
+        duration: 10,
+        steps: ["Neem Kip", "Eet Kip"],
+        difficulty: "Gemakkelijk",
+        type: "dessert",
+        ingredients: ["Kip", "Mond"],
+        image: "", 
+    }
+});
 
+const testEdit = await prisma.recipe.create({
+  data: {
+      title: "testEdit",
+      description: "testEdit",
+      duration: 10,
+      steps: ["testEdit", "testEdit"],
+      difficulty: "Gemakkelijk",
+      type: "Dessert",
+      ingredients: ["testEdit", "testEdit"],
+      image: "", 
+  }
+});
 
 
 
