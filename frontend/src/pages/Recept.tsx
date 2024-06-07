@@ -42,8 +42,6 @@ export const Recept: FC = () => {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
-
-
   const { recipe_id } = useParams();
   const authContext = useContext(AuthContext);
   const loggedIn = authContext?.isLoggedIn;
@@ -51,17 +49,19 @@ export const Recept: FC = () => {
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL;
     const fetchRecipe = async () => {
+      // Timeout to navigate back if loading takes too long
+      const timeoutId = setTimeout(() => {
+        navigate("/recepten");
+      }, 10000);
       try {
-        const response = await axios.get(
-          `${apiUrl}/recipes/${recipe_id}`,
-          {
-            headers: {
-              Accept: "*/*",
-            },
-          }
-        );
-        
+        const response = await axios.get(`${apiUrl}/recipes/${recipe_id}`, {
+          headers: {
+            Accept: "*/*",
+          },
+        });
+
         setRecipe(response.data);
+        clearTimeout(timeoutId); // Cleanup the timeout if component unmounts or completes
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -70,7 +70,7 @@ export const Recept: FC = () => {
     if (recipe_id) {
       fetchRecipe();
     }
-  }, [recipe_id]);
+  }, [recipe_id, navigate]);
 
   const adjustPersons = (delta: number) => {
     setPersons((prev) => Math.min(8, Math.max(1, prev + delta))); // Ensure at least 1 person and at most 8
@@ -85,6 +85,7 @@ export const Recept: FC = () => {
 
     return `${newQuantity} ${unit}`;
   };
+
   if (!recipe) {
     return <Loading />; // Render loading state or similar
   }
