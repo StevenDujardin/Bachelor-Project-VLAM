@@ -26,17 +26,17 @@ export const Card: FC<CardProps> = ({
   };
   return (
     <div
-      className="flex flex-row lg:flex-row lg:w-80 h-full max-h-96 mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105 cursor-pointer select-none"
+      className="flex flex-row lg:flex-row lg:w-80 h-full max-h-fit mx-4 rounded-2xl overflow-hidden object-cover shadow-xl transition duration-300 hover:shadow-2xl hover:translate-y-2 hover:scale-105 cursor-pointer select-none"
       onClick={redirectToRecept}
     >
-      <div className="flex flex-row lg:flex-col gap-4 p-2 md:p-6">
+      <div className="flex flex-row lg:flex-col gap-4 p-2 md:p-4">
         <img
           src={image}
           alt="img"
-          className=" overflow-hidden object-cover rounded-lg shadow-lg"
+          className=" max-w-32  lg:max-w-72 overflow-hidden object-cover rounded-lg shadow-lg aspect-square"
         ></img>
-        <div>
-          <div className=" text-xl md:text-2xl font-light font-centerBold py-2">
+        <div className="flex flex-col justify-between lg:h-2/5">
+          <div className=" text-md md:text-xl font-light font-centerBold my-2 line-clamp-3 h-max">
             {title}
           </div>
           <div className="flex flex-col gap-2 text-sm md:text-base ">

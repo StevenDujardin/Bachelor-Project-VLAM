@@ -216,7 +216,58 @@ export const ReceptenOverview: FC = () => {
           </button>
         </form>
 
+
         <div className="flex flex-col w-full">
+        {!isSearching && (
+            <nav aria-label="Page navigation" className="mt-8 mb-4•">
+              <ul className="flex items-center justify-center  h-10 text-base">
+                <li>
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                    className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    <span className="sr-only">Previous</span>
+                    <ChevronLeft />
+                  </button>
+                </li>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(
+                    (page) =>
+                      page === 1 ||
+                      page === totalPages ||
+                      (page >= currentPage - 2 && page <= currentPage + 2)
+                  )
+                  .map((page, index, arr) => (
+                    <li className="flex items-center" key={page}>
+                      {index > 0 && arr[index - 1] !== page - 1 && (
+                        <span className="px-4 py-2 h-10 border border-x-0 border-gray-300 select-none ">...</span>
+                      )}
+                      <button
+                        onClick={() => setCurrentPage(page)}
+                        className={`flex items-center justify-center px-4 h-10 leading-tight ${
+                          currentPage === page
+                            ? "text-white bg-mantis-600 border border-mantis-600 hover:bg-mantis-700"
+                            : "text-gray-500 bg-white border-y border-gray-300 hover:bg-mantis-500 hover:border-mantis-500 hover:text-white"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    </li>
+                  ))}
+                <li>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    <span className="sr-only">Next</span>
+                    <ChevronRight />
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          )}
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-8 animate-fadeIn">
             {recipes.map((recipe) => (
               <Card
