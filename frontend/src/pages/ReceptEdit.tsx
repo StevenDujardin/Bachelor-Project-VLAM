@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 import { ReceptProps } from "./Recept";
+import DOMPurify from 'dompurify';
 
 const ReceptExample: ReceptProps = {
   image:
@@ -35,7 +36,6 @@ export const ReceptEdit: FC = () => {
   const { recipe_id } = useParams();
   const apiUrl = import.meta.env.VITE_API_URL;
 
-
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -61,14 +61,19 @@ export const ReceptEdit: FC = () => {
     }
   }, [recipe_id]);
 
+  const sanitizeInput = (input: string) => {
+    return DOMPurify.sanitize(input);
+  };
+
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     key: keyof ReceptProps
   ) => {
+    const sanitizedValue = sanitizeInput(event.target.value);
     if (recipe) {
       setRecipe({
         ...recipe,
-        [key]: event.target.value,
+        [key]: sanitizedValue,
       });
     }
   };
@@ -87,9 +92,10 @@ export const ReceptEdit: FC = () => {
       | "image"
     >
   ) => {
+    const sanitizedValue = sanitizeInput(event.target.value);
     if (recipe) {
       const updatedArray = [...(recipe[key] as string[])];
-      updatedArray[index] = event.target.value;
+      updatedArray[index] = sanitizedValue;
       setRecipe({
         ...recipe,
         [key]: updatedArray,
@@ -98,9 +104,10 @@ export const ReceptEdit: FC = () => {
   };
 
   const handleAddStep = (index: number | null) => {
-    if (recipe && index !== null && newStep.trim()) {
+    const sanitizedNewStep = sanitizeInput(newStep).trim();
+    if (recipe && index !== null && sanitizedNewStep) {
       const updatedSteps = [...recipe.steps];
-      updatedSteps.splice(index + 1, 0, newStep.trim());
+      updatedSteps.splice(index + 1, 0, sanitizedNewStep);
       setRecipe({
         ...recipe,
         steps: updatedSteps,
@@ -121,8 +128,9 @@ export const ReceptEdit: FC = () => {
   };
 
   const handleAddIngredient = () => {
-    if (recipe && newIngredient.trim()) {
-      const updatedIngredients = [...recipe.ingredients, newIngredient.trim()];
+    const sanitizedNewIngredient = sanitizeInput(newIngredient).trim();
+    if (recipe && sanitizedNewIngredient) {
+      const updatedIngredients = [...recipe.ingredients, sanitizedNewIngredient];
       setRecipe({
         ...recipe,
         ingredients: updatedIngredients,
@@ -244,19 +252,19 @@ export const ReceptEdit: FC = () => {
         id="edit-form"
         className="max-w-7xl w-screen self-center font-poppins"
       >
-        <div className="flex flex-col md:flex-row w-screen max-w-7xl  py-8">
-          <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100  border border-mantis-200 shadow-lg">
+        <div className="flex flex-col md:flex-row w-screen max-w-7xl py-8">
+          <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100 border border-mantis-200 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10 p-6">
               <div className="flex flex-col lg:w-3/5">
                 <img
-                  src={imagePreview || ReceptExample.image} // Use imagePreview for the src
+                  src={imagePreview || ReceptExample.image}
                   alt="img"
-                  className="  h-142 overflow-hidden object-cover rounded-lg shadow-lg"
+                  className="h-142 overflow-hidden object-cover rounded-lg shadow-lg"
                 ></img>
                 <input
                   type="file"
                   onChange={handleImageChange}
-                  className="p-2 "
+                  className="p-2"
                   title="Recipe Image"
                 />
               </div>
@@ -281,18 +289,17 @@ export const ReceptEdit: FC = () => {
                 <div className="flex flex-col gap-1 sm:flex-row md:px-10 lg:px-0 lg:flex-col lg:max-w-fit xl:max-w-full xl:flex-row justify-between m-4 lg:m-0 whitespace-nowrap">
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <ChefHat size={24} className="mr-2" />
-                    
                     <select
-                  title="Type"
-                  value={recipe.type}
-                  onChange={(e) => handleChange(e, "type")}
-                  className=" bg-LVBO w-full rounded-lg border border-mantis-200 focus:outline-none focus:ring-mantis-500 focus:border-mantis-500"
-                >
-                  <option value="Dranken">Dranken</option>
-                  <option value="Voorgerecht">Voorgerecht</option>
-                  <option value="Hoofdgerecht">Hoofdgerecht</option>
-                  <option value="Dessert">Dessert</option>
-                </select>
+                      title="Type"
+                      value={recipe.type}
+                      onChange={(e) => handleChange(e, "type")}
+                      className="bg-LVBO w-full rounded-lg border border-mantis-200 focus:outline-none focus:ring-mantis-500 focus:border-mantis-500"
+                    >
+                      <option value="Drinken">Drinken</option>
+                      <option value="Voorgerecht">Voorgerecht</option>
+                      <option value="Hoofdgerecht">Hoofdgerecht</option>
+                      <option value="Dessert">Dessert</option>
+                    </select>
                   </div>
                   <div className="flex bg-LVBO p-4 my-2 rounded-full text-white">
                     <Timer size={24} className="mr-2" />
@@ -322,12 +329,12 @@ export const ReceptEdit: FC = () => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center pb-8">
-          <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100  border border-mantis-200 shadow-lg">
+          <div className="flex flex-row md:w-1/3 min-w-80 mx-4 mb-4 md:mb-0 rounded-2xl bg-mantis-100 border border-mantis-200 shadow-lg">
             <div className="flex flex-col w-full gap-4 p-6">
               <div className="text-2xl font-light font-centerBold py-2">
                 Ingrediënten
               </div>
-              <div className="flex flex-col gap-2  font-poppins">
+              <div className="flex flex-col gap-2 font-poppins">
                 {recipe.ingredients.map((ingredient, index) => (
                   <div key={index} className="flex items-center">
                     <textarea
@@ -396,7 +403,7 @@ export const ReceptEdit: FC = () => {
                       <div className="flex flex-col gap-2 items-start mt-2">
                         <textarea
                           value={newStep}
-                          onChange={(e) => setNewStep(e.target.value)}
+                          onChange={(e) => setNewStep(sanitizeInput(e.target.value))}
                           className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
                           placeholder="Typ hier een nieuwe stap..."
                         />
@@ -423,7 +430,7 @@ export const ReceptEdit: FC = () => {
                   <div className="flex flex-col items-center mt-2">
                     <textarea
                       value={newStep}
-                      onChange={(e) => setNewStep(e.target.value)}
+                      onChange={(e) => setNewStep(sanitizeInput(e.target.value))}
                       className="bg-white rounded-lg p-2 w-full resize-none overflow-hidden"
                       placeholder="Typ hier een nieuwe stap..."
                     />

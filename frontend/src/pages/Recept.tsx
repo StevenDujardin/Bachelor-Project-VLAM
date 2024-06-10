@@ -77,13 +77,20 @@ export const Recept: FC = () => {
   };
 
   const adjustIngredientQuantity = (ingredient: string, factor: number) => {
-    const match = ingredient.match(/^(\d+)\s?(.*)$/);
+    const match = ingredient.match(/^(\d+([.,]\d+)?)\s?(.*)$/);
     if (!match) return ingredient; // Return the original if no match
 
-    const [, quantity, unit] = match;
-    const newQuantity = parseFloat(quantity) * factor;
+    const [, quantity, , unit] = match;
+    const normalizedQuantity = quantity.replace(",", ".");
 
-    return `${newQuantity} ${unit}`;
+    const newQuantity = parseFloat(normalizedQuantity) * factor;
+
+    // Format the new quantity to a fixed number of decimal places if needed
+    const formattedQuantity = Number.isInteger(newQuantity)
+      ? newQuantity
+      : newQuantity.toFixed(2);
+
+    return `${formattedQuantity} ${unit}`;
   };
 
   if (!recipe) {
@@ -206,8 +213,8 @@ export const Recept: FC = () => {
               </button>
             </div>
             <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">
-              {adjustedIngredients.map((ingredient) => (
-                <div className="flex pt-2">
+              {adjustedIngredients.map((ingredient, index) => (
+                <div className="flex pt-2" key={index}  >
                   <p>{ingredient}</p>
                 </div>
               ))}
