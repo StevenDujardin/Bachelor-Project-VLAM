@@ -154,10 +154,10 @@ export const Recept: FC = () => {
             <img
               src={recipe?.image || ReceptExample.image}
               alt="img"
-              className=" lg:w-3/5 h-142 overflow-hidden object-cover rounded-lg shadow-lg"
+              className=" lg:w-3/5 lg:h-142 max-w-full  overflow-hidden object-cover rounded-lg shadow-lg"
             ></img>
 
-            <div className="flex flex-col justify-between lg:w-2/5">
+            <div className="flex flex-col justify-between  lg:w-2/5">
               <div>
                 <div className=" text-5xl font-light font-centerBold py-2">
                   {recipe.title}

@@ -254,12 +254,12 @@ export const ReceptEdit: FC = () => {
       >
         <div className="flex flex-col md:flex-row w-screen max-w-7xl py-8">
           <div className="flex flex-row lg:flex-row lg:w-screen mx-4 rounded-2xl overflow-hidden bg-mantis-100 border border-mantis-200 shadow-lg">
-            <div className="flex flex-col lg:flex-row gap-10 p-6">
-              <div className="flex flex-col lg:w-3/5">
+            <div className="flex flex-col lg:flex-row gap-10 p-6 w-full">
+              <div className="flex flex-col lg:w-3/5 lg:h-142  ">
                 <img
                   src={imagePreview || ReceptExample.image}
                   alt="img"
-                  className="h-142 overflow-hidden object-cover rounded-lg shadow-lg"
+                  className=" lg:h-142 overflow-hidden object-cover rounded-lg shadow-lg"
                 ></img>
                 <input
                   type="file"

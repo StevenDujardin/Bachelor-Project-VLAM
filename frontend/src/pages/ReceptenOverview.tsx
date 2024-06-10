@@ -219,7 +219,7 @@ export const ReceptenOverview: FC = () => {
 
         <div className="flex flex-col w-full">
         {!isSearching && (
-            <nav aria-label="Page navigation" className="mt-8 mb-4•">
+            <nav aria-label="Page navigation" className="mt-8 mb-4">
               <ul className="flex items-center justify-center  h-10 text-base">
                 <li>
                   <button
