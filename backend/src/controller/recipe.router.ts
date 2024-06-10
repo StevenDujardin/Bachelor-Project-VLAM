@@ -3,6 +3,8 @@ import recipeService from "../domain/service/recipe.service"
 import path from 'path';
 import multer from "multer";
 import fs from 'fs';
+import sharp from 'sharp';
+import { buffer } from 'stream/consumers';
 
 const recipeRouter = express.Router();
 
@@ -429,28 +431,35 @@ recipeRouter.put('/edit/:id', async (req, res) => {
  *     tags:
  *       - Recipes
  */
-  recipeRouter.post('/image/upload/', upload.single('file'), async (req: Request, res: Response) => {
+  recipeRouter.post('/image/upload/', upload.single('file'), async (req, res) => {
+    const API_URL = process.env.API_URL;
+
     try {
-      console.log("uploadImage");
-  
       if (!req.file) {
-        throw new Error("File upload failed");
+        return res.status(400).send('No file uploaded.');
       }
   
-      let fileLocation = req.file.path;
-      res.sendFile(fileLocation);
-  
-      let fileUrl = `http://localhost:3000/recipes/image/${req.file.filename}`;
-  
-      // TODO: Write image location to DB
-      // TODO: Retrieve location from DB and pull image in recipe overview
-  
+      // Process the image and save it to a temporary file
+      await sharp(req.file.path)
+        .resize(1024, 1024, {
+          fit: sharp.fit.inside,
+          withoutEnlargement: true
+        })
+        .toFormat( 'jpeg', { quality: 80 })
+        .toFile(`./images/compressed-${req.file.filename}`)
 
-      res.status(200).json({ status: "File uploaded successfully", path: fileUrl });
-    } catch (error: Error | any) {
-      res.status(500).json({ status: error.message });
+      // Construct the URL for accessing the processed image
+      const fileUrl = `${API_URL}/recipes/image/compressed-${req.file.filename}`;
+      console.log(fileUrl);
+
+  
+      res.status(200).json({ message: 'File uploaded and processed successfully', path: fileUrl });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error during file upload and processing.');
     }
   });
+  
 
 
   /**

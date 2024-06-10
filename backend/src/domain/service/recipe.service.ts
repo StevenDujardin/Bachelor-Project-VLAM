@@ -6,6 +6,7 @@ import { Ingredient } from "@prisma/client";
 import axios from "axios";
 import fs from 'fs';
 import crypto from 'crypto';
+import sharp from "sharp";
 
 const getAllRecipes = (): Promise<Recipe[]> => {
     return recipeDb.DBgetAllRecipes();
@@ -31,19 +32,53 @@ const filterRecipes = (typeDish: string, difficulty: string, duration: number): 
   return recipeDb.DBfilterRecipes(typeDish, difficulty, duration);
 };
 
-const downloadImage = async (url: string | undefined, filename: string): Promise<any> => {
-  const writer = fs.createWriteStream(`images/${filename}.png`);
+
+
+const downloadImage = async (url: string | undefined, filename: string): Promise<void> => {
+  // Ensure url is defined
+  if (!url) throw new Error('URL is undefined');
+
+  const path = `images/${filename}.png`;
+  const writer = fs.createWriteStream(path);
+
   const response = await axios({
     url,
     method: "GET",
     responseType: "stream",
-  })
-  response.data.pipe(writer);
-  return new Promise((resolve, reject) => {
-    writer.on('finish', resolve);
-    writer.on('error', reject);
   });
-}
+
+  response.data.pipe(writer);
+
+  return new Promise((resolve, reject) => {
+    writer.on('finish', async () => {
+      try {
+        // Process the image and save it to a temporary file
+        await sharp(path)
+          .resize(1024, 1024, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true
+          })
+          .toFormat('jpeg', { quality: 80 })
+          .toFile(`./images/compressed-${filename}.jpeg`); // Changed extension to jpeg
+
+        // Delete the original image
+        fs.unlinkSync(path);
+        
+        console.log(`Image downloaded and processed successfully: ${filename}`);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+    writer.on('error', (error) => {
+      // Delete the partially written file in case of an error
+      fs.unlinkSync(path);
+      reject(error);
+    });
+  });
+};
+
 
 
 const generateRecipe = async (prompt: string, type: string, difficulty: string, duration: string): Promise<Recipe> => {
@@ -104,7 +139,7 @@ const generateRecipe = async (prompt: string, type: string, difficulty: string, 
         const filename = crypto.randomBytes(16).toString('hex');
         await downloadImage(image, filename);
 
-        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `${API_URL}/recipes/image/${filename}.png`);
+        return recipeDb.DBinsertRecipe(textJson.title, textJson.description, textJson.steps, textJson.duration as number, textJson.difficulty, textJson.type, textJson.ingredients, `${API_URL}/recipes/image/compressed-${filename}.jpeg`);
         
       } else {
         throw new Error('Interactie met de assistent kon niet succesvol worden uitgevoerd.');

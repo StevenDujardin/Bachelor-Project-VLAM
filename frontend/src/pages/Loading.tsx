@@ -18,7 +18,7 @@ export const Loading: FC = () => {
         <div className="align-bottom self-center text-center h-screen p-20">
           {showNotFound ? (
             <span className="flex flex-col justify-center text-black text-2xl p-4 font-centerBold">
-              Page not found, redirecting...
+              Pagina niet gevonden, u wordt doorverwezen...
             </span>
           ) : (
             <div role="status">
@@ -39,7 +39,7 @@ export const Loading: FC = () => {
                 />
               </svg>
               <span className="flex flex-col justify-center text-black text-2xl p-4 font-centerBold">
-                Loading...
+                Laden...
               </span>
             </div>
           )}

@@ -25,6 +25,7 @@
     "node": "^18.20.3",
     "openai": "^4.47.1",
     "prisma": "^5.14.0",
+    "sharp": "^0.33.4",
     "supertest": "^7.0.0",
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.2.8",
