@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { Sparkles } from "lucide-react";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ScrollingBanner } from "../components/ScrollingBanner";
 
 interface ErrorResponse {
   status: string;
@@ -85,13 +86,21 @@ export const Home: FC = () => {
             </p>
           </div>
         </div>
+        <div className="relative overflow-hidden max-w-full my-4">
+          <ScrollingBanner />
+        </div>
 
         <div className=" m-4 md:m-10 p-4 md:p-10 bg-mantis-50 border border-mantis-200 rounded-2xl shadow-xl">
           <label
             htmlFor="recipeRequest"
             className="text-2xl flex gap-1 items-center  font-light font-centerBold"
           >
-          Kook AI <Sparkles size={18} fill="green" className="text-green-700"></Sparkles>
+            Kook AI{" "}
+            <Sparkles
+              size={18}
+              fill="green"
+              className="text-green-700"
+            ></Sparkles>
           </label>
           <form
             onSubmit={handleSubmit}

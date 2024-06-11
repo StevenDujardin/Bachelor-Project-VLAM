@@ -52,9 +52,18 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "loop-scroll": {
+          from: {
+            transform: "translateX(0)",
+          },
+          to: {
+            transform: "translateX(-100%)",
+          },
+        },
       },
       animation: {
         fadeIn: "fadeIn 1s ease-out",
+        "loop-scroll": "loop-scroll 50s linear infinite",
       },
     },
   },

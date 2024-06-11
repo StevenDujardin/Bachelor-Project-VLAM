@@ -7,3 +7,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .paused {
+        animation-play-state: paused;
+    }
+}

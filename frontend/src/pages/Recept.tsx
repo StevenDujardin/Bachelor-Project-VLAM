@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from "react";
-import { ChefHat, SignalHigh, Timer } from "lucide-react";
+import { ChefHat, SignalHigh, Plus, Minus, Timer } from "lucide-react";
 import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Loading } from "./Loading";
@@ -194,10 +194,10 @@ export const Recept: FC = () => {
             <div className="flex justify-between p-2 mx-4 rounded-full bg-white">
               <button
                 title="substract person"
-                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 px-2 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
                 onClick={() => adjustPersons(-1)}
               >
-                -
+              <Minus size={20} />
               </button>
               <div className="flex flex-col justify-center">
                 <p>
@@ -206,10 +206,10 @@ export const Recept: FC = () => {
               </div>
               <button
                 title="add person"
-                className="bg-LVBO px-3 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
+                className="bg-lvboSpectrum-500 hover:bg-lvboSpectrum-600 px-2 rounded-full aspect-square w-9 h-9 text-white select-none transition duration-200 active:bg-mantis-500 active:scale-90"
                 onClick={() => adjustPersons(1)}
               >
-                +
+                <Plus size={20} />
               </button>
             </div>
             <div className="flex flex-col gap-2 divide-y divide-LVBO font-poppins">

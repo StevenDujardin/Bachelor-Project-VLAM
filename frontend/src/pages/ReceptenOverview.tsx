@@ -124,7 +124,7 @@ export const ReceptenOverview: FC = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-end w-full h-80 object-cover bg-mantis-50">
+      <div className="flex flex-col justify-end w-full h-72 md:h-80 object-cover bg-mantis-50">
         <div className="flex justify-center md:px-24">
           <form
             onSubmit={handleSearchSubmit}
@@ -142,10 +142,10 @@ export const ReceptenOverview: FC = () => {
           </form>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-20">
+      <div className="flex flex-col md:flex-row w-screen max-w-7xl self-center h-max py-8 md:py-20">
         <form onSubmit={handleFilterSubmit} className="md:w-80 pb-8">
-          <div className=" font-centerBold text-xl pl-2">Filters</div>
-          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
+          <div className=" font-centerBold text-xl px-4">Filters</div>
+          <div className=" mx-4 my-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Type gerecht:</div>
             <div className="flex flex-col p-4 gap-2 divide-y">
               {["dranken", "voorgerecht", "hoofdgerecht", "dessert"].map(
@@ -168,7 +168,7 @@ export const ReceptenOverview: FC = () => {
               )}
             </div>
           </div>
-          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
+          <div className=" mx-4 my-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Tijdsduur:</div>
             <div className="flex flex-col p-4 gap-2 divide-y">
               {["15", "30", "45", "60", "120"].map((duration) => (
@@ -187,7 +187,7 @@ export const ReceptenOverview: FC = () => {
               ))}
             </div>
           </div>
-          <div className=" m-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
+          <div className=" mx-4 my-2 p-2 bg-mantis-50 border border-mantis-200 rounded-xl">
             <div className="text-md font-centerBold">Moeilijkheidsgraad:</div>
             <div className="flex flex-col p-4 gap-2 divide-y">
               {["gemakkelijk", "gemiddeld", "moeilijk"].map((difficulty) => (
@@ -210,7 +210,7 @@ export const ReceptenOverview: FC = () => {
           </div>
           <button
             type="submit"
-            className=" flex justify-self-center mx-2 py-2 px-4 text-white font-centerBold rounded-md bg-mantis-500 hover:bg-mantis-600 transition duration-200 active:bg-mantis-700"
+            className=" flex justify-self-center mx-4 my-2 py-2 px-4 text-white font-centerBold rounded-md bg-mantis-500 hover:bg-mantis-600 transition duration-200 active:bg-mantis-700"
           >
             Filters toepassen
           </button>

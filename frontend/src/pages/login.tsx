@@ -100,7 +100,6 @@ const Login: FC = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className={`w-full border ${errorMessage == "Username is required" ? "border-red-600" : "border-mantis-400"} bg-mantis-100 rounded-md px-3 py-3 font-350 leading-8 placeholder:text-neutral-400 focus:outline-none`}
-              // {...register('usename', { required: true })}
             />
           </div>
 

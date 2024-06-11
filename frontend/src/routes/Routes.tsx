@@ -1,4 +1,4 @@
-import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, RouterProvider, ScrollRestoration, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/useAuth";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Home } from "../pages/Home";
@@ -22,6 +22,7 @@ const Layout = () => {
         </div>
       </main>
       <Footer />
+      <ScrollRestoration/>
     </div>
   );
 };
