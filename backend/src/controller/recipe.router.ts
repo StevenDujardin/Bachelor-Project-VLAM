@@ -193,7 +193,11 @@ recipeRouter.get('/', async (req, res) => {
         const endIndex = page * pageSize;
 
         const result = await recipeService.filterRecipes(type, difficulty , duration);
-        const paginatedResult = result.slice(startIndex, endIndex);
+
+        // Reverse the order so the latest recipes are first
+        const reversedResult = result.reverse();
+
+        const paginatedResult = reversedResult.slice(startIndex, endIndex);
 
         const totalPages = Math.ceil(result.length / pageSize);
 
