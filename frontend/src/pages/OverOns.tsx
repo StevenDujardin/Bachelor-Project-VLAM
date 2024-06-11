@@ -22,7 +22,7 @@ export const OverOns: FC = () => {
         </p>
         <div className="flex flex-col md:flex-row gap-8 xl:-translate-x-20">
           <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Balletjes%20van%20champignons%20en%20bonen%20met%20mosterdsaus_%283%29_.jpg?itok=zNDydGb-"
+            src="/images/Balletjes van champignons en bonen met mosterdsaus_(3)_.jpg"
             alt="img"
             className=" h-64 object-cover  rounded-2xl md:rounded-none md:rounded-l-2xl"
           ></img>
@@ -46,7 +46,7 @@ export const OverOns: FC = () => {
         </div>
         <div className="flex flex-col md:flex-row-reverse gap-8 xl:translate-x-20">
           <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
+            src="/images/Groep_Zomergroenten.jpg"
             alt="img"
             className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
           ></img>
@@ -67,7 +67,7 @@ export const OverOns: FC = () => {
         </div>
         <div className="flex flex-col md:flex-row gap-8 xl:-translate-x-20">
           <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Slagerij%20VVIB%201.jpg?itok=gdiByPma"
+            src="/images/Slagerij VVIB 1.jpg"
             alt="img"
             className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-l-2xl"
           ></img>
@@ -86,7 +86,7 @@ export const OverOns: FC = () => {
         </div>
         <div className="flex flex-col md:flex-row-reverse gap-8 xl:translate-x-20">
           <img
-            src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/vissersboot_met_vissers.jpg?itok=RTY343kN"
+            src="/images/vissersboot_met_vissers.jpg"
             alt="img"
             className=" h-64 object-cover rounded-2xl md:rounded-none md:rounded-r-2xl"
           ></img>

@@ -42,7 +42,7 @@ export const BestPractice: FC = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-8">
             <img
-              src="https://www.techopedia.com/wp-content/uploads/2023/09/How-to-Write-AI-Prompts-1.png"
+              src="images/How-to-Write-AI-Prompts.png"
               alt="Gebruik Lokaal Geproduceerde Ingrediënten"
               className="h-64 rounded-2xl object-cover shadow-lg"
             />

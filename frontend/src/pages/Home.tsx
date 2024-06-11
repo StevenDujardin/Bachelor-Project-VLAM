@@ -62,7 +62,7 @@ export const Home: FC = () => {
   return (
     <>
       <img
-        src="https://www.lekkervanbijons.be/sites/default/files/styles/1200w/public/images/Groep_Zomergroenten.jpg?h=3bdddb62&itok=jbb1-v-R"
+        src="/images/Groep_Zomergroenten.jpg"
         alt="groenten"
         className="w-full h-96 overflow-hidden object-cover brightness-90"
       ></img>
