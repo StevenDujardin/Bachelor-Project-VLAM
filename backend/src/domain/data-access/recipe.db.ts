@@ -118,6 +118,9 @@ const DBfilterRecipes = async (type: string, difficulty: string, duration: numbe
           ...(difficulty && { difficulty: { equals: difficulty, mode: 'insensitive' } }),
           ...(duration && { duration: { lte: duration } }),
         },
+        orderBy: {
+            recipe_id: 'desc',
+    },
       });
       return mapToRecipes(recipes);
     } catch (error) {
