@@ -85,7 +85,7 @@ const generateRecipe = async (prompt: string, type: string, difficulty: string, 
     const API_URL = process.env.API_URL;
     const openai = new OpenAI({apiKey:process.env.OPENAI_SECRET_KEY});
     const assistant = await openai.beta.assistants.retrieve(
-        "asst_fDgYsQlhKOttJtOaHPujJESr"
+        "asst_f1OC5vgug0y5APYc0TZQXV0c"
       );  
       let finalPrompt = prompt;
       if(type) {
@@ -133,7 +133,10 @@ const generateRecipe = async (prompt: string, type: string, difficulty: string, 
             console.log(textJson.warning);
             throw new Error(textJson.warning);
         }
-        const imagePrompt = textJson.imagePrompt;
+        let imagePrompt = textJson.imagePrompt;
+        
+        imagePrompt += "The image MAY NOT contain any living animals or animal carcasses. Any animalproducts MUST be shown propperly prepared. The image MUST contain ALL the following ingredients: " + textJson.ingredients + ". The image CAN ONLY contain these ingredients. The image CAN NOT show any hands. The image CAN NOT contain any text. ONLY show the dish.";
+        console.log(imagePrompt);
         const resp = await openai.images.generate({ model: "dall-e-3", prompt: imagePrompt, style: "vivid", n: 1 });
         const image = resp.data[0].url;
         const filename = crypto.randomBytes(16).toString('hex');
