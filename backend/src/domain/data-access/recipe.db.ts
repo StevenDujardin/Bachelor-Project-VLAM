@@ -6,7 +6,11 @@ import { Ingredient } from "@prisma/client";
 //Get all recipes
 const DBgetAllRecipes = async (): Promise<Recipe[]> => {
     try {
-        const recipes = await database.recipe.findMany();
+        const recipes = await database.recipe.findMany({
+            orderBy: {
+                    recipe_id: 'desc',
+            },
+        });
         return mapToRecipes(recipes);
     } catch (error) {
         throw new Error('Error');
